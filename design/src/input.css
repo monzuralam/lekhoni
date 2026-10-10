@@ -1,0 +1,511 @@
+/* ==========================================================================
+   Lekhoni design system (Tailwind CSS v4, CSS-first configuration)
+   In Next.js: copy this file to app/globals.css and drop the @source lines.
+   ========================================================================== */
+
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@source "../*.html";
+@source "../assets/js/*.js";
+
+/* Dark mode is driven by <html data-theme="dark">, not by the OS setting alone */
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+/* --------------------------------------------------------------------------
+   Design tokens
+   -------------------------------------------------------------------------- */
+@theme {
+  /* 900px: switches between the mobile menu and the desktop menu (nav: / max-nav:) */
+  --breakpoint-nav: 56.25rem;
+
+  --font-sans: "Hind Siliguri", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Noto Serif Bengali", "Hind Siliguri", Georgia, serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --color-accent: #0f766e;
+  --color-accent-ink: #fff;
+  --color-link: var(--color-accent);
+  --color-page: #faf8f5;
+  --color-surface: #fff;
+  --color-surface-2: #f3efe9;
+  --color-ink: #1d2433;
+  --color-ink-2: #4b5263;
+  --color-muted: #858a97;
+  --color-line: #e8e3db;
+  --color-danger: #c2410c;
+  --color-success: #15803d;
+  --color-sale: #db2777;
+  --color-star: #f59e0b;
+
+  --container-site: 72.5rem;
+  --radius-card: 1rem;
+
+  /* Two-layer shadows. The layer colors are variables so dark mode can deepen them. */
+  --shadow-soft: 0 1px 2px var(--shadow-key), 0 4px 16px var(--shadow-ambient);
+  --shadow-lift: 0 2px 6px var(--shadow-key), 0 14px 36px var(--shadow-ambient-lift);
+
+  --animate-fade-up: fade-up 0.5s ease both;
+  --animate-shimmer: shimmer 1.4s linear infinite;
+  --animate-pop: pop 0.3s ease both;
+  --animate-toast-in: toast-in 0.35s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  --animate-slide-in: slide-in 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes shimmer {
+    from {
+      background-position: 200% 0;
+    }
+    to {
+      background-position: -200% 0;
+    }
+  }
+  @keyframes pop {
+    0% {
+      transform: scale(0.94);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  @keyframes toast-in {
+    from {
+      opacity: 0;
+      transform: translateY(16px) scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  @keyframes slide-in {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Base layer
+   -------------------------------------------------------------------------- */
+@layer base {
+  :root {
+    --shadow-key: rgb(29 36 51 / 0.05);
+    --shadow-ambient: rgb(29 36 51 / 0.06);
+    --shadow-ambient-lift: rgb(29 36 51 / 0.12);
+    color-scheme: light;
+  }
+
+  /* Dark mode only swaps token values, so components never need dark: color classes */
+  [data-theme="dark"] {
+    --color-page: #13161d;
+    --color-surface: #1a1e28;
+    --color-surface-2: #222736;
+    --color-ink: #e9eaee;
+    --color-ink-2: #b6bac6;
+    --color-muted: #878c99;
+    --color-line: #2b3141;
+    --color-link: color-mix(in srgb, var(--color-accent) 60%, white);
+    --shadow-key: rgb(0 0 0 / 0.3);
+    --shadow-ambient: rgb(0 0 0 / 0.35);
+    --shadow-ambient-lift: rgb(0 0 0 / 0.55);
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 7rem;
+  }
+
+  body {
+    background-color: var(--color-page);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  ::selection {
+    background-color: color-mix(in srgb, var(--color-accent) 25%, transparent);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-link);
+    outline-offset: 2px;
+  }
+
+  kbd {
+    display: inline-block;
+    min-width: 1.6em;
+    padding: 0.1em 0.45em;
+    border: 1px solid var(--color-line);
+    border-bottom-width: 2px;
+    border-radius: 0.4rem;
+    background-color: var(--color-surface);
+    color: var(--color-ink-2);
+    font-family: var(--font-mono);
+    font-size: 0.75em;
+    line-height: 1.5;
+    text-align: center;
+  }
+
+  mark {
+    padding: 0 0.15em;
+    border-radius: 0.2em;
+    background-color: color-mix(in srgb, var(--color-star) 35%, transparent);
+    color: inherit;
+  }
+
+  /* Native elements we style lightly so they match the tokens */
+  summary {
+    cursor: pointer;
+  }
+
+  [hidden] {
+    display: none !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Custom utilities
+   -------------------------------------------------------------------------- */
+
+/* Stroke icon from the inline SVG sprite. Size is always set separately: class="icon size-5" */
+@utility icon {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+}
+
+/* Shimmer skeleton block */
+@utility sk {
+  border-radius: 0.5rem;
+  background-color: var(--color-surface-2);
+  background-image: linear-gradient(
+    90deg,
+    var(--color-surface-2) 0%,
+    var(--color-surface) 50%,
+    var(--color-surface-2) 100%
+  );
+  background-size: 200% 100%;
+  animation: var(--animate-shimmer);
+}
+
+/* Hide scrollbars on carousel tracks (scrolling still works) */
+@utility scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   WordPress post content
+   Deliberately NOT inside a @layer so it wins over the typography plugin.
+   Use as: <div class="entry-content prose">…the_content…</div>
+   -------------------------------------------------------------------------- */
+.entry-content {
+  --tw-prose-body: var(--color-ink-2);
+  --tw-prose-headings: var(--color-ink);
+  --tw-prose-lead: var(--color-ink-2);
+  --tw-prose-links: var(--color-link);
+  --tw-prose-bold: var(--color-ink);
+  --tw-prose-counters: var(--color-muted);
+  --tw-prose-bullets: var(--color-accent);
+  --tw-prose-hr: var(--color-line);
+  --tw-prose-quotes: var(--color-ink);
+  --tw-prose-quote-borders: var(--color-accent);
+  --tw-prose-captions: var(--color-muted);
+  --tw-prose-kbd: var(--color-ink);
+  --tw-prose-code: var(--color-ink);
+  --tw-prose-pre-code: #e6e9f0;
+  --tw-prose-pre-bg: #161a23;
+  --tw-prose-th-borders: var(--color-line);
+  --tw-prose-td-borders: var(--color-line);
+  max-width: none;
+  font-size: calc(1.08rem * var(--reader-scale, 1));
+  line-height: 1.9;
+}
+
+/* Focus (reading) mode narrows the measure */
+[data-reading] .entry-content {
+  max-width: 720px;
+  margin-inline: auto;
+}
+
+.entry-content :where(h1, h2, h3, h4, h5, h6) {
+  font-family: var(--font-serif);
+  scroll-margin-top: 7rem;
+}
+
+.entry-content a {
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+}
+
+/* Remove the typography plugin's decorative quote marks and backticks */
+.entry-content blockquote p:first-of-type::before,
+.entry-content blockquote p:last-of-type::after {
+  content: none;
+}
+.entry-content blockquote {
+  font-style: normal;
+  font-family: var(--font-serif);
+}
+.entry-content blockquote cite {
+  display: block;
+  margin-top: 0.5em;
+  color: var(--color-muted);
+  font-family: var(--font-sans);
+  font-size: 0.875em;
+  font-style: normal;
+}
+.entry-content code::before,
+.entry-content code::after {
+  content: none;
+}
+.entry-content :not(pre) > code {
+  padding: 0.15em 0.4em;
+  border-radius: 0.375rem;
+  background-color: var(--color-surface-2);
+  font-weight: 500;
+}
+
+/* Code blocks are the anchor for the JS copy button */
+.entry-content pre {
+  position: relative;
+  border-radius: 0.875rem;
+  font-size: 0.875em;
+  line-height: 1.7;
+}
+
+.entry-content img {
+  border-radius: 0.875rem;
+}
+
+.entry-content .wp-element-caption,
+.entry-content figcaption {
+  margin-top: 0.6em;
+  color: var(--color-muted);
+  font-size: 0.875em;
+  text-align: center;
+}
+
+/* Gallery block: auto-fit grid of square images */
+.entry-content .wp-block-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.75rem;
+  margin-block: 2em;
+}
+.entry-content .wp-block-gallery figure {
+  margin: 0;
+}
+.entry-content .wp-block-gallery img {
+  width: 100%;
+  aspect-ratio: 1;
+  margin: 0;
+  object-fit: cover;
+  cursor: zoom-in;
+}
+
+/* Table block scrolls sideways on small screens */
+.entry-content .wp-block-table {
+  overflow-x: auto;
+}
+.entry-content .wp-block-table table {
+  min-width: 480px;
+  margin-block: 0;
+}
+
+/* Button block: accent pill */
+.entry-content .wp-block-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-block: 1.5em;
+}
+.entry-content .wp-block-button__link {
+  display: inline-block;
+  padding: 0.6em 1.5em;
+  border-radius: 999px;
+  background-color: var(--color-accent);
+  color: var(--color-accent-ink);
+  font-weight: 600;
+  text-decoration: none;
+  transition: filter 0.2s;
+}
+.entry-content .wp-block-button__link:hover {
+  filter: brightness(1.1);
+}
+.entry-content .is-style-outline .wp-block-button__link {
+  border: 1.5px solid var(--color-accent);
+  background-color: transparent;
+  color: var(--color-link);
+}
+
+/* Columns block */
+.entry-content .wp-block-columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-block: 1.5em;
+}
+.entry-content .wp-block-column > :first-child {
+  margin-top: 0;
+}
+.entry-content .wp-block-column > :last-child {
+  margin-bottom: 0;
+}
+
+/* Embed block keeps a 16:9 frame */
+.entry-content .wp-block-embed iframe,
+.entry-content .wp-block-embed .embed-placeholder {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  border-radius: 0.875rem;
+}
+
+/* Pullquote, separator, details, cover and alignment helpers */
+.entry-content .wp-block-pullquote {
+  margin-block: 2em;
+  padding-block: 1.5em;
+  border-block: 2px solid var(--color-accent);
+  text-align: center;
+}
+.entry-content .wp-block-pullquote blockquote {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 1.35em;
+  line-height: 1.6;
+}
+.entry-content .wp-block-separator {
+  width: 6rem;
+  margin-inline: auto;
+  border-top-width: 2px;
+}
+.entry-content .wp-block-separator.is-style-wide {
+  width: 100%;
+  border-top-width: 1px;
+}
+.entry-content .wp-block-details {
+  margin-block: 1.25em;
+  padding: 0.75em 1.1em;
+  border: 1px solid var(--color-line);
+  border-radius: 0.875rem;
+  background-color: var(--color-surface);
+}
+.entry-content .wp-block-details summary {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+.entry-content .wp-block-details[open] summary {
+  margin-bottom: 0.5em;
+}
+.entry-content .wp-block-details > :last-child {
+  margin-bottom: 0;
+}
+.entry-content .wp-block-cover {
+  position: relative;
+  display: grid;
+  min-height: 300px;
+  margin-block: 2em;
+  padding: 2rem;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 1rem;
+  background-color: #161a23;
+  text-align: center;
+}
+.entry-content .wp-block-cover__image-background {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  border-radius: 0;
+  object-fit: cover;
+  opacity: 0.35;
+}
+.entry-content .wp-block-cover__inner-container {
+  position: relative;
+  color: #fff;
+}
+.entry-content .wp-block-cover__inner-container :where(h2, h3, p) {
+  margin-block: 0.3em;
+  color: #fff;
+}
+.entry-content .wp-block-preformatted {
+  background-color: var(--color-surface-2);
+  color: var(--color-ink-2);
+  white-space: pre-wrap;
+}
+.entry-content .has-text-align-center {
+  text-align: center;
+}
+.entry-content .has-text-align-right {
+  text-align: right;
+}
+.entry-content .aligncenter {
+  margin-inline: auto;
+}
+.entry-content .alignleft {
+  float: left;
+  max-width: 45%;
+  margin: 0.4em 1.5em 1em 0;
+}
+.entry-content .alignright {
+  float: right;
+  max-width: 45%;
+  margin: 0.4em 0 1em 1.5em;
+}
+.entry-content::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+/* --------------------------------------------------------------------------
+   Reduced motion: switch off animation and smooth scrolling everywhere
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

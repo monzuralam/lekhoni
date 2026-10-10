@@ -1,0 +1,15 @@
+{
+  "name": "lekhoni",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Lekhoni: static HTML/Tailwind v4 template for a headless WordPress + WooCommerce + Next.js site",
+  "scripts": {
+    "dev": "tailwindcss -i ./src/input.css -o ./assets/css/style.css --watch",
+    "build": "tailwindcss -i ./src/input.css -o ./assets/css/style.css --minify"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.0",
+    "@tailwindcss/typography": "^0.5.19",
+    "tailwindcss": "^4.3.0"
+  }
+}

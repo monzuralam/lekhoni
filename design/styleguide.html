@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>স্টাইল গাইড | লেখনী</title>
+  <meta name="description" content="লেখনী টেমপ্লেটের ডিজাইন সিস্টেম: রঙ, টাইপোগ্রাফি, বাটন, ফর্ম, কার্ড ও ইন্টারঅ্যাকটিভ কম্পোনেন্ট।">
+  <meta property="og:title" content="স্টাইল গাইড | লেখনী">
+  <meta property="og:description" content="লেখনী টেমপ্লেটের ডিজাইন সিস্টেম: রঙ, টাইপোগ্রাফি, বাটন, ফর্ম, কার্ড ও ইন্টারঅ্যাকটিভ কম্পোনেন্ট।">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="bn_BD">
+  <meta property="og:site_name" content="লেখনী">
+  <meta property="og:image" content="assets/img/cover-1.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#faf8f5">
+  <script>
+    // Apply the saved theme and accent before the CSS loads to avoid a flash
+    (function () {
+      try {
+        var d = document.documentElement;
+        var t = localStorage.getItem('lk-theme');
+        if (t !== 'dark' && t !== 'light') t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        d.setAttribute('data-theme', t);
+        var a = localStorage.getItem('lk-accent');
+        if (a) d.style.setProperty('--color-accent', a);
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&amp;family=Noto+Serif+Bengali:wght@500;600;700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script src="assets/js/main.js" defer></script>
+</head>
+<body class="group/body">
+<!-- Inline SVG icon sprite (24x24, stroke style). Next.js: move to a shared <Icons /> component in the root layout -->
+<svg xmlns="http://www.w3.org/2000/svg" class="hidden" aria-hidden="true"><symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></symbol><symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4"/></symbol><symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"/></symbol><symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol><symbol id="i-close" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol><symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol><symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></symbol><symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></symbol><symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></symbol><symbol id="i-facebook" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></symbol><symbol id="i-x" viewBox="0 0 24 24"><path d="M4 4l11.7 16H20L8.3 4zM4 20l6.8-6.8M13.2 10.8 20 4"/></symbol><symbol id="i-instagram" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></symbol><symbol id="i-youtube" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="m10 9 5 3-5 3z"/></symbol><symbol id="i-rss" viewBox="0 0 24 24"><path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></symbol><symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol><symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></symbol><symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></symbol><symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol><symbol id="i-linkedin" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></symbol><symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol><symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol><symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15zM4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></symbol><symbol id="i-cart" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2 2h3l2.7 12.4a2 2 0 0 0 2 1.6h8.7a2 2 0 0 0 2-1.6L22 7H6"/></symbol><symbol id="i-user" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol><symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21.2l7.8-7.7 1-1.1a5.5 5.5 0 0 0 0-7.8z"/></symbol><symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6M14 11v6"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol><symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></symbol><symbol id="i-eye-off" viewBox="0 0 24 24"><path d="M9.9 4.2A10.9 10.9 0 0 1 12 4c6.5 0 10 8 10 8a18 18 0 0 1-2.2 3.2M6.6 6.6A18.4 18.4 0 0 0 2 12s3.5 7 10 7a10.7 10.7 0 0 0 5.4-1.6M2 2l20 20M9.9 9.9a3 3 0 0 0 4.2 4.2"/></symbol><symbol id="i-lock" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol><symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></symbol><symbol id="i-truck" viewBox="0 0 24 24"><path d="M1 3h15v13H1zM16 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></symbol><symbol id="i-star" viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2L5.8 21 7 14.2 2 9.3l6.9-1z"/></symbol><symbol id="i-shield-check" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></symbol><symbol id="i-rotate-ccw" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></symbol><symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol><symbol id="i-tag" viewBox="0 0 24 24"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L2 12V2h10l8.6 8.6a2 2 0 0 1 0 2.8z"/><path d="M7 7h.01"/></symbol><symbol id="i-zap" viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></symbol><symbol id="i-gift" viewBox="0 0 24 24"><path d="M20 12v10H4V12M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></symbol><symbol id="i-headset" viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1v-6h3zM3 19a2 2 0 0 0 2 2h1v-6H3z"/></symbol><symbol id="i-quote" viewBox="0 0 24 24"><path d="M3 21c3 0 7-1 7-8V5H3v7h4c0 2-1 4-4 4zM14 21c3 0 7-1 7-8V5h-7v7h4c0 2-1 4-4 4z"/></symbol><symbol id="i-pause" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></symbol><symbol id="i-play" viewBox="0 0 24 24"><path d="m6 3 14 9-14 9z"/></symbol><symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></symbol><symbol id="i-map-pin" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></symbol><symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></symbol><symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></symbol><symbol id="i-filter" viewBox="0 0 24 24"><path d="M22 3H2l8 9.5V19l4 2v-8.5z"/></symbol><symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol></svg>
+<a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[90] focus:rounded-full focus:bg-accent focus:px-5 focus:py-2.5 focus:text-sm focus:font-semibold focus:text-accent-ink">মূল কনটেন্টে যান</a>
+
+<!-- COMPONENT: SiteHeader | GraphQL: generalSettings { title description } | WooGraphQL: cart { contents { itemCount } } for the cart badge -->
+<header data-sticky-header class="sticky top-0 z-40 border-b border-transparent bg-page/90 backdrop-blur-md transition-[border-color,box-shadow] duration-300 group-data-scrolled/body:border-line group-data-scrolled/body:shadow-soft print:hidden">
+  <div class="mx-auto w-full max-w-site px-4 sm:px-6">
+    <div class="grid grid-cols-[1fr_auto] items-center gap-3 py-4 transition-[padding] duration-300 group-data-scrolled/body:py-2 nav:grid-cols-[1fr_auto_1fr]">
+      <div class="flex items-center gap-0.5 max-nav:hidden"><a href="#" aria-label="ফেসবুক" class="grid size-9 place-items-center rounded-full text-muted transition hover:bg-surface-2 hover:text-link"><svg class="icon size-4.5" aria-hidden="true"><use href="#i-facebook"/></svg></a><a href="#" aria-label="এক্স" class="grid size-9 place-items-center rounded-full text-muted transition hover:bg-surface-2 hover:text-link"><svg class="icon size-4.5" aria-hidden="true"><use href="#i-x"/></svg></a><a href="#" aria-label="ইনস্টাগ্রাম" class="grid size-9 place-items-center rounded-full text-muted transition hover:bg-surface-2 hover:text-link"><svg class="icon size-4.5" aria-hidden="true"><use href="#i-instagram"/></svg></a><a href="#" aria-label="RSS ফিড" class="grid size-9 place-items-center rounded-full text-muted transition hover:bg-surface-2 hover:text-link"><svg class="icon size-4.5" aria-hidden="true"><use href="#i-rss"/></svg></a></div>
+      <a href="index.html" aria-label="লেখনী, হোম পেজ" class="font-serif text-3xl font-bold leading-none text-ink transition-[font-size] duration-300 group-data-scrolled/body:text-2xl nav:text-4xl nav:group-data-scrolled/body:text-3xl">লেখনী<span class="text-link">.</span></a>
+      <div class="flex items-center justify-end gap-0.5">
+        <button type="button" data-search-open aria-label="খুঁজুন" aria-keyshortcuts="Control+K" class="relative inline-flex size-10 items-center justify-center rounded-full text-ink-2 transition hover:bg-surface-2 hover:text-link"><svg class="icon size-5" aria-hidden="true"><use href="#i-search"/></svg></button>
+        <a href="account.html?tab=wishlist" aria-label="পছন্দের তালিকা" class="relative inline-flex size-10 items-center justify-center rounded-full text-ink-2 transition hover:bg-surface-2 hover:text-link max-nav:hidden"><svg class="icon size-5" aria-hidden="true"><use href="#i-heart"/></svg><span data-wishlist-count data-empty class="absolute -right-0.5 -top-0.5 grid h-4.5 min-w-4.5 place-items-center rounded-full bg-accent px-1 text-[0.625rem] font-bold leading-none text-accent-ink data-empty:hidden">০</span></a>
+        <button type="button" data-cart-open aria-label="কার্ট খুলুন" class="relative inline-flex size-10 items-center justify-center rounded-full text-ink-2 transition hover:bg-surface-2 hover:text-link"><svg class="icon size-5" aria-hidden="true"><use href="#i-cart"/></svg><span data-cart-count data-empty class="absolute -right-0.5 -top-0.5 grid h-4.5 min-w-4.5 place-items-center rounded-full bg-accent px-1 text-[0.625rem] font-bold leading-none text-accent-ink data-empty:hidden">০</span></button>
+        <a href="account.html" aria-label="আমার অ্যাকাউন্ট" class="relative inline-flex size-10 items-center justify-center rounded-full text-ink-2 transition hover:bg-surface-2 hover:text-link max-nav:hidden"><svg class="icon size-5" aria-hidden="true"><use href="#i-user"/></svg></a>
+        <button type="button" data-theme-toggle aria-pressed="false" aria-label="ডার্ক মোড চালু করুন" class="relative inline-flex size-10 items-center justify-center rounded-full text-ink-2 transition hover:bg-surface-2 hover:text-link max-nav:hidden"><svg class="icon size-5 dark:hidden" aria-hidden="true"><use href="#i-moon"/></svg><svg class="icon size-5 hidden dark:block" aria-hidden="true"><use href="#i-sun"/></svg></button>
+        <button type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav" aria-label="মেনু খুলুন" class="relative inline-flex size-10 items-center justify-center rounded-full text-ink-2 transition hover:bg-surface-2 hover:text-link group/burger nav:hidden"><svg class="icon size-5 group-aria-expanded/burger:hidden" aria-hidden="true"><use href="#i-menu"/></svg><svg class="icon size-5 hidden group-aria-expanded/burger:block" aria-hidden="true"><use href="#i-close"/></svg></button>
+      </div>
+    </div>
+    <!-- COMPONENT: MainMenu | GraphQL: menu(id: "primary", idType: LOCATION) { menuItems(first: 100) { nodes { id label uri parentId } } } (build the tree from parentId) -->
+    <nav id="site-nav" aria-label="প্রধান মেনু" class="group-data-reading/body:hidden max-nav:hidden max-nav:max-h-[calc(100dvh-5rem)] max-nav:overflow-y-auto max-nav:border-t max-nav:border-line max-nav:py-2 max-nav:data-open:block nav:pb-2">
+      <ul data-menu class="flex max-nav:flex-col nav:items-center nav:justify-center nav:gap-1">
+        <li class="group/l1 relative max-nav:border-b max-nav:border-line">
+          <div class="flex items-center">
+            <span data-menu-label class="flex items-center rounded-full px-3 py-2 text-[0.95rem] font-medium text-ink-2 transition hover:text-link aria-[current=page]:text-link data-active:text-link max-nav:flex-1 max-nav:px-1 cursor-default">হোম</span>
+            <button type="button" data-submenu-toggle aria-expanded="false" aria-label="হোম সাবমেনু" class="grid size-9 shrink-0 place-items-center rounded-full text-muted transition hover:text-link nav:-ml-2.5 nav:size-6"><svg class="icon size-4 transition duration-200 group-data-open/l1:rotate-180" aria-hidden="true"><use href="#i-chevron-down"/></svg></button>
+          </div>
+          <ul class="max-nav:mb-2 max-nav:ml-2 max-nav:hidden max-nav:border-l max-nav:border-line max-nav:pl-2 max-nav:group-data-open/l1:block nav:invisible nav:absolute nav:left-0 nav:top-full nav:z-50 nav:min-w-52 nav:translate-y-1 nav:rounded-card nav:border nav:border-line nav:bg-surface nav:p-2 nav:opacity-0 nav:shadow-lift nav:transition nav:duration-200 nav:group-hover/l1:visible nav:group-hover/l1:translate-y-0 nav:group-hover/l1:opacity-100 nav:group-focus-within/l1:visible nav:group-focus-within/l1:translate-y-0 nav:group-focus-within/l1:opacity-100 nav:group-data-open/l1:visible nav:group-data-open/l1:translate-y-0 nav:group-data-open/l1:opacity-100">
+            <li><a href="index.html" class="block flex-1 rounded-lg px-3 py-2 text-sm text-ink-2 transition hover:bg-surface-2 hover:text-link aria-[current=page]:font-semibold aria-[current=page]:text-link data-active:text-link">ব্লগ হোম</a></li>
+            <li><a href="home-shop.html" class="block flex-1 rounded-lg px-3 py-2 text-sm text-ink-2 transition hover:bg-surface-2 hover:text-link aria-[current=page]:font-semibold aria-[current=page]:text-link data-active:text-link">শপ হোম</a></li>
+          </ul>
+        </li>
+        <li class="group/l1 relative max-nav:border-b max-nav:border-line">
+          <div class="flex items-center">
+            <a href="blog.html" data-menu-label class="flex items-center rounded-full px-3 py-2 text-[0.95rem] font-medium text-ink-2 transition hover:text-link aria-[current=page]:text-link data-active:text-link max-nav:flex-1 max-nav:px-1">ব্লগ</a>
+            <button type="button" data-submenu-toggle aria-expanded="false" aria-label="ব্লগ সাবমেনু" class="grid size-9 shrink-0 place-items-center rounded-full text-muted transition hover:text-link nav:-ml-2.5 nav:size-6"><svg class="icon size-4 transition duration-200 group-data-open/l1:rotate-180" aria-hidden="true"><use href="#i-chevron-down"/></svg></button>
+          </div>
+          <ul class="max-nav:mb-2 max-nav:ml-2 max-nav:hidden max-nav:border-l max-nav:border-line max-nav:pl-2 max-nav:group-data-open/l1:block nav:invisible nav:absolute nav:left-0 nav:top-full nav:z-50 nav:min-w-52 nav:translate-y-1 nav:rounded-card nav:border nav:border-line nav:bg-surface nav:p-2 nav:opacity-0 nav:shadow-lift nav:transition nav:duration-200 nav:group-hover/l1:visible nav:group-hover/l1:translate-y-0 nav:group-hover/l1:opacity-100 nav:group-focus-within/l1:visible nav:group-focus-within/l1:translate-y-0 nav:group-focus-within/l1:opacity-100 nav:group-data-open/l1:visible nav:group-data-open/l1:translate-y-0 nav:group-data-open/l1:opacity-100">
+            <li class="group/l2 relative">
+              <div class="flex items-center">
+                <span data-menu-label class="block flex-1 rounded-lg px-3 py-2 text-sm text-ink-2 transition hover:bg-surface-2 hover:text-link aria-[current=page]:font-semibold aria-[current=page]:text-link data-active:text-link cursor-default">টিউটোরিয়াল</span>
+                <button type="button" data-submenu-toggle aria-expanded="false" aria-label="টিউটোরিয়াল সাবমেনু" class="grid size-9 shrink-0 place-items-center rounded-full text-muted transition hover:text-link nav:size-7"><svg class="icon size-4 transition duration-200 max-nav:group-data-open/l2:rotate-180 nav:-rotate-90" aria-hidden="true"><use href="#i-chevron-down"/></svg></button>
+              </div>
+              <ul class="max-nav:mb-1 max-nav:ml-2 max-nav:hidden max-nav:border-l max-nav:border-line max-nav:pl-2 max-nav:group-data-open/l2:block nav:invisible nav:absolute nav:left-full nav:-top-2 nav:z-50 nav:min-w-48 nav:rounded-card nav:border nav:border-line nav:bg-surface nav:p-2 nav:opacity-0 nav:shadow-lift nav:transition nav:duration-200 nav:group-hover/l2:visible nav:group-hover/l2:opacity-100 nav:group-focus-within/l2:visible nav:group-focus-within/l2:opacity-100 nav:group-data-open/l2:visible nav:group-data-open/l2:opacity-100">
+                <li><a href="category.html?topic=graphql" class="block flex-1 rounded-lg px-3 py-2 text-sm text-ink-2 transition hover:bg-surface-2 hover:text-link aria-[current=page]:font-semibold aria-[current=page]:text-link data-active:text-link">GraphQL</a></li>
+                <li><a href="category.html?topic=nextjs" class="block flex-1 rounded-lg px-3 py-2 text-sm text-ink-2 transition hover:bg-surface-2 hover:text-link aria-[current=page]:font-semibold aria-[current=page]:text-link data-active:text-link">Next.js</a></li>
+                <li><a href="category.html?topic=wordpress" class="block flex-1 rounded-lg px-3 py-2 text-sm text-ink-2 transition hover:bg-surface-2 hover:text-link aria-[current=page]:font-semibold aria-[current=page]:text-link data-active:text-link">ওয়ার্ডপ্রেস</a></li>
+              </ul>
+            </li>
+            <li><a href="archive.html" class="block flex-1 rounded-lg px-3 py-2 text-sm text-ink-2 transition hover:bg-surface-2 hover:text-link aria-[current=page]:font-semibold aria-[current=page]:text-link data-active:text-link">আর্কাইভ</a></li>
+            <li><a href="topics.html" class="block flex-1 rounded-lg px-3 py-2 text-sm text-ink-2 transition hover:bg-surface-2 hover:text-link aria-[current=page]:font-semibold aria-[current=page]:text-link data-active:text-link">সব বিষয়</a></li>
+          </ul>
+        </li>
+        <li class="max-nav:border-b max-nav:border-line"><a href="shop.html" data-menu-label class="flex items-center rounded-full px-3 py-2 text-[0.95rem] font-medium text-ink-2 transition hover:text-link aria-[current=page]:text-link data-active:text-link max-nav:flex-1 max-nav:px-1">শপ</a></li>
+        <li class="max-nav:border-b max-nav:border-line"><a href="about.html" class="flex items-center rounded-full px-3 py-2 text-[0.95rem] font-medium text-ink-2 transition hover:text-link aria-[current=page]:text-link data-active:text-link max-nav:flex-1 max-nav:px-1">আমাদের সম্পর্কে</a></li>
+        <li class="max-nav:border-b max-nav:border-line"><a href="contact.html" class="flex items-center rounded-full px-3 py-2 text-[0.95rem] font-medium text-ink-2 transition hover:text-link aria-[current=page]:text-link data-active:text-link max-nav:flex-1 max-nav:px-1">যোগাযোগ</a></li>
+        <li class="group/l1 relative">
+          <div class="flex items-center">
+            <span data-menu-label class="flex items-center rounded-full px-3 py-2 text-[0.95rem] font-medium text-ink-2 transition hover:text-link aria-[current=page]:text-link data-active:text-link max-nav:flex-1 max-nav:px-1 cursor-default">আরো</span>
+            <button type="button" data-submenu-toggle aria-expanded="false" aria-label="আরো সাবমেনু" class="grid size-9 shrink-0 place-items-center rounded-full text-muted transition hover:text-link nav:-ml-2.5 nav:size-6"><svg class="icon size-4 transition duration-200 group-data-open/l1:rotate-180" aria-hidden="true"><use href="#i-chevron-down"/></svg></button>
+          </div>
+          <ul class="max-nav:mb-2 max-nav:ml-2 max-nav:hidden max-nav:border-l max-nav:border-line max-nav:pl-2 max-nav:group-data-open/l1:block nav:invisible nav:absolute nav:left-0 nav:top-full nav:z-50 nav:min-w-52 nav:translate-y-1 nav:rounded-card nav:border nav:border-line nav:bg-surface nav:p-2 nav:opacity-0 nav:shadow-lift nav:transition nav:duration-200 nav:group-hover/l1:visible nav:group-hover/l1:translate-y-0 nav:group-hover/l1:opacity-100 nav:group-focus-within/l1:visible nav:group-focus-within/l1:translate-y-0 nav:group-focus-within/l1:opacity-100 nav:group-data-open/l1:visible nav:group-data-open/l1:translate-y-0 nav:group-data-open/l1:opacity-100 nav:left-auto nav:right-0">
+            <li><a href="styleguide.html" class="block flex-1 rounded-lg px-3 py-2 text-sm text-ink-2 transition hover:bg-surface-2 hover:text-link aria-[current=page]:font-semibold aria-[current=page]:text-link data-active:text-link">স্টাইল গাইড</a></li>
+            <li><a href="elements.html" class="block flex-1 rounded-lg px-3 py-2 text-sm text-ink-2 transition hover:bg-surface-2 hover:text-link aria-[current=page]:font-semibold aria-[current=page]:text-link data-active:text-link">ব্লক এলিমেন্টস</a></li>
+            <li><a href="demo.html" class="block flex-1 rounded-lg px-3 py-2 text-sm text-ink-2 transition hover:bg-surface-2 hover:text-link aria-[current=page]:font-semibold aria-[current=page]:text-link data-active:text-link">ডেমো হাব</a></li>
+          </ul>
+        </li>
+      </ul>
+      <!-- Mobile only: actions that do not fit in the header bar -->
+      <div class="flex items-center gap-2 pt-3 nav:hidden">
+        <a href="account.html?tab=wishlist" class="inline-flex items-center justify-center gap-2 rounded-full border border-line bg-surface px-5 py-2.5 text-sm font-semibold text-ink transition hover:border-accent hover:text-link active:scale-95 flex-1 px-3"><svg class="icon size-4" aria-hidden="true"><use href="#i-heart"/></svg>পছন্দ (<span data-wishlist-count>০</span>)</a>
+        <a href="account.html" class="inline-flex items-center justify-center gap-2 rounded-full border border-line bg-surface px-5 py-2.5 text-sm font-semibold text-ink transition hover:border-accent hover:text-link active:scale-95 flex-1 px-3"><svg class="icon size-4" aria-hidden="true"><use href="#i-user"/></svg>অ্যাকাউন্ট</a>
+        <button type="button" data-theme-toggle aria-pressed="false" aria-label="ডার্ক মোড চালু করুন" class="relative inline-flex size-10 items-center justify-center rounded-full text-ink-2 transition hover:bg-surface-2 hover:text-link shrink-0 border border-line"><svg class="icon size-5 dark:hidden" aria-hidden="true"><use href="#i-moon"/></svg><svg class="icon size-5 hidden dark:block" aria-hidden="true"><use href="#i-sun"/></svg></button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="main" tabindex="-1" class="focus:outline-none">
+
+<!-- COMPONENT: PageHeader -->
+<header class="border-b border-line bg-surface-2/60">
+  <div class="mx-auto w-full max-w-site px-4 sm:px-6 py-10 text-center sm:py-14">
+    <div class="flex justify-center"><!-- COMPONENT: Breadcrumbs | Derived from the route; JSON-LD BreadcrumbList on single and product pages -->
+<nav aria-label="ব্রেডক্রাম্ব"><ol class="flex flex-wrap items-center gap-2 text-sm text-muted"><li class="flex items-center gap-2"><a href="index.html" class="transition hover:text-link">হোম</a><span aria-hidden="true" class="text-line">/</span></li><li aria-current="page" class="font-medium text-ink-2">স্টাইল গাইড</li></ol></nav></div>
+    <h1 class="mt-3 text-3xl text-ink sm:text-[2.5rem]">স্টাইল গাইড</h1>
+    <p class="mx-auto mt-3 max-w-2xl text-lg text-ink-2">লেখনীর ডিজাইন সিস্টেম: রঙ, হরফ, কম্পোনেন্ট আর ইন্টারঅ্যাকশন এক পাতায়।</p>
+  </div>
+</header>
+
+<!-- COMPONENT: StyleguideNav | Static in-page anchors -->
+<nav aria-label="স্টাইল গাইডের অংশ" class="sticky top-14 z-20 border-b border-line bg-page/90 backdrop-blur-md group-data-reading/body:hidden nav:top-[6.5rem] print:hidden">
+  <ul class="mx-auto w-full max-w-site px-4 sm:px-6 scrollbar-none flex items-center gap-2 overflow-x-auto py-3"><li class="shrink-0"><a href="#colors" class="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3.5 py-1.5 text-sm font-medium text-ink-2 transition hover:border-accent hover:text-link aria-pressed:border-accent aria-pressed:bg-accent aria-pressed:text-accent-ink aria-[current=page]:border-accent aria-[current=page]:bg-accent aria-[current=page]:text-accent-ink">রঙ</a></li><li class="shrink-0"><a href="#type" class="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3.5 py-1.5 text-sm font-medium text-ink-2 transition hover:border-accent hover:text-link aria-pressed:border-accent aria-pressed:bg-accent aria-pressed:text-accent-ink aria-[current=page]:border-accent aria-[current=page]:bg-accent aria-[current=page]:text-accent-ink">টাইপোগ্রাফি</a></li><li class="shrink-0"><a href="#buttons" class="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3.5 py-1.5 text-sm font-medium text-ink-2 transition hover:border-accent hover:text-link aria-pressed:border-accent aria-pressed:bg-accent aria-pressed:text-accent-ink aria-[current=page]:border-accent aria-[current=page]:bg-accent aria-[current=page]:text-accent-ink">বাটন</a></li><li class="shrink-0"><a href="#forms" class="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3.5 py-1.5 text-sm font-medium text-ink-2 transition hover:border-accent hover:text-link aria-pressed:border-accent aria-pressed:bg-accent aria-pressed:text-accent-ink aria-[current=page]:border-accent aria-[current=page]:bg-accent aria-[current=page]:text-accent-ink">ফর্ম</a></li><li class="shrink-0"><a href="#meta" class="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3.5 py-1.5 text-sm font-medium text-ink-2 transition hover:border-accent hover:text-link aria-pressed:border-accent aria-pressed:bg-accent aria-pressed:text-accent-ink aria-[current=page]:border-accent aria-[current=page]:bg-accent aria-[current=page]:text-accent-ink">ট্যাগ ও মেটা</a></li><li class="shrink-0"><a href="#cards" class="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3.5 py-1.5 text-sm font-medium text-ink-2 transition hover:border-accent hover:text-link aria-pressed:border-accent aria-pressed:bg-accent aria-pressed:text-accent-ink aria-[current=page]:border-accent aria-[current=page]:bg-accent aria-[current=page]:text-accent-ink">কার্ড</a></li><li class="shrink-0"><a href="#skeleton" class="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3.5 py-1.5 text-sm font-medium text-ink-2 transition hover:border-accent hover:text-link aria-pressed:border-accent aria-pressed:bg-accent aria-pressed:text-accent-ink aria-[current=page]:border-accent aria-[current=page]:bg-accent aria-[current=page]:text-accent-ink">স্কেলিটন</a></li><li class="shrink-0"><a href="#pagination" class="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3.5 py-1.5 text-sm font-medium text-ink-2 transition hover:border-accent hover:text-link aria-pressed:border-accent aria-pressed:bg-accent aria-pressed:text-accent-ink aria-[current=page]:border-accent aria-[current=page]:bg-accent aria-[current=page]:text-accent-ink">পেজিনেশন</a></li><li class="shrink-0"><a href="#carousel" class="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3.5 py-1.5 text-sm font-medium text-ink-2 transition hover:border-accent hover:text-link aria-pressed:border-accent aria-pressed:bg-accent aria-pressed:text-accent-ink aria-[current=page]:border-accent aria-[current=page]:bg-accent aria-[current=page]:text-accent-ink">ক্যারোসেল</a></li><li class="shrink-0"><a href="#countdown" class="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3.5 py-1.5 text-sm font-medium text-ink-2 transition hover:border-accent hover:text-link aria-pressed:border-accent aria-pressed:bg-accent aria-pressed:text-accent-ink aria-[current=page]:border-accent aria-[current=page]:bg-accent aria-[current=page]:text-accent-ink">কাউন্টডাউন</a></li><li class="shrink-0"><a href="#reading" class="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3.5 py-1.5 text-sm font-medium text-ink-2 transition hover:border-accent hover:text-link aria-pressed:border-accent aria-pressed:bg-accent aria-pressed:text-accent-ink aria-[current=page]:border-accent aria-[current=page]:bg-accent aria-[current=page]:text-accent-ink">পড়ার সুবিধা</a></li><li class="shrink-0"><a href="#filter" class="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3.5 py-1.5 text-sm font-medium text-ink-2 transition hover:border-accent hover:text-link aria-pressed:border-accent aria-pressed:bg-accent aria-pressed:text-accent-ink aria-[current=page]:border-accent aria-[current=page]:bg-accent aria-[current=page]:text-accent-ink">ফিল্টার</a></li><li class="shrink-0"><a href="#share" class="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3.5 py-1.5 text-sm font-medium text-ink-2 transition hover:border-accent hover:text-link aria-pressed:border-accent aria-pressed:bg-accent aria-pressed:text-accent-ink aria-[current=page]:border-accent aria-[current=page]:bg-accent aria-[current=page]:text-accent-ink">শেয়ার ও টোস্ট</a></li><li class="shrink-0"><a href="#palette" class="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3.5 py-1.5 text-sm font-medium text-ink-2 transition hover:border-accent hover:text-link aria-pressed:border-accent aria-pressed:bg-accent aria-pressed:text-accent-ink aria-[current=page]:border-accent aria-[current=page]:bg-accent aria-[current=page]:text-accent-ink">সার্চ</a></li><li class="shrink-0"><a href="#theme" class="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3.5 py-1.5 text-sm font-medium text-ink-2 transition hover:border-accent hover:text-link aria-pressed:border-accent aria-pressed:bg-accent aria-pressed:text-accent-ink aria-[current=page]:border-accent aria-[current=page]:bg-accent aria-[current=page]:text-accent-ink">থিম</a></li></ul>
+</nav>
+
+<div class="mx-auto w-full max-w-site px-4 sm:px-6">
+
+<section id="colors" aria-labelledby="colors-title" class="scroll-mt-44 border-t border-line py-12 first:border-t-0">
+  <h2 id="colors-title" class="text-2xl text-ink sm:text-3xl">রঙ</h2>
+  <p class="mt-1 text-ink-2">সব রঙ টোকেন থেকে আসে। ডার্ক মোডে শুধু টোকেনের মান বদলায়, কম্পোনেন্টের ক্লাস একই থাকে।</p>
+  <div class="mt-6"><ul class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5"><li class="rounded-card border border-line bg-surface shadow-soft overflow-hidden"><span class="block h-20 border-b border-line bg-accent"></span><span class="block p-3"><span class="block text-sm font-semibold text-ink">অ্যাকসেন্ট</span><code class="block font-mono text-xs text-muted">bg-accent</code><code class="block font-mono text-xs text-muted">--color-accent</code></span></li><li class="rounded-card border border-line bg-surface shadow-soft overflow-hidden"><span class="block h-20 border-b border-line bg-link"></span><span class="block p-3"><span class="block text-sm font-semibold text-ink">লিংক</span><code class="block font-mono text-xs text-muted">bg-link</code><code class="block font-mono text-xs text-muted">--color-link</code></span></li><li class="rounded-card border border-line bg-surface shadow-soft overflow-hidden"><span class="block h-20 border-b border-line bg-page"></span><span class="block p-3"><span class="block text-sm font-semibold text-ink">পাতার পটভূমি</span><code class="block font-mono text-xs text-muted">bg-page</code><code class="block font-mono text-xs text-muted">--color-page</code></span></li><li class="rounded-card border border-line bg-surface shadow-soft overflow-hidden"><span class="block h-20 border-b border-line bg-surface"></span><span class="block p-3"><span class="block text-sm font-semibold text-ink">সারফেস</span><code class="block font-mono text-xs text-muted">bg-surface</code><code class="block font-mono text-xs text-muted">--color-surface</code></span></li><li class="rounded-card border border-line bg-surface shadow-soft overflow-hidden"><span class="block h-20 border-b border-line bg-surface-2"></span><span class="block p-3"><span class="block text-sm font-semibold text-ink">সারফেস ২</span><code class="block font-mono text-xs text-muted">bg-surface-2</code><code class="block font-mono text-xs text-muted">--color-surface-2</code></span></li><li class="rounded-card border border-line bg-surface shadow-soft overflow-hidden"><span class="block h-20 border-b border-line bg-ink"></span><span class="block p-3"><span class="block text-sm font-semibold text-ink">মূল লেখা</span><code class="block font-mono text-xs text-muted">bg-ink</code><code class="block font-mono text-xs text-muted">--color-ink</code></span></li><li class="rounded-card border border-line bg-surface shadow-soft overflow-hidden"><span class="block h-20 border-b border-line bg-ink-2"></span><span class="block p-3"><span class="block text-sm font-semibold text-ink">গৌণ লেখা</span><code class="block font-mono text-xs text-muted">bg-ink-2</code><code class="block font-mono text-xs text-muted">--color-ink-2</code></span></li><li class="rounded-card border border-line bg-surface shadow-soft overflow-hidden"><span class="block h-20 border-b border-line bg-muted"></span><span class="block p-3"><span class="block text-sm font-semibold text-ink">হালকা লেখা</span><code class="block font-mono text-xs text-muted">bg-muted</code><code class="block font-mono text-xs text-muted">--color-muted</code></span></li><li class="rounded-card border border-line bg-surface shadow-soft overflow-hidden"><span class="block h-20 border-b border-line bg-line"></span><span class="block p-3"><span class="block text-sm font-semibold text-ink">বর্ডার</span><code class="block font-mono text-xs text-muted">bg-line</code><code class="block font-mono text-xs text-muted">--color-line</code></span></li><li class="rounded-card border border-line bg-surface shadow-soft overflow-hidden"><span class="block h-20 border-b border-line bg-danger"></span><span class="block p-3"><span class="block text-sm font-semibold text-ink">ত্রুটি</span><code class="block font-mono text-xs text-muted">bg-danger</code><code class="block font-mono text-xs text-muted">--color-danger</code></span></li><li class="rounded-card border border-line bg-surface shadow-soft overflow-hidden"><span class="block h-20 border-b border-line bg-success"></span><span class="block p-3"><span class="block text-sm font-semibold text-ink">সফল</span><code class="block font-mono text-xs text-muted">bg-success</code><code class="block font-mono text-xs text-muted">--color-success</code></span></li><li class="rounded-card border border-line bg-surface shadow-soft overflow-hidden"><span class="block h-20 border-b border-line bg-sale"></span><span class="block p-3"><span class="block text-sm font-semibold text-ink">অফার</span><code class="block font-mono text-xs text-muted">bg-sale</code><code class="block font-mono text-xs text-muted">--color-sale</code></span></li><li class="rounded-card border border-line bg-surface shadow-soft overflow-hidden"><span class="block h-20 border-b border-line bg-star"></span><span class="block p-3"><span class="block text-sm font-semibold text-ink">রেটিং</span><code class="block font-mono text-xs text-muted">bg-star</code><code class="block font-mono text-xs text-muted">--color-star</code></span></li></ul></div>
+</section>
+
+<section id="type" aria-labelledby="type-title" class="scroll-mt-44 border-t border-line py-12 first:border-t-0">
+  <h2 id="type-title" class="text-2xl text-ink sm:text-3xl">টাইপোগ্রাফি</h2>
+
+  <div class="mt-6"><div class="grid gap-8 lg:grid-cols-2">
+      <div class="space-y-4">
+        <p class="text-xs font-semibold uppercase tracking-widest text-link">শিরোনাম: Noto Serif Bengali</p>
+        <p class="font-serif text-5xl font-semibold leading-tight text-ink">বড় শিরোনাম</p>
+        <p class="font-serif text-4xl font-semibold text-ink">দ্বিতীয় স্তরের শিরোনাম</p>
+        <p class="font-serif text-2xl font-semibold text-ink">তৃতীয় স্তরের শিরোনাম</p>
+        <p class="font-serif text-xl font-semibold text-ink">চতুর্থ স্তরের শিরোনাম</p>
+      </div>
+      <div class="space-y-4">
+        <p class="text-xs font-semibold uppercase tracking-widest text-link">মূল লেখা: Hind Siliguri</p>
+        <p class="text-xl text-ink-2">ভূমিকা অনুচ্ছেদ একটু বড় হরফে লেখা হয়, যাতে পাঠক সহজে শুরু করতে পারেন।</p>
+        <p class="text-ink-2">সাধারণ অনুচ্ছেদের আকার ১৭ পিক্সেল এবং লাইনের উচ্চতা ১.৭৫। যুক্তাক্ষর, কার আর ফলা যেন গায়ে গায়ে না লাগে, সে জন্য এই ফাঁকটুকু জরুরি। <a href="#type" class="text-link underline underline-offset-4">এটি একটি লিংক</a>, <strong class="text-ink">এটি গাঢ় লেখা</strong>, আর <mark>এটি হাইলাইট</mark>।</p>
+        <p class="text-sm text-muted">ছোট লেখা ও মেটা তথ্য: ২৮ সেপ্টেম্বর, ২০২৬ · ৮ মিনিট</p>
+        <p class="text-ink-2">কিবোর্ড শর্টকাট: <kbd>Ctrl</kbd> + <kbd>K</kbd> · কোড: <code class="rounded-md bg-surface-2 px-1.5 py-0.5 font-mono text-sm text-ink">npm run dev</code></p>
+      </div>
+    </div></div>
+</section>
+
+<section id="buttons" aria-labelledby="buttons-title" class="scroll-mt-44 border-t border-line py-12 first:border-t-0">
+  <h2 id="buttons-title" class="text-2xl text-ink sm:text-3xl">বাটন</h2>
+
+  <div class="mt-6"><div class="flex flex-wrap items-center gap-3">
+      <button type="button" class="inline-flex items-center justify-center gap-2 rounded-full bg-accent px-7 py-3 text-base font-semibold text-accent-ink transition hover:brightness-110 active:scale-95">বড় প্রাইমারি</button>
+      <button type="button" class="inline-flex items-center justify-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-accent-ink transition hover:brightness-110 active:scale-95">প্রাইমারি</button>
+      <button type="button" class="inline-flex items-center justify-center gap-2 rounded-full border border-line bg-surface px-5 py-2.5 text-sm font-semibold text-ink transition hover:border-accent hover:text-link active:scale-95">আউটলাইন</button>
+      <button type="button" class="inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-link transition hover:bg-accent/10">ঘোস্ট<svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"/></svg></button>
+      <button type="button" class="inline-flex items-center justify-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-accent-ink transition hover:brightness-110 active:scale-95"><svg class="icon size-4" aria-hidden="true"><use href="#i-cart"/></svg>আইকনসহ</button>
+      <button type="button" disabled class="inline-flex items-center justify-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-accent-ink transition hover:brightness-110 active:scale-95 cursor-not-allowed opacity-50">নিষ্ক্রিয়</button>
+      <button type="button" aria-label="পছন্দ" class="relative inline-flex size-10 items-center justify-center rounded-full text-ink-2 transition hover:bg-surface-2 hover:text-link border border-line"><svg class="icon size-5" aria-hidden="true"><use href="#i-heart"/></svg></button>
+      <button type="button" aria-label="কার্ট" class="relative inline-flex size-10 items-center justify-center rounded-full text-ink-2 transition hover:bg-surface-2 hover:text-link border border-line"><svg class="icon size-5" aria-hidden="true"><use href="#i-cart"/></svg><span class="absolute -right-0.5 -top-0.5 grid h-4.5 min-w-4.5 place-items-center rounded-full bg-accent px-1 text-[0.625rem] font-bold leading-none text-accent-ink data-empty:hidden">৩</span></button>
+    </div></div>
+</section>
+
+<section id="forms" aria-labelledby="forms-title" class="scroll-mt-44 border-t border-line py-12 first:border-t-0">
+  <h2 id="forms-title" class="text-2xl text-ink sm:text-3xl">ফর্ম ও ভ্যালিডেশন</h2>
+
+  <div class="mt-6"><form data-validate data-success="ফর্ম ঠিকঠাক পূরণ হয়েছে!" class="rounded-card border border-line bg-surface shadow-soft grid max-w-3xl gap-5 p-6 sm:grid-cols-2 sm:p-8">
+      <div data-field class="">
+  <label for="sg-name" class="mb-1.5 block text-sm font-medium text-ink">নাম</label>
+  <input id="sg-name" name="sg-name" type="text" required autocomplete="name"  class="w-full rounded-xl border border-line bg-surface px-4 py-2.5 text-base text-ink transition placeholder:text-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20 aria-[invalid=true]:border-danger aria-[invalid=true]:ring-danger/20">
+</div>
+      <div data-field class="">
+  <label for="sg-email" class="mb-1.5 block text-sm font-medium text-ink">ইমেইল</label>
+  <input id="sg-email" name="sg-email" type="email" required autocomplete="email"  class="w-full rounded-xl border border-line bg-surface px-4 py-2.5 text-base text-ink transition placeholder:text-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20 aria-[invalid=true]:border-danger aria-[invalid=true]:ring-danger/20">
+</div>
+      <div data-field class="">
+  <label for="sg-phone" class="mb-1.5 block text-sm font-medium text-ink">মোবাইল নম্বর</label>
+  <input id="sg-phone" name="sg-phone" type="tel" required placeholder="01XXXXXXXXX" data-rule="mobile" inputmode="tel" class="w-full rounded-xl border border-line bg-surface px-4 py-2.5 text-base text-ink transition placeholder:text-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20 aria-[invalid=true]:border-danger aria-[invalid=true]:ring-danger/20"><p class="mt-1.5 text-xs text-muted">বাংলাদেশি নম্বর, যেমন ০১৭১২৩৪৫৬৭৮</p>
+</div>
+      <div data-field>
+        <label for="sg-topic" class="mb-1.5 block text-sm font-medium text-ink">বিষয়</label>
+        <select id="sg-topic" name="topic" required class="w-full rounded-xl border border-line bg-surface px-4 py-2.5 text-base text-ink transition placeholder:text-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20 aria-[invalid=true]:border-danger aria-[invalid=true]:ring-danger/20"><option value="">বেছে নিন</option><option>ব্লগ</option><option>শপ</option><option>অন্যান্য</option></select>
+      </div>
+      <div data-field>
+  <label for="sg-password" class="mb-1.5 block text-sm font-medium text-ink">পাসওয়ার্ড</label>
+  <div class="relative">
+    <input id="sg-password" name="sg-password" type="password" required autocomplete="new-password" minlength="8" class="w-full rounded-xl border border-line bg-surface px-4 py-2.5 text-base text-ink transition placeholder:text-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20 aria-[invalid=true]:border-danger aria-[invalid=true]:ring-danger/20 pr-12">
+    <button type="button" data-password-toggle aria-pressed="false" aria-label="পাসওয়ার্ড দেখান" class="group/eye absolute right-1.5 top-1/2 grid size-9 -translate-y-1/2 place-items-center rounded-full text-muted transition hover:text-link"><svg class="icon size-4.5 group-aria-pressed/eye:hidden" aria-hidden="true"><use href="#i-eye"/></svg><svg class="icon size-4.5 hidden group-aria-pressed/eye:block" aria-hidden="true"><use href="#i-eye-off"/></svg></button>
+  </div>
+</div>
+      <div data-field>
+  <label for="sg-password2" class="mb-1.5 block text-sm font-medium text-ink">পাসওয়ার্ড আবার</label>
+  <div class="relative">
+    <input id="sg-password2" name="sg-password2" type="password" required autocomplete="new-password" data-match="#sg-password" class="w-full rounded-xl border border-line bg-surface px-4 py-2.5 text-base text-ink transition placeholder:text-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20 aria-[invalid=true]:border-danger aria-[invalid=true]:ring-danger/20 pr-12">
+    <button type="button" data-password-toggle aria-pressed="false" aria-label="পাসওয়ার্ড দেখান" class="group/eye absolute right-1.5 top-1/2 grid size-9 -translate-y-1/2 place-items-center rounded-full text-muted transition hover:text-link"><svg class="icon size-4.5 group-aria-pressed/eye:hidden" aria-hidden="true"><use href="#i-eye"/></svg><svg class="icon size-4.5 hidden group-aria-pressed/eye:block" aria-hidden="true"><use href="#i-eye-off"/></svg></button>
+  </div>
+</div>
+      <div class="sm:col-span-2"><!-- COMPONENT: PasswordStrength | Client-side only -->
+<div data-password-strength="#sg-password" data-level="0" class="group/strength -mt-2">
+  <div class="h-1.5 overflow-hidden rounded-full bg-surface-2">
+    <div class="h-full w-0 rounded-full transition-all duration-300 group-data-[level=1]/strength:w-1/3 group-data-[level=1]/strength:bg-danger group-data-[level=2]/strength:w-2/3 group-data-[level=2]/strength:bg-star group-data-[level=3]/strength:w-full group-data-[level=3]/strength:bg-success"></div>
+  </div>
+  <p data-strength-label aria-live="polite" class="mt-1 min-h-5 text-xs text-muted"></p>
+</div></div>
+      <div data-field class="sm:col-span-2">
+  <label for="sg-message" class="mb-1.5 block text-sm font-medium text-ink">বার্তা</label>
+  <textarea id="sg-message" name="sg-message" rows="3" required minlength="10" class="w-full rounded-xl border border-line bg-surface px-4 py-2.5 text-base text-ink transition placeholder:text-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20 aria-[invalid=true]:border-danger aria-[invalid=true]:ring-danger/20"></textarea>
+</div>
+      <div data-field class="sm:col-span-2"><label class="flex cursor-pointer items-start gap-2.5 text-sm text-ink-2"><input type="checkbox" name="agree" required class="mt-1 size-4 rounded accent-accent">আমি শর্তাবলি মেনে নিচ্ছি</label></div>
+      <div class="flex flex-wrap items-center gap-3 sm:col-span-2"><button type="submit" class="inline-flex items-center justify-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-accent-ink transition hover:brightness-110 active:scale-95">যাচাই করে জমা দিন</button><button type="reset" class="inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-link transition hover:bg-accent/10">মুছে ফেলুন</button><span class="text-sm text-muted">খালি রেখে জমা দিলে বাংলা ত্রুটি বার্তা দেখা যাবে।</span></div>
+    </form>
+    <div class="mt-6 flex flex-wrap items-center gap-6">
+      <!-- COMPONENT: QuantityStepper | Client state; passed as quantity to addToCart / updateItemQuantities -->
+<div data-qty data-max="10" class="inline-flex items-center rounded-full border border-line bg-surface">
+  <button type="button" data-qty-minus aria-label="পরিমাণ কমান" class="grid size-10 place-items-center rounded-full text-ink-2 transition hover:bg-surface-2 hover:text-link"><svg class="icon size-4" aria-hidden="true"><use href="#i-minus"/></svg></button>
+  <label for="sg-qty" class="sr-only">পরিমাণ</label>
+  <input id="sg-qty" type="number" value="1" min="1" max="10" inputmode="numeric" class="w-10 bg-transparent text-center text-sm font-semibold text-ink [appearance:textfield] focus:outline-none [&::-webkit-inner-spin-button]:appearance-none">
+  <button type="button" data-qty-plus aria-label="পরিমাণ বাড়ান" class="grid size-10 place-items-center rounded-full text-ink-2 transition hover:bg-surface-2 hover:text-link"><svg class="icon size-4" aria-hidden="true"><use href="#i-plus"/></svg></button>
+</div>
+      <label class="flex cursor-pointer items-center gap-3 text-[0.95rem] text-ink-2">সুইচ
+        <input type="checkbox" class="peer sr-only" checked>
+        <span aria-hidden="true" class="relative h-6 w-11 shrink-0 rounded-full bg-line transition after:absolute after:left-0.5 after:top-0.5 after:size-5 after:rounded-full after:bg-surface after:shadow-soft after:transition peer-checked:bg-accent peer-checked:after:translate-x-5 peer-focus-visible:ring-2 peer-focus-visible:ring-accent/40"></span>
+      </label>
+      <label class="flex cursor-pointer items-center gap-2 text-[0.95rem] text-ink-2"><input type="radio" name="sg-radio" checked class="size-4 accent-accent">রেডিও ক</label>
+      <label class="flex cursor-pointer items-center gap-2 text-[0.95rem] text-ink-2"><input type="radio" name="sg-radio" class="size-4 accent-accent">রেডিও খ</label>
+    </div></div>
+</section>
+
+<section id="meta" aria-labelledby="meta-title" class="scroll-mt-44 border-t border-line py-12 first:border-t-0">
+  <h2 id="meta-title" class="text-2xl text-ink sm:text-3xl">ট্যাগ, মেটা, ব্রেডক্রাম্ব ও কলআউট</h2>
+
+  <div class="mt-6"><div class="space-y-6">
+      <div class="flex flex-wrap items-center gap-2">
+        <a href="#meta" class="inline-flex items-center rounded-full bg-surface-2 px-3 py-1 text-sm text-ink-2 transition hover:bg-accent/10 hover:text-link">ট্যাগ</a><a href="#meta" class="inline-flex items-center rounded-full bg-surface-2 px-3 py-1 text-sm text-ink-2 transition hover:bg-accent/10 hover:text-link"># হেডলেস</a>
+        <button type="button" aria-pressed="true" class="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3.5 py-1.5 text-sm font-medium text-ink-2 transition hover:border-accent hover:text-link aria-pressed:border-accent aria-pressed:bg-accent aria-pressed:text-accent-ink aria-[current=page]:border-accent aria-[current=page]:bg-accent aria-[current=page]:text-accent-ink">সক্রিয় চিপ</button><button type="button" aria-pressed="false" class="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3.5 py-1.5 text-sm font-medium text-ink-2 transition hover:border-accent hover:text-link aria-pressed:border-accent aria-pressed:bg-accent aria-pressed:text-accent-ink aria-[current=page]:border-accent aria-[current=page]:bg-accent aria-[current=page]:text-accent-ink">চিপ</button>
+        <span class="rounded-full bg-sale px-2.5 py-0.5 text-xs font-semibold text-white">অফার</span>
+        <span class="rounded-full bg-accent px-2.5 py-0.5 text-xs font-semibold text-accent-ink">নতুন</span>
+        <span class="rounded-full bg-ink px-2.5 py-0.5 text-xs font-semibold text-page">স্টক শেষ</span>
+        <span class="rounded-full bg-success/15 px-2.5 py-0.5 text-xs font-semibold text-success">সম্পন্ন</span>
+        <span class="rounded-full bg-danger/15 px-2.5 py-0.5 text-xs font-semibold text-danger">বাতিল</span>
+      </div>
+      <p class="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted"><span class="inline-flex items-center gap-1.5"><svg class="icon size-4" aria-hidden="true"><use href="#i-calendar"/></svg>২৮ সেপ্টেম্বর, ২০২৬</span><span class="inline-flex items-center gap-1.5"><svg class="icon size-4" aria-hidden="true"><use href="#i-clock"/></svg>৮ মিনিট</span><span class="inline-flex items-center gap-1.5"><svg class="icon size-4" aria-hidden="true"><use href="#i-chat"/></svg>৩টি মন্তব্য</span><span class="inline-flex items-center gap-1.5"><span class="flex" role="img" aria-label="৫-এর মধ্যে ৪.৬ রেটিং"><svg class="icon size-4 fill-current text-star" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon size-4 fill-current text-star" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon size-4 fill-current text-star" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon size-4 fill-current text-star" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon size-4 fill-current text-star" aria-hidden="true"><use href="#i-star"/></svg></span>৪.৬</span></p>
+      <!-- COMPONENT: Breadcrumbs | Derived from the route; JSON-LD BreadcrumbList on single and product pages -->
+<nav aria-label="ব্রেডক্রাম্ব"><ol class="flex flex-wrap items-center gap-2 text-sm text-muted"><li class="flex items-center gap-2"><a href="index.html" class="transition hover:text-link">হোম</a><span aria-hidden="true" class="text-line">/</span></li><li class="flex items-center gap-2"><a href="blog.html" class="transition hover:text-link">ব্লগ</a><span aria-hidden="true" class="text-line">/</span></li><li aria-current="page" class="font-medium text-ink-2">বর্তমান পাতা</li></ol></nav>
+      <div class="grid gap-3 md:grid-cols-2">
+        <p class="flex items-start gap-3 rounded-card border p-4 text-[0.95rem] leading-relaxed border-accent/40 bg-accent/5 text-ink-2"><span class="mt-0.5 text-link"><svg class="icon size-5" aria-hidden="true"><use href="#i-zap"/></svg></span><span><strong class="text-ink">টিপস:</strong> টোকেন বদলালেই পুরো সাইটের রঙ বদলায়।</span></p>
+        <p class="flex items-start gap-3 rounded-card border p-4 text-[0.95rem] leading-relaxed border-success/40 bg-success/10 text-ink-2"><span class="mt-0.5 text-success"><svg class="icon size-5" aria-hidden="true"><use href="#i-check"/></svg></span><span><strong class="text-ink">সফল:</strong> আপনার পরিবর্তন সংরক্ষণ করা হয়েছে।</span></p>
+        <p class="flex items-start gap-3 rounded-card border p-4 text-[0.95rem] leading-relaxed border-star/50 bg-star/10 text-ink-2"><span class="mt-0.5 text-star"><svg class="icon size-5" aria-hidden="true"><use href="#i-clock"/></svg></span><span><strong class="text-ink">সতর্কতা:</strong> অফারটি আজ রাতেই শেষ হচ্ছে।</span></p>
+        <p class="flex items-start gap-3 rounded-card border p-4 text-[0.95rem] leading-relaxed border-danger/40 bg-danger/10 text-ink-2"><span class="mt-0.5 text-danger"><svg class="icon size-5" aria-hidden="true"><use href="#i-close"/></svg></span><span><strong class="text-ink">ত্রুটি:</strong> সংযোগ পাওয়া যায়নি, আবার চেষ্টা করুন।</span></p>
+      </div>
+    </div></div>
+</section>
+
+<section id="cards" aria-labelledby="cards-title" class="scroll-mt-44 border-t border-line py-12 first:border-t-0">
+  <h2 id="cards-title" class="text-2xl text-ink sm:text-3xl">কার্ডের ধরন</h2>
+
+  <div class="mt-6"><div class="grid gap-8 lg:grid-cols-2">
+      <div><p class="text-xs font-semibold uppercase tracking-widest text-link mb-3">গ্রিড কার্ড</p><!-- COMPONENT: PostCard (variant: grid) | GraphQL: posts { nodes { title uri excerpt dateGmt featuredImage { node { sourceUrl altText } } author { node { name uri avatar { url } } } categories { nodes { name uri } } } } -->
+<article class="group/post flex flex-col overflow-hidden rounded-card border border-line bg-surface shadow-soft transition duration-300 hover:-translate-y-1 hover:shadow-lift">
+  <a href="single.html" tabindex="-1" aria-hidden="true" class="block aspect-video overflow-hidden bg-surface-2"><img src="assets/img/cover-2.svg" alt="" width="1200" height="675" loading="lazy" class="size-full object-cover transition duration-500 group-hover/post:scale-105"></a>
+  <div class="flex flex-1 flex-col gap-2.5 p-5">
+    <a href="category.html" class="text-xs font-semibold uppercase tracking-widest text-link w-fit hover:underline">GraphQL</a>
+    <h3 class="text-xl text-ink"><a href="single.html" class="transition hover:text-link">WPGraphQL দিয়ে প্রথম কোয়েরি লেখা</a></h3>
+    <p class="line-clamp-2 text-[0.95rem] leading-relaxed text-ink-2">প্লাগইন চালু করা থেকে শুরু করে পোস্টের তালিকা আনা পর্যন্ত, GraphiQL IDE-তে হাতে-কলমে প্রথম কোয়েরি লিখে ফেলুন।</p>
+    <p class="mt-auto flex flex-wrap items-center gap-x-2.5 gap-y-1 pt-2 text-sm text-muted"><img src="assets/img/avatar-2.svg" alt="" width="28" height="28" loading="lazy" class="size-7 rounded-full"><a href="author.html" class="font-medium text-ink-2 transition hover:text-link">করিমা সুলতানা</a><span aria-hidden="true">·</span><time datetime="2026-09-24">২৪ সেপ্টেম্বর, ২০২৬</time><span aria-hidden="true">·</span><span>৬ মিনিট</span></p>
+  </div>
+</article></div>
+      <div class="space-y-8">
+        <div><p class="text-xs font-semibold uppercase tracking-widest text-link mb-3">লিস্ট কার্ড</p><!-- COMPONENT: PostCard (variant: list) | GraphQL: posts { nodes { title uri excerpt dateGmt featuredImage { node { sourceUrl altText } } author { node { name uri avatar { url } } } categories { nodes { name uri } } } } -->
+<article class="group/post grid overflow-hidden rounded-card border border-line bg-surface shadow-soft transition duration-300 hover:shadow-lift sm:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
+  <a href="single.html" tabindex="-1" aria-hidden="true" class="block aspect-video overflow-hidden bg-surface-2 sm:aspect-auto sm:min-h-52"><img src="assets/img/cover-3.svg" alt="" width="1200" height="675" loading="lazy" class="size-full object-cover transition duration-500 group-hover/post:scale-105"></a>
+  <div class="flex flex-col gap-2.5 p-5 sm:p-6">
+    <a href="category.html" class="text-xs font-semibold uppercase tracking-widest text-link w-fit hover:underline">Next.js</a>
+    <h3 class="text-xl text-ink sm:text-2xl"><a href="single.html" class="transition hover:text-link">Next.js App Router-এ ব্লগ তৈরি: ধাপে ধাপে</a></h3>
+    <p class="line-clamp-3 text-[0.95rem] leading-relaxed text-ink-2">সার্ভার কম্পোনেন্ট, ডায়নামিক রাউট আর generateStaticParams ব্যবহার করে একটি পূর্ণাঙ্গ ব্লগের কাঠামো দাঁড় করানোর গাইড।</p>
+    <p class="mt-auto flex flex-wrap items-center gap-x-2.5 gap-y-1 pt-2 text-sm text-muted"><img src="assets/img/avatar-1.svg" alt="" width="28" height="28" loading="lazy" class="size-7 rounded-full"><a href="author.html" class="font-medium text-ink-2 transition hover:text-link">রহিম আহমেদ</a><span aria-hidden="true">·</span><time datetime="2026-09-19">১৯ সেপ্টেম্বর, ২০২৬</time><span aria-hidden="true">·</span><span>১২ মিনিট</span></p>
+  </div>
+</article></div>
+        <div><p class="text-xs font-semibold uppercase tracking-widest text-link mb-3">মিনি কার্ড</p><div class="rounded-card border border-line bg-surface shadow-soft space-y-4 p-5"><!-- COMPONENT: PostCard (variant: mini) | GraphQL: posts { nodes { title uri excerpt dateGmt featuredImage { node { sourceUrl altText } } author { node { name uri avatar { url } } } categories { nodes { name uri } } } } -->
+<article class="group/post flex items-center gap-3">
+  <a href="single.html" tabindex="-1" aria-hidden="true" class="block size-16 shrink-0 overflow-hidden rounded-xl bg-surface-2"><img src="assets/img/cover-4.svg" alt="" width="1200" height="675" loading="lazy" class="size-full object-cover"></a>
+  <div class="min-w-0">
+    <h3 class="line-clamp-2 font-serif text-[0.95rem] font-semibold leading-snug text-ink"><a href="single.html" class="transition hover:text-link">বাংলা ওয়েবসাইটের জন্য সঠিক ফন্ট বাছাই</a></h3>
+    <time datetime="2026-09-12" class="text-xs text-muted">১২ সেপ্টেম্বর, ২০২৬</time>
+  </div>
+</article><article class="group/post flex items-center gap-3">
+  <a href="single.html" tabindex="-1" aria-hidden="true" class="block size-16 shrink-0 overflow-hidden rounded-xl bg-surface-2"><img src="assets/img/cover-2.svg" alt="" width="1200" height="675" loading="lazy" class="size-full object-cover"></a>
+  <div class="min-w-0">
+    <h3 class="line-clamp-2 font-serif text-[0.95rem] font-semibold leading-snug text-ink"><a href="single.html" class="transition hover:text-link">WooGraphQL দিয়ে হেডলেস দোকান: কার্ট থেকে চেকআউট</a></h3>
+    <time datetime="2026-09-05" class="text-xs text-muted">৫ সেপ্টেম্বর, ২০২৬</time>
+  </div>
+</article></div></div>
+      </div>
+    </div>
+    <p class="text-xs font-semibold uppercase tracking-widest text-link mb-3 mt-8">পণ্য কার্ড (অফার, নতুন, স্টক শেষ)</p>
+    <ul class="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
+      <li><!-- COMPONENT: ProductCard | WooGraphQL: products { nodes { databaseId name slug onSale stockStatus averageRating reviewCount shortDescription image { sourceUrl altText } galleryImages { nodes { sourceUrl } } productCategories { nodes { name uri } } ... on SimpleProduct { price regularPrice } } } | Mutation: addToCart(input: { productId, quantity }) -->
+<article data-product data-product-id="p1" data-product-name="লেখনী ক্লাসিক নোটবুক" data-product-price="350" data-product-regular-price="450" data-product-image="assets/img/product-1.svg" data-product-category="নোটবুক" data-product-rating="4.8" data-product-reviews="124" data-product-url="product.html" data-product-stock="in" data-product-description="১৬০ পাতার হার্ডকভার নোটবুক। ১০০ জিএসএম মসৃণ কাগজে কালি ছড়ায় না, সঙ্গে ফিতা বুকমার্ক।" class="group/card relative flex h-full flex-col overflow-hidden rounded-card border border-line bg-surface shadow-soft transition duration-300 hover:-translate-y-1 hover:shadow-lift group-data-[view=list]/plist:flex-row">
+  <div class="relative aspect-square shrink-0 overflow-hidden bg-surface-2 group-data-[view=list]/plist:w-36 sm:group-data-[view=list]/plist:w-52">
+    <a href="product.html" tabindex="-1" aria-hidden="true" class="block size-full">
+      <img src="assets/img/product-1.svg" alt="" width="800" height="800" loading="lazy" class="size-full object-cover">
+      <img src="assets/img/product-2.svg" alt="" width="800" height="800" loading="lazy" class="absolute inset-0 size-full object-cover opacity-0 transition-opacity duration-500 group-hover/card:opacity-100">
+    </a>
+    <div class="absolute left-3 top-3 flex flex-col items-start gap-1.5"><span class="rounded-full bg-sale px-2.5 py-0.5 text-xs font-semibold text-white">অফার</span></div>
+    <button type="button" data-wishlist-toggle aria-pressed="false" aria-label="পছন্দের তালিকায় যোগ করুন" class="group/wish absolute right-3 top-3 grid size-9 place-items-center rounded-full bg-surface/90 text-ink-2 shadow-soft transition hover:text-sale aria-pressed:text-sale"><svg class="icon size-4.5 group-aria-pressed/wish:fill-current" aria-hidden="true"><use href="#i-heart"/></svg></button>
+    <button type="button" data-quick-view class="absolute inset-x-3 bottom-3 inline-flex translate-y-2 items-center justify-center gap-1.5 rounded-full bg-surface/95 px-3 py-2 text-xs font-semibold text-ink opacity-0 shadow-soft transition duration-300 hover:text-link focus-visible:translate-y-0 focus-visible:opacity-100 group-hover/card:translate-y-0 group-hover/card:opacity-100 pointer-coarse:translate-y-0 pointer-coarse:opacity-100"><svg class="icon size-4" aria-hidden="true"><use href="#i-eye"/></svg>এক নজরে দেখুন</button>
+  </div>
+  <div class="flex min-w-0 flex-1 flex-col gap-1.5 p-4">
+    <p class="text-xs font-medium text-muted">নোটবুক</p>
+    <h3 class="line-clamp-2 font-serif text-base font-semibold leading-snug text-ink"><a href="product.html" class="transition hover:text-link">লেখনী ক্লাসিক নোটবুক</a></h3>
+    <div class="flex items-center gap-1.5"><span class="flex" role="img" aria-label="৫-এর মধ্যে ৪.৮ রেটিং"><svg class="icon size-4 fill-current text-star" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon size-4 fill-current text-star" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon size-4 fill-current text-star" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon size-4 fill-current text-star" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon size-4 fill-current text-star" aria-hidden="true"><use href="#i-star"/></svg></span><span class="text-xs text-muted">(১২৪)</span></div>
+    <div class="mt-auto pt-1"><p class="flex flex-wrap items-baseline gap-x-2"><span class="sr-only">ছাড়ের দাম</span><span class="text-lg font-bold text-sale">৳৩৫০</span><span class="sr-only">আগের দাম</span><del class="text-sm text-muted">৳৪৫০</del></p><button type="button" data-add-to-cart class="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-full border border-accent bg-transparent px-4 py-2 text-sm font-semibold text-link transition hover:bg-accent hover:text-accent-ink active:scale-95"><svg class="icon size-4" aria-hidden="true"><use href="#i-cart"/></svg>কার্টে যোগ করুন</button></div>
+  </div>
+</article></li><li><article data-product data-product-id="p4" data-product-name="ক্যানভাস টোট ব্যাগ" data-product-price="380" data-product-regular-price="0" data-product-image="assets/img/product-4.svg" data-product-category="ব্যাগ" data-product-rating="4.5" data-product-reviews="56" data-product-url="product.html" data-product-stock="in" data-product-description="মজবুত সুতি ক্যানভাসের ব্যাগ। ল্যাপটপ, খাতা আর বাজার, সব এক ব্যাগেই ধরে।" class="group/card relative flex h-full flex-col overflow-hidden rounded-card border border-line bg-surface shadow-soft transition duration-300 hover:-translate-y-1 hover:shadow-lift group-data-[view=list]/plist:flex-row">
+  <div class="relative aspect-square shrink-0 overflow-hidden bg-surface-2 group-data-[view=list]/plist:w-36 sm:group-data-[view=list]/plist:w-52">
+    <a href="product.html" tabindex="-1" aria-hidden="true" class="block size-full">
+      <img src="assets/img/product-4.svg" alt="" width="800" height="800" loading="lazy" class="size-full object-cover">
+      <img src="assets/img/product-5.svg" alt="" width="800" height="800" loading="lazy" class="absolute inset-0 size-full object-cover opacity-0 transition-opacity duration-500 group-hover/card:opacity-100">
+    </a>
+    <div class="absolute left-3 top-3 flex flex-col items-start gap-1.5"><span class="rounded-full bg-accent px-2.5 py-0.5 text-xs font-semibold text-accent-ink">নতুন</span></div>
+    <button type="button" data-wishlist-toggle aria-pressed="false" aria-label="পছন্দের তালিকায় যোগ করুন" class="group/wish absolute right-3 top-3 grid size-9 place-items-center rounded-full bg-surface/90 text-ink-2 shadow-soft transition hover:text-sale aria-pressed:text-sale"><svg class="icon size-4.5 group-aria-pressed/wish:fill-current" aria-hidden="true"><use href="#i-heart"/></svg></button>
+    <button type="button" data-quick-view class="absolute inset-x-3 bottom-3 inline-flex translate-y-2 items-center justify-center gap-1.5 rounded-full bg-surface/95 px-3 py-2 text-xs font-semibold text-ink opacity-0 shadow-soft transition duration-300 hover:text-link focus-visible:translate-y-0 focus-visible:opacity-100 group-hover/card:translate-y-0 group-hover/card:opacity-100 pointer-coarse:translate-y-0 pointer-coarse:opacity-100"><svg class="icon size-4" aria-hidden="true"><use href="#i-eye"/></svg>এক নজরে দেখুন</button>
+  </div>
+  <div class="flex min-w-0 flex-1 flex-col gap-1.5 p-4">
+    <p class="text-xs font-medium text-muted">ব্যাগ</p>
+    <h3 class="line-clamp-2 font-serif text-base font-semibold leading-snug text-ink"><a href="product.html" class="transition hover:text-link">ক্যানভাস টোট ব্যাগ</a></h3>
+    <div class="flex items-center gap-1.5"><span class="flex" role="img" aria-label="৫-এর মধ্যে ৪.৫ রেটিং"><svg class="icon size-4 fill-current text-star" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon size-4 fill-current text-star" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon size-4 fill-current text-star" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon size-4 fill-current text-star" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon size-4 text-line" aria-hidden="true"><use href="#i-star"/></svg></span><span class="text-xs text-muted">(৫৬)</span></div>
+    <div class="mt-auto pt-1"><p class="text-lg font-bold text-ink">৳৩৮০</p><button type="button" data-add-to-cart class="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-full border border-accent bg-transparent px-4 py-2 text-sm font-semibold text-link transition hover:bg-accent hover:text-accent-ink active:scale-95"><svg class="icon size-4" aria-hidden="true"><use href="#i-cart"/></svg>কার্টে যোগ করুন</button></div>
+  </div>
+</article></li><li><article data-product data-product-id="p8" data-product-name="২০২৭ সাপ্তাহিক প্ল্যানার" data-product-price="550" data-product-regular-price="0" data-product-image="assets/img/product-8.svg" data-product-category="প্ল্যানার" data-product-rating="4.3" data-product-reviews="38" data-product-url="product.html" data-product-stock="out" data-product-description="সপ্তাহভিত্তিক পরিকল্পনার ডায়েরি। লক্ষ্য, অভ্যাস ট্র্যাকার আর মাসিক পর্যালোচনার পাতা আছে।" class="group/card relative flex h-full flex-col overflow-hidden rounded-card border border-line bg-surface shadow-soft transition duration-300 hover:-translate-y-1 hover:shadow-lift group-data-[view=list]/plist:flex-row">
+  <div class="relative aspect-square shrink-0 overflow-hidden bg-surface-2 group-data-[view=list]/plist:w-36 sm:group-data-[view=list]/plist:w-52">
+    <a href="product.html" tabindex="-1" aria-hidden="true" class="block size-full">
+      <img src="assets/img/product-8.svg" alt="" width="800" height="800" loading="lazy" class="size-full object-cover">
+      <img src="assets/img/product-1.svg" alt="" width="800" height="800" loading="lazy" class="absolute inset-0 size-full object-cover opacity-0 transition-opacity duration-500 group-hover/card:opacity-100">
+    </a>
+    <div class="absolute left-3 top-3 flex flex-col items-start gap-1.5"><span class="rounded-full bg-ink px-2.5 py-0.5 text-xs font-semibold text-page">স্টক শেষ</span></div>
+    <button type="button" data-wishlist-toggle aria-pressed="false" aria-label="পছন্দের তালিকায় যোগ করুন" class="group/wish absolute right-3 top-3 grid size-9 place-items-center rounded-full bg-surface/90 text-ink-2 shadow-soft transition hover:text-sale aria-pressed:text-sale"><svg class="icon size-4.5 group-aria-pressed/wish:fill-current" aria-hidden="true"><use href="#i-heart"/></svg></button>
+    <button type="button" data-quick-view class="absolute inset-x-3 bottom-3 inline-flex translate-y-2 items-center justify-center gap-1.5 rounded-full bg-surface/95 px-3 py-2 text-xs font-semibold text-ink opacity-0 shadow-soft transition duration-300 hover:text-link focus-visible:translate-y-0 focus-visible:opacity-100 group-hover/card:translate-y-0 group-hover/card:opacity-100 pointer-coarse:translate-y-0 pointer-coarse:opacity-100"><svg class="icon size-4" aria-hidden="true"><use href="#i-eye"/></svg>এক নজরে দেখুন</button>
+  </div>
+  <div class="flex min-w-0 flex-1 flex-col gap-1.5 p-4">
+    <p class="text-xs font-medium text-muted">প্ল্যানার</p>
+    <h3 class="line-clamp-2 font-serif text-base font-semibold leading-snug text-ink"><a href="product.html" class="transition hover:text-link">২০২৭ সাপ্তাহিক প্ল্যানার</a></h3>
+    <div class="flex items-center gap-1.5"><span class="flex" role="img" aria-label="৫-এর মধ্যে ৪.৩ রেটিং"><svg class="icon size-4 fill-current text-star" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon size-4 fill-current text-star" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon size-4 fill-current text-star" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon size-4 fill-current text-star" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon size-4 text-line" aria-hidden="true"><use href="#i-star"/></svg></span><span class="text-xs text-muted">(৩৮)</span></div>
+    <div class="mt-auto pt-1"><p class="text-lg font-bold text-ink">৳৫৫০</p><button type="button" disabled class="mt-2 inline-flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-full bg-surface-2 px-4 py-2 text-sm font-semibold text-muted">স্টক শেষ</button></div>
+  </div>
+</article></li><li><article data-product data-product-id="p3" data-product-name="সিরামিক মগ &quot;চা ও কোড&quot;" data-product-price="450" data-product-regular-price="550" data-product-image="assets/img/product-3.svg" data-product-category="মগ" data-product-rating="4.9" data-product-reviews="210" data-product-url="product.html" data-product-stock="in" data-product-description="৩৫০ মিলি সিরামিক মগ। মাইক্রোওয়েভ ও ডিশওয়াশারে ব্যবহার করা যায়, প্রিন্ট ওঠে না।" class="group/card relative flex h-full flex-col overflow-hidden rounded-card border border-line bg-surface shadow-soft transition duration-300 hover:-translate-y-1 hover:shadow-lift group-data-[view=list]/plist:flex-row">
+  <div class="relative aspect-square shrink-0 overflow-hidden bg-surface-2 group-data-[view=list]/plist:w-36 sm:group-data-[view=list]/plist:w-52">
+    <a href="product.html" tabindex="-1" aria-hidden="true" class="block size-full">
+      <img src="assets/img/product-3.svg" alt="" width="800" height="800" loading="lazy" class="size-full object-cover">
+      <img src="assets/img/product-4.svg" alt="" width="800" height="800" loading="lazy" class="absolute inset-0 size-full object-cover opacity-0 transition-opacity duration-500 group-hover/card:opacity-100">
+    </a>
+    <div class="absolute left-3 top-3 flex flex-col items-start gap-1.5"><span class="rounded-full bg-sale px-2.5 py-0.5 text-xs font-semibold text-white">−১৮%</span></div>
+    <button type="button" data-wishlist-toggle aria-pressed="false" aria-label="পছন্দের তালিকায় যোগ করুন" class="group/wish absolute right-3 top-3 grid size-9 place-items-center rounded-full bg-surface/90 text-ink-2 shadow-soft transition hover:text-sale aria-pressed:text-sale"><svg class="icon size-4.5 group-aria-pressed/wish:fill-current" aria-hidden="true"><use href="#i-heart"/></svg></button>
+    <button type="button" data-quick-view class="absolute inset-x-3 bottom-3 inline-flex translate-y-2 items-center justify-center gap-1.5 rounded-full bg-surface/95 px-3 py-2 text-xs font-semibold text-ink opacity-0 shadow-soft transition duration-300 hover:text-link focus-visible:translate-y-0 focus-visible:opacity-100 group-hover/card:translate-y-0 group-hover/card:opacity-100 pointer-coarse:translate-y-0 pointer-coarse:opacity-100"><svg class="icon size-4" aria-hidden="true"><use href="#i-eye"/></svg>এক নজরে দেখুন</button>
+  </div>
+  <div class="flex min-w-0 flex-1 flex-col gap-1.5 p-4">
+    <p class="text-xs font-medium text-muted">মগ</p>
+    <h3 class="line-clamp-2 font-serif text-base font-semibold leading-snug text-ink"><a href="product.html" class="transition hover:text-link">সিরামিক মগ "চা ও কোড"</a></h3>
+    <div class="flex items-center gap-1.5"><span class="flex" role="img" aria-label="৫-এর মধ্যে ৪.৯ রেটিং"><svg class="icon size-4 fill-current text-star" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon size-4 fill-current text-star" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon size-4 fill-current text-star" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon size-4 fill-current text-star" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon size-4 fill-current text-star" aria-hidden="true"><use href="#i-star"/></svg></span><span class="text-xs text-muted">(২১০)</span></div>
+    <div class="mt-auto pt-1"><p class="flex flex-wrap items-baseline gap-x-2"><span class="sr-only">ছাড়ের দাম</span><span class="text-lg font-bold text-sale">৳৪৫০</span><span class="sr-only">আগের দাম</span><del class="text-sm text-muted">৳৫৫০</del></p><div data-stock-sold="64" data-stock-total="80" class="mt-1"></div><button type="button" data-add-to-cart class="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-full border border-accent bg-transparent px-4 py-2 text-sm font-semibold text-link transition hover:bg-accent hover:text-accent-ink active:scale-95"><svg class="icon size-4" aria-hidden="true"><use href="#i-cart"/></svg>কার্টে যোগ করুন</button></div>
+  </div>
+</article></li>
+    </ul></div>
+</section>
+
+<section id="skeleton" aria-labelledby="skeleton-title" class="scroll-mt-44 border-t border-line py-12 first:border-t-0">
+  <h2 id="skeleton-title" class="text-2xl text-ink sm:text-3xl">স্কেলিটন লোডার</h2>
+  <p class="mt-1 text-ink-2">কনটেন্ট লোড হওয়ার সময় জায়গা ধরে রাখে, তাই লেআউট লাফায় না।</p>
+  <div class="mt-6"><!-- COMPONENT: SkeletonCard | Shown from loading.js / Suspense fallbacks -->
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" aria-hidden="true">
+      <div class="overflow-hidden rounded-card border border-line bg-surface"><div class="sk aspect-video rounded-none"></div><div class="space-y-3 p-5"><div class="sk h-3 w-1/4"></div><div class="sk h-5 w-11/12"></div><div class="sk h-5 w-2/3"></div><div class="sk h-3 w-1/2"></div></div></div>
+      <div class="flex items-center gap-4 rounded-card border border-line bg-surface p-5"><div class="sk size-16 shrink-0 rounded-full"></div><div class="flex-1 space-y-3"><div class="sk h-4 w-3/4"></div><div class="sk h-3 w-1/2"></div></div></div>
+      <div class="space-y-3 rounded-card border border-line bg-surface p-5"><div class="sk h-4 w-full"></div><div class="sk h-4 w-11/12"></div><div class="sk h-4 w-4/5"></div><div class="sk h-9 w-32 rounded-full"></div></div>
+    </div></div>
+</section>
+
+<section id="pagination" aria-labelledby="pagination-title" class="scroll-mt-44 border-t border-line py-12 first:border-t-0">
+  <h2 id="pagination-title" class="text-2xl text-ink sm:text-3xl">পেজিনেশন</h2>
+
+  <div class="mt-6"><!-- COMPONENT: Pagination | GraphQL: pageInfo { hasNextPage hasPreviousPage startCursor endCursor } (or offsetPagination { total }) -->
+<nav aria-label="পৃষ্ঠা নেভিগেশন" class="flex justify-start">
+  <ul class="flex flex-wrap items-center gap-2">
+    <li><span aria-disabled="true" class="inline-flex h-10 cursor-not-allowed items-center gap-1.5 rounded-full border border-line px-4 text-sm font-medium text-muted opacity-60"><svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-left"/></svg>আগের</span></li>
+    <li><a href="#pagination" aria-label="পৃষ্ঠা ১" class="grid size-10 place-items-center rounded-full border border-line bg-surface text-sm font-medium text-ink-2 transition hover:border-accent hover:text-link">১</a></li><li><a href="#pagination" aria-current="page" aria-label="পৃষ্ঠা ২, বর্তমান পৃষ্ঠা" class="grid size-10 place-items-center rounded-full bg-accent text-sm font-semibold text-accent-ink">২</a></li><li><a href="#pagination" aria-label="পৃষ্ঠা ৩" class="grid size-10 place-items-center rounded-full border border-line bg-surface text-sm font-medium text-ink-2 transition hover:border-accent hover:text-link">৩</a></li><li><a href="#pagination" aria-label="পৃষ্ঠা ৪" class="grid size-10 place-items-center rounded-full border border-line bg-surface text-sm font-medium text-ink-2 transition hover:border-accent hover:text-link">৪</a></li><li aria-hidden="true" class="px-1 text-muted">…</li><li><a href="#pagination" aria-label="পৃষ্ঠা ৬" class="grid size-10 place-items-center rounded-full border border-line bg-surface text-sm font-medium text-ink-2 transition hover:border-accent hover:text-link">৬</a></li>
+    <li><a href="#pagination" rel="next" class="inline-flex h-10 items-center gap-1.5 rounded-full border border-line bg-surface px-4 text-sm font-medium text-ink-2 transition hover:border-accent hover:text-link">পরের<svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"/></svg></a></li>
+  </ul>
+</nav></div>
+</section>
+
+<section id="carousel" aria-labelledby="carousel-title" class="scroll-mt-44 border-t border-line py-12 first:border-t-0">
+  <h2 id="carousel-title" class="text-2xl text-ink sm:text-3xl">ক্যারোসেল</h2>
+
+  <div class="mt-6"><!-- COMPONENT: Carousel | Generic client component: scroll-snap track, arrows, dots, optional autoplay -->
+    <div data-carousel data-autoplay="5000" data-loop aria-label="নমুনা ক্যারোসেল" class="group/demo">
+      <div class="mb-4 flex items-center justify-between gap-4">
+        <p class="text-sm text-ink-2">মাউস, স্পর্শ, তীর বোতাম অথবা কিবোর্ডের <kbd>←</kbd> <kbd>→</kbd> দিয়ে চালান। হোভার বা ফোকাসে স্বয়ংক্রিয় চলা থেমে যায়।</p>
+        <div class="flex items-center gap-2">
+          <button type="button" data-carousel-toggle aria-label="স্লাইড থামান" class="grid size-10 place-items-center rounded-full border border-line bg-surface text-ink-2 shadow-soft transition hover:border-accent hover:text-link disabled:cursor-not-allowed disabled:opacity-40"><svg class="icon size-4 group-data-paused/demo:hidden" aria-hidden="true"><use href="#i-pause"/></svg><svg class="icon size-4 hidden group-data-paused/demo:block" aria-hidden="true"><use href="#i-play"/></svg></button>
+          <div class="flex shrink-0 items-center gap-2">
+    <button type="button" data-carousel-prev aria-label="আগের স্লাইড" class="grid size-10 place-items-center rounded-full border border-line bg-surface text-ink-2 shadow-soft transition hover:border-accent hover:text-link disabled:cursor-not-allowed disabled:opacity-40"><svg class="icon size-4.5" aria-hidden="true"><use href="#i-arrow-left"/></svg></button>
+    <button type="button" data-carousel-next aria-label="পরের স্লাইড" class="grid size-10 place-items-center rounded-full border border-line bg-surface text-ink-2 shadow-soft transition hover:border-accent hover:text-link disabled:cursor-not-allowed disabled:opacity-40"><svg class="icon size-4.5" aria-hidden="true"><use href="#i-arrow-right"/></svg></button>
+  </div>
+        </div>
+      </div>
+      <ul data-carousel-track tabindex="0" class="scrollbar-none flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth pb-2"><li class="w-[80%] shrink-0 snap-start sm:w-[calc((100%-2.5rem)/3)]"><div class="grid aspect-video place-items-center rounded-card border border-line bg-accent/10 font-serif text-3xl font-bold text-ink">১</div></li><li class="w-[80%] shrink-0 snap-start sm:w-[calc((100%-2.5rem)/3)]"><div class="grid aspect-video place-items-center rounded-card border border-line bg-sale/10 font-serif text-3xl font-bold text-ink">২</div></li><li class="w-[80%] shrink-0 snap-start sm:w-[calc((100%-2.5rem)/3)]"><div class="grid aspect-video place-items-center rounded-card border border-line bg-star/15 font-serif text-3xl font-bold text-ink">৩</div></li><li class="w-[80%] shrink-0 snap-start sm:w-[calc((100%-2.5rem)/3)]"><div class="grid aspect-video place-items-center rounded-card border border-line bg-success/10 font-serif text-3xl font-bold text-ink">৪</div></li><li class="w-[80%] shrink-0 snap-start sm:w-[calc((100%-2.5rem)/3)]"><div class="grid aspect-video place-items-center rounded-card border border-line bg-surface-2 font-serif text-3xl font-bold text-ink">৫</div></li><li class="w-[80%] shrink-0 snap-start sm:w-[calc((100%-2.5rem)/3)]"><div class="grid aspect-video place-items-center rounded-card border border-line bg-accent/20 font-serif text-3xl font-bold text-ink">৬</div></li></ul>
+      <div data-carousel-dots class="mt-4 flex items-center justify-center gap-2"></div>
+    </div></div>
+</section>
+
+<section id="countdown" aria-labelledby="countdown-title" class="scroll-mt-44 border-t border-line py-12 first:border-t-0">
+  <h2 id="countdown-title" class="text-2xl text-ink sm:text-3xl">কাউন্টডাউন ও স্টক বার</h2>
+
+  <div class="mt-6"><!-- COMPONENT: Countdown | Client component -->
+    <div class="flex flex-wrap items-start gap-10">
+      <div data-countdown="2026-10-31T23:59:59+06:00">
+        <p class="sr-only">অফার শেষ হবে ৩১ অক্টোবর, ২০২৬ রাত ১১টা ৫৯ মিনিটে।</p>
+        <p class="mb-2 text-sm font-medium text-ink-2">চলমান কাউন্টডাউন</p>
+        <div data-countdown-body aria-live="off" class="flex items-start gap-2"><span class="flex flex-col items-center"><span data-unit="d" class="grid h-14 min-w-14 place-items-center rounded-xl bg-ink px-2 font-mono text-2xl font-bold tabular-nums text-page">০০</span><span class="mt-1 text-xs text-muted">দিন</span></span><span class="flex flex-col items-center"><span data-unit="h" class="grid h-14 min-w-14 place-items-center rounded-xl bg-ink px-2 font-mono text-2xl font-bold tabular-nums text-page">০০</span><span class="mt-1 text-xs text-muted">ঘণ্টা</span></span><span class="flex flex-col items-center"><span data-unit="m" class="grid h-14 min-w-14 place-items-center rounded-xl bg-ink px-2 font-mono text-2xl font-bold tabular-nums text-page">০০</span><span class="mt-1 text-xs text-muted">মিনিট</span></span><span class="flex flex-col items-center"><span data-unit="s" class="grid h-14 min-w-14 place-items-center rounded-xl bg-ink px-2 font-mono text-2xl font-bold tabular-nums text-page">০০</span><span class="mt-1 text-xs text-muted">সেকেন্ড</span></span></div>
+        <p data-countdown-ended hidden class="rounded-full bg-surface-2 px-4 py-2 text-sm font-semibold text-ink-2">অফারটি শেষ হয়ে গেছে</p>
+      </div>
+      <div class="w-full max-w-xs"><p class="mb-2 text-sm font-medium text-ink-2">স্টক প্রগ্রেস বার</p><div data-stock-sold="64" data-stock-total="80"></div></div>
+    </div></div>
+</section>
+
+<section id="reading" aria-labelledby="reading-title" class="scroll-mt-44 border-t border-line py-12 first:border-t-0">
+  <h2 id="reading-title" class="text-2xl text-ink sm:text-3xl">পড়ার সুবিধা</h2>
+
+  <div class="mt-6"><div class="flex flex-wrap items-center justify-between gap-4 rounded-card border border-line bg-surface p-4">
+      <!-- COMPONENT: ReaderControls | Client component; persists --reader-scale in localStorage -->
+<div data-reader role="group" aria-label="পড়ার সুবিধা" class="inline-flex items-center gap-0.5 rounded-full border border-line bg-surface p-1 print:hidden">
+  <button type="button" data-reader-action="smaller" aria-label="লেখা ছোট করুন" class="grid size-9 place-items-center rounded-full text-sm font-semibold text-ink-2 transition hover:bg-surface-2 hover:text-link disabled:cursor-not-allowed disabled:opacity-40">অ−</button>
+  <span data-reader-value aria-live="polite" class="min-w-12 text-center text-xs text-muted">১০০%</span>
+  <button type="button" data-reader-action="larger" aria-label="লেখা বড় করুন" class="grid size-9 place-items-center rounded-full text-sm font-semibold text-ink-2 transition hover:bg-surface-2 hover:text-link disabled:cursor-not-allowed disabled:opacity-40 text-base">অ+</button>
+  <button type="button" data-reader-action="reset" aria-label="লেখার আকার আগের মতো করুন" class="grid size-9 place-items-center rounded-full text-sm font-semibold text-ink-2 transition hover:bg-surface-2 hover:text-link disabled:cursor-not-allowed disabled:opacity-40"><svg class="icon size-4" aria-hidden="true"><use href="#i-rotate-ccw"/></svg></button>
+  <span aria-hidden="true" class="mx-1 h-5 w-px bg-line"></span>
+  <button type="button" data-reader-action="focus" aria-pressed="false" class="inline-flex h-9 items-center gap-1.5 rounded-full px-3 text-sm font-medium text-ink-2 transition hover:bg-surface-2 hover:text-link aria-pressed:bg-accent aria-pressed:text-accent-ink"><svg class="icon size-4" aria-hidden="true"><use href="#i-book"/></svg>ফোকাস মোড</button>
+</div>
+      <p class="text-sm text-muted">ফোকাস মোডে মেনু, সাইডবার ও ফুটার লুকিয়ে যায়। <kbd>Esc</kbd> চাপলে আগের অবস্থায় ফিরবে।</p>
+    </div>
+    <div class="mt-6 grid gap-8 lg:grid-cols-[minmax(0,1fr)_15rem]">
+      <div data-toc-source class="entry-content prose min-w-0">
+        <h3 id="sg-sample-1">নমুনা লেখা: ক্যাশ কীভাবে কাজ করে</h3>
+        <p>এই অংশটি <code>.entry-content</code> ক্লাসের ভেতরে আছে, ঠিক যেভাবে ওয়ার্ডপ্রেসের পোস্ট দেখানো হবে। ওপরের বোতাম দিয়ে লেখার আকার বদলে দেখুন।</p>
+        <pre><code>const res = await fetch(process.env.WP_GRAPHQL_URL, {
+  method: &#x27;POST&#x27;,
+  headers: { &#x27;Content-Type&#x27;: &#x27;application/json&#x27; },
+  body: JSON.stringify({ query }),
+  next: { tags: [&#x27;posts&#x27;] },
+});</code></pre>
+        <h3 id="sg-sample-2">গ্যালারি ও লাইটবক্স</h3>
+        <figure class="wp-block-gallery">
+          <figure><img data-lightbox="sg" data-caption="প্রথম ছবি" src="assets/img/cover-1.svg" alt="নোড ও সংযোগের চিত্র" width="1200" height="675" loading="lazy"></figure>
+          <figure><img data-lightbox="sg" data-caption="দ্বিতীয় ছবি" src="assets/img/cover-3.svg" alt="স্তরযুক্ত কার্ডের চিত্র" width="1200" height="675" loading="lazy"></figure>
+          <figure><img data-lightbox="sg" data-caption="তৃতীয় ছবি" src="assets/img/cover-4.svg" alt="বড় অক্ষরের নকশা" width="1200" height="675" loading="lazy"></figure>
+        </figure>
+        <h3 id="sg-sample-3">টেবিল</h3>
+        <figure class="wp-block-table"><table><thead><tr><th>পদ্ধতি</th><th>কখন আপডেট হয়</th><th>উপযুক্ত ক্ষেত্র</th></tr></thead><tbody><tr><td>স্ট্যাটিক</td><td>বিল্ডের সময়</td><td>কম বদলায় এমন পাতা</td></tr><tr><td>ISR</td><td>নির্দিষ্ট সময় পরপর</td><td>ব্লগ পোস্ট</td></tr><tr><td>অন-ডিমান্ড</td><td>ওয়েবহুক এলে</td><td>পণ্যের দাম ও স্টক</td></tr></tbody></table></figure>
+      </div>
+      <aside class="rounded-card border border-line bg-surface shadow-soft self-start p-5 max-lg:hidden lg:sticky lg:top-48"><h3 class="mb-3 text-base text-ink">সূচিপত্র (স্বয়ংক্রিয়)</h3><nav data-toc aria-label="নমুনা সূচিপত্র"></nav></aside>
+    </div></div>
+</section>
+
+<section id="filter" aria-labelledby="filter-title" class="scroll-mt-44 border-t border-line py-12 first:border-t-0">
+  <h2 id="filter-title" class="text-2xl text-ink sm:text-3xl">ফিল্টার ও সাজানো</h2>
+  <p class="mt-1 text-ink-2">বাছাই ও ক্রম ঠিকানার ?filter= এবং ?sort= অংশে জমা থাকে, তাই লিংক শেয়ার করলেও একই অবস্থা দেখা যায়।</p>
+  <div class="mt-6"><!-- COMPONENT: FilterSort | Client component in the demo; in Next.js prefer searchParams so the server filters -->
+    <div data-filter-list>
+      <div class="mb-5 flex flex-wrap items-center justify-between gap-4">
+        <ul aria-label="বিষয় অনুযায়ী বাছাই" class="flex flex-wrap gap-2"><li><button type="button" data-filter="all" aria-pressed="true" class="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3.5 py-1.5 text-sm font-medium text-ink-2 transition hover:border-accent hover:text-link aria-pressed:border-accent aria-pressed:bg-accent aria-pressed:text-accent-ink aria-[current=page]:border-accent aria-[current=page]:bg-accent aria-[current=page]:text-accent-ink">সব</button></li><li><button type="button" data-filter="wordpress" aria-pressed="false" class="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3.5 py-1.5 text-sm font-medium text-ink-2 transition hover:border-accent hover:text-link aria-pressed:border-accent aria-pressed:bg-accent aria-pressed:text-accent-ink aria-[current=page]:border-accent aria-[current=page]:bg-accent aria-[current=page]:text-accent-ink">ওয়ার্ডপ্রেস</button></li><li><button type="button" data-filter="graphql" aria-pressed="false" class="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3.5 py-1.5 text-sm font-medium text-ink-2 transition hover:border-accent hover:text-link aria-pressed:border-accent aria-pressed:bg-accent aria-pressed:text-accent-ink aria-[current=page]:border-accent aria-[current=page]:bg-accent aria-[current=page]:text-accent-ink">GraphQL</button></li><li><button type="button" data-filter="nextjs" aria-pressed="false" class="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3.5 py-1.5 text-sm font-medium text-ink-2 transition hover:border-accent hover:text-link aria-pressed:border-accent aria-pressed:bg-accent aria-pressed:text-accent-ink aria-[current=page]:border-accent aria-[current=page]:bg-accent aria-[current=page]:text-accent-ink">Next.js</button></li><li><button type="button" data-filter="design" aria-pressed="false" class="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3.5 py-1.5 text-sm font-medium text-ink-2 transition hover:border-accent hover:text-link aria-pressed:border-accent aria-pressed:bg-accent aria-pressed:text-accent-ink aria-[current=page]:border-accent aria-[current=page]:bg-accent aria-[current=page]:text-accent-ink">ডিজাইন</button></li><li><button type="button" data-filter="guide" aria-pressed="false" class="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3.5 py-1.5 text-sm font-medium text-ink-2 transition hover:border-accent hover:text-link aria-pressed:border-accent aria-pressed:bg-accent aria-pressed:text-accent-ink aria-[current=page]:border-accent aria-[current=page]:bg-accent aria-[current=page]:text-accent-ink">কেনার গাইড</button></li></ul>
+        <div class="flex items-center gap-3 text-sm text-muted"><p aria-live="polite"><span data-filter-count class="font-semibold text-ink">৮</span>টি ফলাফল</p>
+          <label for="sg-sort" class="sr-only">সাজান</label>
+          <select id="sg-sort" data-sort class="rounded-xl border border-line bg-surface px-3 py-2 text-sm text-ink transition focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20"><option value="newest">নতুন আগে</option><option value="oldest">পুরোনো আগে</option><option value="title">শিরোনাম অনুযায়ী</option></select></div>
+      </div>
+      <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4"><li data-filter-item data-tags="wordpress" data-date="2026-09-28" data-title="হেডলেস ওয়ার্ডপ্রেস কী এবং কেন ব্যবহার করবেন" class="rounded-card border border-line bg-surface shadow-soft flex flex-col gap-1 p-4"><span class="text-xs font-semibold uppercase tracking-widest text-link">ওয়ার্ডপ্রেস</span><a href="single.html" class="font-serif font-semibold leading-snug text-ink transition hover:text-link">হেডলেস ওয়ার্ডপ্রেস কী এবং কেন ব্যবহার করবেন</a><time datetime="2026-09-28" class="text-xs text-muted">২৮ সেপ্টেম্বর, ২০২৬</time></li><li data-filter-item data-tags="graphql" data-date="2026-09-24" data-title="WPGraphQL দিয়ে প্রথম কোয়েরি লেখা" class="rounded-card border border-line bg-surface shadow-soft flex flex-col gap-1 p-4"><span class="text-xs font-semibold uppercase tracking-widest text-link">GraphQL</span><a href="single.html" class="font-serif font-semibold leading-snug text-ink transition hover:text-link">WPGraphQL দিয়ে প্রথম কোয়েরি লেখা</a><time datetime="2026-09-24" class="text-xs text-muted">২৪ সেপ্টেম্বর, ২০২৬</time></li><li data-filter-item data-tags="nextjs" data-date="2026-09-19" data-title="Next.js App Router-এ ব্লগ তৈরি: ধাপে ধাপে" class="rounded-card border border-line bg-surface shadow-soft flex flex-col gap-1 p-4"><span class="text-xs font-semibold uppercase tracking-widest text-link">Next.js</span><a href="single.html" class="font-serif font-semibold leading-snug text-ink transition hover:text-link">Next.js App Router-এ ব্লগ তৈরি: ধাপে ধাপে</a><time datetime="2026-09-19" class="text-xs text-muted">১৯ সেপ্টেম্বর, ২০২৬</time></li><li data-filter-item data-tags="design" data-date="2026-09-12" data-title="বাংলা ওয়েবসাইটের জন্য সঠিক ফন্ট বাছাই" class="rounded-card border border-line bg-surface shadow-soft flex flex-col gap-1 p-4"><span class="text-xs font-semibold uppercase tracking-widest text-link">ডিজাইন</span><a href="single.html" class="font-serif font-semibold leading-snug text-ink transition hover:text-link">বাংলা ওয়েবসাইটের জন্য সঠিক ফন্ট বাছাই</a><time datetime="2026-09-12" class="text-xs text-muted">১২ সেপ্টেম্বর, ২০২৬</time></li><li data-filter-item data-tags="graphql" data-date="2026-09-05" data-title="WooGraphQL দিয়ে হেডলেস দোকান: কার্ট থেকে চেকআউট" class="rounded-card border border-line bg-surface shadow-soft flex flex-col gap-1 p-4"><span class="text-xs font-semibold uppercase tracking-widest text-link">GraphQL</span><a href="single.html" class="font-serif font-semibold leading-snug text-ink transition hover:text-link">WooGraphQL দিয়ে হেডলেস দোকান: কার্ট থেকে চেকআউট</a><time datetime="2026-09-05" class="text-xs text-muted">৫ সেপ্টেম্বর, ২০২৬</time></li><li data-filter-item data-tags="nextjs" data-date="2026-08-29" data-title="ISR ও অন-ডিমান্ড রিভ্যালিডেশন সহজ ভাষায়" class="rounded-card border border-line bg-surface shadow-soft flex flex-col gap-1 p-4"><span class="text-xs font-semibold uppercase tracking-widest text-link">Next.js</span><a href="single.html" class="font-serif font-semibold leading-snug text-ink transition hover:text-link">ISR ও অন-ডিমান্ড রিভ্যালিডেশন সহজ ভাষায়</a><time datetime="2026-08-29" class="text-xs text-muted">২৯ আগস্ট, ২০২৬</time></li><li data-filter-item data-tags="design" data-date="2026-08-21" data-title="Tailwind CSS v4-এ ডিজাইন টোকেন সাজানো" class="rounded-card border border-line bg-surface shadow-soft flex flex-col gap-1 p-4"><span class="text-xs font-semibold uppercase tracking-widest text-link">ডিজাইন</span><a href="single.html" class="font-serif font-semibold leading-snug text-ink transition hover:text-link">Tailwind CSS v4-এ ডিজাইন টোকেন সাজানো</a><time datetime="2026-08-21" class="text-xs text-muted">২১ আগস্ট, ২০২৬</time></li><li data-filter-item data-tags="wordpress" data-date="2026-08-14" data-title="হেডলেস সাইটে SEO: মেটাডেটা থেকে সাইটম্যাপ" class="rounded-card border border-line bg-surface shadow-soft flex flex-col gap-1 p-4"><span class="text-xs font-semibold uppercase tracking-widest text-link">ওয়ার্ডপ্রেস</span><a href="single.html" class="font-serif font-semibold leading-snug text-ink transition hover:text-link">হেডলেস সাইটে SEO: মেটাডেটা থেকে সাইটম্যাপ</a><time datetime="2026-08-14" class="text-xs text-muted">১৪ আগস্ট, ২০২৬</time></li></ul>
+      <p data-filter-empty hidden class="rounded-card border border-dashed border-line p-8 text-center text-ink-2">এই বিষয়ে কিছু নেই।</p>
+    </div></div>
+</section>
+
+<section id="share" aria-labelledby="share-title" class="scroll-mt-44 border-t border-line py-12 first:border-t-0">
+  <h2 id="share-title" class="text-2xl text-ink sm:text-3xl">শেয়ার ও টোস্ট</h2>
+
+  <div class="mt-6"><div class="space-y-6">
+      <!-- COMPONENT: ShareButtons | Client component; URL and title come from the post -->
+<div data-share class="flex flex-wrap items-center gap-2 print:hidden">
+  <span class="mr-1 text-sm font-semibold text-ink">শেয়ার করুন:</span><a href="#" data-share-network="facebook" aria-label="ফেসবুকে শেয়ার করুন" class="grid size-10 place-items-center rounded-full border border-line bg-surface text-ink-2 transition hover:border-accent hover:text-link"><svg class="icon size-4" aria-hidden="true"><use href="#i-facebook"/></svg></a><a href="#" data-share-network="x" aria-label="এক্সে শেয়ার করুন" class="grid size-10 place-items-center rounded-full border border-line bg-surface text-ink-2 transition hover:border-accent hover:text-link"><svg class="icon size-4" aria-hidden="true"><use href="#i-x"/></svg></a><a href="#" data-share-network="whatsapp" aria-label="হোয়াটসঅ্যাপে শেয়ার করুন" class="grid size-10 place-items-center rounded-full border border-line bg-surface text-ink-2 transition hover:border-accent hover:text-link"><svg class="icon size-4" aria-hidden="true"><use href="#i-chat"/></svg></a><a href="#" data-share-network="linkedin" aria-label="লিংকডইনে শেয়ার করুন" class="grid size-10 place-items-center rounded-full border border-line bg-surface text-ink-2 transition hover:border-accent hover:text-link"><svg class="icon size-4" aria-hidden="true"><use href="#i-linkedin"/></svg></a>
+  <button type="button" data-share-copy aria-label="লিংক কপি করুন" class="grid size-10 place-items-center rounded-full border border-line bg-surface text-ink-2 transition hover:border-accent hover:text-link"><svg class="icon size-4" aria-hidden="true"><use href="#i-link"/></svg></button>
+  <button type="button" data-share-native aria-label="অন্য অ্যাপে শেয়ার করুন" class="grid size-10 place-items-center rounded-full border border-line bg-surface text-ink-2 transition hover:border-accent hover:text-link"><svg class="icon size-4" aria-hidden="true"><use href="#i-share"/></svg></button>
+</div>
+      <div class="flex flex-wrap gap-3">
+        <button type="button" data-toast="সফলভাবে সংরক্ষণ করা হয়েছে" data-toast-type="success" class="inline-flex items-center justify-center gap-2 rounded-full border border-line bg-surface px-5 py-2.5 text-sm font-semibold text-ink transition hover:border-accent hover:text-link active:scale-95">সফল টোস্ট</button>
+        <button type="button" data-toast="কিছু একটা ভুল হয়েছে" data-toast-type="error" class="inline-flex items-center justify-center gap-2 rounded-full border border-line bg-surface px-5 py-2.5 text-sm font-semibold text-ink transition hover:border-accent hover:text-link active:scale-95">ত্রুটি টোস্ট</button>
+        <button type="button" data-toast="নতুন লেখা প্রকাশিত হয়েছে" data-toast-type="info" class="inline-flex items-center justify-center gap-2 rounded-full border border-line bg-surface px-5 py-2.5 text-sm font-semibold text-ink transition hover:border-accent hover:text-link active:scale-95">তথ্য টোস্ট</button>
+      </div>
+      <p class="text-sm text-muted">জাভাস্ক্রিপ্ট থেকে: <code class="rounded-md bg-surface-2 px-1.5 py-0.5 font-mono text-ink">LekhoniToast.show('বার্তা', 'success')</code></p>
+    </div></div>
+</section>
+
+<section id="palette" aria-labelledby="palette-title" class="scroll-mt-44 border-t border-line py-12 first:border-t-0">
+  <h2 id="palette-title" class="text-2xl text-ink sm:text-3xl">কমান্ড প্যালেট সার্চ</h2>
+
+  <div class="mt-6"><div class="rounded-card border border-line bg-surface shadow-soft flex flex-wrap items-center justify-between gap-4 p-6">
+      <p class="text-ink-2">যেকোনো পাতায় <kbd>Ctrl</kbd> + <kbd>K</kbd> (ম্যাকে <kbd>⌘</kbd> + <kbd>K</kbd>) অথবা <kbd>/</kbd> চাপুন। পোস্ট, পেজ, পণ্য ও বিষয় একসঙ্গে খোঁজা যায়, <kbd>↑</kbd> <kbd>↓</kbd> দিয়ে বাছাই আর <kbd>Enter</kbd> দিয়ে খোলা যায়।</p>
+      <button type="button" data-search-open class="inline-flex items-center justify-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-accent-ink transition hover:brightness-110 active:scale-95"><svg class="icon size-4" aria-hidden="true"><use href="#i-search"/></svg>সার্চ খুলুন</button>
+    </div></div>
+</section>
+
+<section id="theme" aria-labelledby="theme-title" class="scroll-mt-44 border-t border-line py-12 first:border-t-0">
+  <h2 id="theme-title" class="text-2xl text-ink sm:text-3xl">থিম ও অ্যাকসেন্ট পিকার</h2>
+
+  <div class="mt-6"><!-- COMPONENT: AccentPicker | Client component; saves --color-accent in localStorage ("lk-accent") -->
+<div data-accent-picker class="rounded-card border border-line bg-surface shadow-soft p-6">
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <h3 class="text-lg text-ink">থিম ও অ্যাকসেন্ট রঙ</h3>
+    <button type="button" data-theme-toggle aria-pressed="false" aria-label="ডার্ক মোড চালু করুন" class="inline-flex items-center justify-center gap-2 rounded-full border border-line bg-surface px-5 py-2.5 text-sm font-semibold text-ink transition hover:border-accent hover:text-link active:scale-95"><svg class="icon size-4 dark:hidden" aria-hidden="true"><use href="#i-moon"/></svg><svg class="icon size-4 hidden dark:block" aria-hidden="true"><use href="#i-sun"/></svg><span class="dark:hidden">ডার্ক মোড</span><span class="hidden dark:inline">লাইট মোড</span></button>
+  </div>
+  <p class="mt-2 text-sm text-ink-2">একটি রঙ বেছে নিন। বাটন, লিংক, ব্যাজসহ পুরো সাইটের রঙ সঙ্গে সঙ্গে বদলে যাবে এবং সব পাতায় মনে রাখা হবে।</p>
+  <div class="mt-4 flex flex-wrap items-center gap-3">
+    <button type="button" data-accent="#0f766e" aria-pressed="false" aria-label="টিল (ডিফল্ট)" title="টিল (ডিফল্ট)" class="size-10 rounded-full bg-[#0f766e] ring-offset-2 ring-offset-surface transition hover:scale-110 aria-pressed:ring-2 aria-pressed:ring-ink"></button><button type="button" data-accent="#2563eb" aria-pressed="false" aria-label="নীল" title="নীল" class="size-10 rounded-full bg-[#2563eb] ring-offset-2 ring-offset-surface transition hover:scale-110 aria-pressed:ring-2 aria-pressed:ring-ink"></button><button type="button" data-accent="#7c3aed" aria-pressed="false" aria-label="বেগুনি" title="বেগুনি" class="size-10 rounded-full bg-[#7c3aed] ring-offset-2 ring-offset-surface transition hover:scale-110 aria-pressed:ring-2 aria-pressed:ring-ink"></button><button type="button" data-accent="#db2777" aria-pressed="false" aria-label="গোলাপি" title="গোলাপি" class="size-10 rounded-full bg-[#db2777] ring-offset-2 ring-offset-surface transition hover:scale-110 aria-pressed:ring-2 aria-pressed:ring-ink"></button><button type="button" data-accent="#c2410c" aria-pressed="false" aria-label="কমলা" title="কমলা" class="size-10 rounded-full bg-[#c2410c] ring-offset-2 ring-offset-surface transition hover:scale-110 aria-pressed:ring-2 aria-pressed:ring-ink"></button><button type="button" data-accent="#15803d" aria-pressed="false" aria-label="সবুজ" title="সবুজ" class="size-10 rounded-full bg-[#15803d] ring-offset-2 ring-offset-surface transition hover:scale-110 aria-pressed:ring-2 aria-pressed:ring-ink"></button>
+    <label for="sg-accent" class="ml-1 flex items-center gap-2 text-sm text-ink-2">নিজের রঙ<input id="sg-accent" type="color" value="#0f766e" class="h-10 w-12 cursor-pointer rounded-lg border border-line bg-surface p-1"></label>
+    <button type="button" data-accent-reset class="inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-link transition hover:bg-accent/10"><svg class="icon size-4" aria-hidden="true"><use href="#i-rotate-ccw"/></svg>রিসেট</button>
+  </div>
+</div></div>
+</section>
+</div>
+
+</main>
+<!-- COMPONENT: SiteFooter | GraphQL: posts(first: 4) { nodes { title uri } } tags(first: 8) { nodes { name uri } } menu(id: "footer", idType: LOCATION) { menuItems { nodes { label uri } } } -->
+<footer class="mt-16 border-t border-line bg-surface print:hidden">
+  <div class="mx-auto w-full max-w-site px-4 sm:px-6">
+    <div class="grid gap-10 py-12 group-data-reading/body:hidden sm:grid-cols-2 lg:grid-cols-4">
+      <div>
+        <h2 class="mb-4 text-lg text-ink">লেখনী সম্পর্কে</h2>
+        <p class="text-[0.95rem] leading-relaxed text-ink-2">হেডলেস ওয়ার্ডপ্রেস, GraphQL আর Next.js নিয়ে বাংলায় লেখা, সঙ্গে লেখালেখির পছন্দের জিনিসপত্রের ছোট্ট দোকান।</p>
+        <div class="mt-4 flex gap-2"><a href="#" aria-label="ফেসবুক" class="grid size-9 place-items-center rounded-full border border-line text-ink-2 transition hover:border-accent hover:text-link"><svg class="icon size-4" aria-hidden="true"><use href="#i-facebook"/></svg></a><a href="#" aria-label="এক্স" class="grid size-9 place-items-center rounded-full border border-line text-ink-2 transition hover:border-accent hover:text-link"><svg class="icon size-4" aria-hidden="true"><use href="#i-x"/></svg></a><a href="#" aria-label="ইনস্টাগ্রাম" class="grid size-9 place-items-center rounded-full border border-line text-ink-2 transition hover:border-accent hover:text-link"><svg class="icon size-4" aria-hidden="true"><use href="#i-instagram"/></svg></a><a href="#" aria-label="ইউটিউব" class="grid size-9 place-items-center rounded-full border border-line text-ink-2 transition hover:border-accent hover:text-link"><svg class="icon size-4" aria-hidden="true"><use href="#i-youtube"/></svg></a></div>
+      </div>
+      <div>
+        <h2 class="mb-4 text-lg text-ink">সাম্প্রতিক লেখা</h2>
+        <ul class="space-y-2.5 text-[0.95rem] leading-snug"><li><a href="single.html" class="line-clamp-2 text-ink-2 transition hover:text-link">হেডলেস ওয়ার্ডপ্রেস কী এবং কেন ব্যবহার করবেন</a></li><li><a href="single.html" class="line-clamp-2 text-ink-2 transition hover:text-link">WPGraphQL দিয়ে প্রথম কোয়েরি লেখা</a></li><li><a href="single.html" class="line-clamp-2 text-ink-2 transition hover:text-link">Next.js App Router-এ ব্লগ তৈরি: ধাপে ধাপে</a></li><li><a href="single.html" class="line-clamp-2 text-ink-2 transition hover:text-link">বাংলা ওয়েবসাইটের জন্য সঠিক ফন্ট বাছাই</a></li></ul>
+      </div>
+      <div>
+        <h2 class="mb-4 text-lg text-ink">বিষয়</h2>
+        <ul class="flex flex-wrap gap-2"><li><a href="category.html" class="inline-flex items-center rounded-full bg-surface-2 px-3 py-1 text-sm text-ink-2 transition hover:bg-accent/10 hover:text-link">হেডলেস</a></li><li><a href="category.html" class="inline-flex items-center rounded-full bg-surface-2 px-3 py-1 text-sm text-ink-2 transition hover:bg-accent/10 hover:text-link">GraphQL</a></li><li><a href="category.html" class="inline-flex items-center rounded-full bg-surface-2 px-3 py-1 text-sm text-ink-2 transition hover:bg-accent/10 hover:text-link">Next.js</a></li><li><a href="category.html" class="inline-flex items-center rounded-full bg-surface-2 px-3 py-1 text-sm text-ink-2 transition hover:bg-accent/10 hover:text-link">ওয়ার্ডপ্রেস</a></li><li><a href="category.html" class="inline-flex items-center rounded-full bg-surface-2 px-3 py-1 text-sm text-ink-2 transition hover:bg-accent/10 hover:text-link">WooCommerce</a></li><li><a href="category.html" class="inline-flex items-center rounded-full bg-surface-2 px-3 py-1 text-sm text-ink-2 transition hover:bg-accent/10 hover:text-link">Tailwind</a></li><li><a href="category.html" class="inline-flex items-center rounded-full bg-surface-2 px-3 py-1 text-sm text-ink-2 transition hover:bg-accent/10 hover:text-link">টাইপোগ্রাফি</a></li><li><a href="category.html" class="inline-flex items-center rounded-full bg-surface-2 px-3 py-1 text-sm text-ink-2 transition hover:bg-accent/10 hover:text-link">পারফরম্যান্স</a></li></ul>
+      </div>
+      <div>
+        <h2 class="mb-4 text-lg text-ink">দরকারি লিংক</h2>
+        <ul class="space-y-2 text-[0.95rem]"><li><a href="shop.html" class="text-ink-2 transition hover:text-link">শপ</a></li><li><a href="account.html" class="text-ink-2 transition hover:text-link">আমার অ্যাকাউন্ট</a></li><li><a href="archive.html" class="text-ink-2 transition hover:text-link">আর্কাইভ</a></li><li><a href="topics.html" class="text-ink-2 transition hover:text-link">সব বিষয়</a></li><li><a href="about.html" class="text-ink-2 transition hover:text-link">আমাদের সম্পর্কে</a></li><li><a href="contact.html" class="text-ink-2 transition hover:text-link">যোগাযোগ</a></li></ul>
+      </div>
+    </div>
+    <div class="flex flex-col items-center gap-4 border-t border-line py-8 text-center group-data-reading/body:border-t-0">
+      <a href="index.html" class="font-serif text-2xl font-bold text-ink">লেখনী<span class="text-link">.</span></a>
+      <ul aria-label="পেমেন্ট পদ্ধতি" class="flex flex-wrap justify-center gap-2"><li class="rounded-full border border-line bg-surface px-3 py-1 text-xs font-medium text-ink-2">ক্যাশ অন ডেলিভারি</li><li class="rounded-full border border-line bg-surface px-3 py-1 text-xs font-medium text-ink-2">বিকাশ</li><li class="rounded-full border border-line bg-surface px-3 py-1 text-xs font-medium text-ink-2">নগদ</li><li class="rounded-full border border-line bg-surface px-3 py-1 text-xs font-medium text-ink-2">ভিসা/মাস্টারকার্ড</li></ul>
+      <p class="text-sm text-muted">© ২০২৬ লেখনী · WordPress ও Next.js দিয়ে তৈরি</p>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
