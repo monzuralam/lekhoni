@@ -2,7 +2,9 @@
 
 import {
   createContext,
+  Suspense,
   useContext,
+  useEffect,
   useRef,
   useState,
   type ReactNode,
@@ -27,16 +29,30 @@ export function useNav () {
   return context
 }
 
-export default function NavProvider ({ children }: { children: ReactNode }) {
+// Reports the current path. usePathname suspends while prerendering routes
+// with dynamic params (/my-account/orders/[id]), so this leaf sits in its own
+// <Suspense> and the header around it stays in the static shell.
+function PathnameWatcher ({ onChange }: { onChange: (pathname: string) => void }) {
   const pathname = usePathname()
+  useEffect(() => onChange(pathname), [pathname, onChange])
+  return null
+}
+
+export default function NavProvider ({ children }: { children: ReactNode }) {
   const toggleRef = useRef<HTMLButtonElement>(null)
+  const [pathname, setPathname] = useState('')
   // Remember which page the menu was opened on, so navigating closes it
   const [openOn, setOpenOn] = useState<string | null>(null)
   const open = openOn === pathname
   const setOpen = (value: boolean) => setOpenOn(value ? pathname : null)
 
   return (
-    <NavContext.Provider value={{ open, setOpen, toggleRef }}>{children}</NavContext.Provider>
+    <NavContext.Provider value={{ open, setOpen, toggleRef }}>
+      <Suspense fallback={null}>
+        <PathnameWatcher onChange={setPathname} />
+      </Suspense>
+      {children}
+    </NavContext.Provider>
   )
 }
 

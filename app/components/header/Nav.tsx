@@ -1,16 +1,16 @@
+import { Suspense } from 'react'
 import Link from 'next/link'
 import WishlistCount from '../wishlist/WishlistCount'
 import { getPrimaryMenu } from './menu'
-import NavMenu from './NavMenu'
+import NavMenu, { CurrentNavMenu } from './NavMenu'
 import ThemeToggle from './ThemeToggle'
 
 // Header menu from the WordPress "Primary menu" location (Appearance > Menus)
 export default async function Nav () {
   const items = await getPrimaryMenu()
 
-  return (
-    <NavMenu items={items}>
-      {/* Mobile only: actions that do not fit in the header bar */}
+  // Mobile only: actions that do not fit in the header bar
+  const actions = (
       <div className='flex items-center gap-2 pt-3 nav:hidden'>
         <Link
           href='/my-account/wishlist'
@@ -32,6 +32,13 @@ export default async function Nav () {
         </Link>
         <ThemeToggle className='relative inline-flex size-10 items-center justify-center rounded-full text-ink-2 transition hover:bg-surface-2 hover:text-link shrink-0 border border-line' />
       </div>
-    </NavMenu>
+  )
+
+  // The highlight needs the current path, which streams in on routes with
+  // dynamic params; until then the menu renders without it
+  return (
+    <Suspense fallback={<NavMenu items={items}>{actions}</NavMenu>}>
+      <CurrentNavMenu items={items}>{actions}</CurrentNavMenu>
+    </Suspense>
   )
 }

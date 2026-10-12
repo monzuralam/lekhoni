@@ -18,6 +18,8 @@ const NAV_PARENTS: [RegExp, string][] = [
 const normalize = (path: string) => path.replace(/\/+$/, '') || '/'
 
 function findActive (items: MenuItem[], pathname: string) {
+  // No path yet (Suspense fallback): highlight nothing rather than Home
+  if (!pathname) return { currentId: null, trail: [] }
   const path = normalize(pathname)
   const all: { item: MenuItem; trail: string[] }[] = []
   const walk = (list: MenuItem[], trail: string[]) =>
@@ -49,12 +51,20 @@ const L2_PANEL =
 
 type NavMenuProps = {
   items: MenuItem[]
+  // Current path for the highlight; empty in the Suspense fallback
+  pathname?: string
   children?: ReactNode // mobile-only actions under the menu
 }
 
-export default function NavMenu ({ items, children }: NavMenuProps) {
+// usePathname suspends while prerendering routes with dynamic params
+// (/my-account/orders/[id]), so Nav renders this inside <Suspense> with a
+// plain <NavMenu> (no highlight yet) as the fallback
+export function CurrentNavMenu (props: Omit<NavMenuProps, 'pathname'>) {
+  return <NavMenu {...props} pathname={usePathname()} />
+}
+
+export default function NavMenu ({ items, pathname = '', children }: NavMenuProps) {
   const { open: mobileOpen, setOpen: setMobileOpen, toggleRef } = useNav()
-  const pathname = usePathname()
   const navRef = useRef<HTMLElement>(null)
   // Ids of the open submenu branch, one per level. Stored with the page it
   // was opened on, so navigating closes every submenu.

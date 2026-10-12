@@ -40,17 +40,39 @@ function secondsLeft (token: string) {
   }
 }
 
+const RETRY_DELAYS = [300, 1000, 2500]
+
+// A busy WordPress can answer with an HTML error page (nginx 502) or drop
+// the connection. Queries are retried; mutations are sent once. Either way a
+// failure comes back as `errors`, like a GraphQL error.
 export async function rawQuery<T> (query: string, variables: object = {}, token?: string | null) {
-  const res = await fetch(endpoint(), {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      ...(token ? { Authorization: `Bearer ${token}` } : {})
-    },
-    body: JSON.stringify({ query, variables }),
-    cache: 'no-store'
-  })
-  return (await res.json()) as GraphQLResponse<T>
+  const retries = /^\s*mutation\b/.test(query) ? 0 : RETRY_DELAYS.length
+  let message = 'WordPress did not respond'
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    if (attempt > 0) await new Promise(resolve => setTimeout(resolve, RETRY_DELAYS[attempt - 1]))
+    let res: Response
+    try {
+      res = await fetch(endpoint(), {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { Authorization: `Bearer ${token}` } : {})
+        },
+        body: JSON.stringify({ query, variables }),
+        cache: 'no-store'
+      })
+    } catch {
+      continue // connection refused or reset
+    }
+    const text = await res.text()
+    try {
+      return JSON.parse(text) as GraphQLResponse<T>
+    } catch {
+      message = `WordPress returned ${res.status} instead of JSON`
+      if (res.status < 500 && res.status !== 429) break
+    }
+  }
+  return { errors: [{ message }] } as GraphQLResponse<T>
 }
 
 async function refreshAuthToken (refreshToken: string) {

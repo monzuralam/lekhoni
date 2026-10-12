@@ -3,7 +3,13 @@ import type { NextConfig } from 'next'
 const nextConfig: NextConfig = {
   /* config options here */
   experimental: {
-    agentFeedback: true
+    agentFeedback: true,
+    // `next build` prerenders pages in parallel and every page queries
+    // WordPress. Local's PHP on Windows drops connections when flooded
+    // (nginx then answers 502), so render fewer pages at once and retry a
+    // page that still fails. lib/wp.js retries individual queries too.
+    staticGenerationMaxConcurrency: 4,
+    staticGenerationRetryCount: 2
   },
   cacheComponents: true,
   partialPrefetching: true,

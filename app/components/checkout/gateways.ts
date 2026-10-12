@@ -1,4 +1,5 @@
 import { cacheLife, cacheTag } from 'next/cache'
+import { wpQuery } from '@/lib/wp'
 import { plainText } from '@/lib/products'
 
 export type BankAccount = {
@@ -63,17 +64,10 @@ export async function getBankTransfer (): Promise<{ instructions: string | null;
   cacheLife('minutes')
   cacheTag('payment-gateways')
 
-  const url = process.env.WP_GRAPHQL_URL
-  if (!url) throw new Error('WP_GRAPHQL_URL is not defined')
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      query: '{ bankTransfer { instructions accounts { accountName bankName accountNumber sortCode iban bic } } }'
-    })
-  })
-  const json = await res.json().catch(() => null)
-  const bank = json?.data?.bankTransfer
+  const data = await wpQuery(
+    '{ bankTransfer { instructions accounts { accountName bankName accountNumber sortCode iban bic } } }'
+  )
+  const bank = data?.bankTransfer
   return bank ? { instructions: bank.instructions ?? null, accounts: bank.accounts ?? [] } : null
 }
 
@@ -85,22 +79,14 @@ export async function getPaymentGateways (): Promise<Gateway[]> {
   cacheLife('minutes')
   cacheTag('payment-gateways')
 
-  const url = process.env.WP_GRAPHQL_URL
-  if (!url) throw new Error('WP_GRAPHQL_URL is not defined')
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      query: `{
-        paymentGateways { nodes { id title description } }
-        bankTransfer { accounts { accountName bankName accountNumber sortCode iban bic } }
-      }`
-    })
-  })
-  const json = await res.json().catch(() => null)
+  // wpQuery retries a busy server and throws rather than caching "no gateways"
+  const data = await wpQuery(`{
+    paymentGateways { nodes { id title description } }
+    bankTransfer { accounts { accountName bankName accountNumber sortCode iban bic } }
+  }`)
   const nodes: { id: string; title: string | null; description: string | null }[] =
-    json?.data?.paymentGateways?.nodes ?? []
-  const accounts: BankAccount[] = json?.data?.bankTransfer?.accounts ?? []
+    data?.paymentGateways?.nodes ?? []
+  const accounts: BankAccount[] = data?.bankTransfer?.accounts ?? []
 
   return nodes.map(node => ({
     id: node.id,
