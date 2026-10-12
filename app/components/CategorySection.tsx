@@ -19,29 +19,49 @@ type ProductCategory = {
 
 export default async function CategorySection () {
   const data = await wpQuery(`
+    fragment CategoryFields on ProductCategory {
+      databaseId
+      name
+      slug
+      uri
+      count
+      image {
+        sourceUrl
+        altText
+        mediaDetails {
+          width
+          height
+        }
+      }
+    }
     {
-      productCategories(first: 12, where: { hideEmpty: true, parent: 0, orderby: TERM_ORDER }) {
-        nodes {
-          databaseId
-          name
-          slug
-          uri
-          count
-          image {
-            sourceUrl
-            altText
-            mediaDetails {
-              width
-              height
+      page(id: "/", idType: URI) {
+        homeShop {
+          categorySection {
+            categories(first: 12) {
+              nodes {
+                ...CategoryFields
+              }
             }
           }
         }
       }
+      productCategories(first: 12, where: { hideEmpty: true, parent: 0, orderby: TERM_ORDER }) {
+        nodes {
+          ...CategoryFields
+        }
+      }
     }
   `)
-  const categories: ProductCategory[] = (
-    data?.productCategories?.nodes ?? []
-  ).filter((category: ProductCategory) => category.slug !== 'uncategorized')
+
+  // Categories picked on the Home page in ACF, falling back to the top-level ones
+  const selected: ProductCategory[] =
+    data?.page?.homeShop?.categorySection?.categories?.nodes ?? []
+  const categories: ProductCategory[] = selected.length
+    ? selected
+    : (data?.productCategories?.nodes ?? []).filter(
+        (category: ProductCategory) => category.slug !== 'uncategorized'
+      )
 
   if (!categories.length) return null
 

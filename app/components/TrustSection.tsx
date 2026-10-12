@@ -1,6 +1,4 @@
 import { wpQuery } from '@/lib/wp'
-import Image from 'next/image'
-import Link from 'next/link'
 
 export default async function TrustSection () {
   const stripData = await wpQuery(`
@@ -18,7 +16,9 @@ export default async function TrustSection () {
         }
       }
     `)
-  const items = (await stripData?.page?.homeShop?.trustSection?.items) || []
+  // ACF select fields come back from GraphQL as a list (["truck"])
+  const items: { icon: string[] | string | null; title: string | null; description: string | null }[] =
+    (await stripData?.page?.homeShop?.trustSection?.items) || []
 
   return (
     <>
@@ -39,7 +39,7 @@ export default async function TrustSection () {
                 <span className='grid size-12 shrink-0 place-items-center rounded-2xl bg-accent/10 text-link'>
                   {item.icon && (
                     <svg className='icon size-6' aria-hidden='true'>
-                      <use href={`#i-${item.icon}`} />
+                      <use href={`#i-${Array.isArray(item.icon) ? item.icon[0] : item.icon}`} />
                     </svg>
                   )}
                 </span>

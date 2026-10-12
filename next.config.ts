@@ -24,7 +24,10 @@ const nextConfig: NextConfig = {
         pathname: '/**'
       }
     ],
-    qualities: [75]
+    qualities: [75],
+    // woo.local resolves to 127.0.0.1, which Next blocks by default (SSRF guard).
+    // Allow it in dev only; production should point at a public WP host.
+    dangerouslyAllowLocalIP: process.env.NODE_ENV !== 'production'
   }
 }
 

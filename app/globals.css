@@ -23,6 +23,8 @@
   --color-line: #e8e3db;
   --color-danger: #c2410c;
   --color-success: #15803d;
+  --color-sale: #db2777;
+  --color-star: #f59e0b;
 
   --container-site: 72.5rem;
   --radius-card: 1rem;
@@ -33,11 +35,13 @@
   --animate-shimmer: shimmer 1.2s linear infinite;
   --animate-pop: pop .18s ease both;
   --animate-toast-in: toast-in .25s ease both;
+  --animate-slide-in: slide-in .3s cubic-bezier(.2, .8, .2, 1) both;
 
   @keyframes fade-up { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
   @keyframes shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
   @keyframes pop { from { opacity: 0; transform: scale(.97) translateY(-6px); } to { opacity: 1; transform: none; } }
   @keyframes toast-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  @keyframes slide-in { from { transform: translateX(100%); } to { transform: translateX(0); } }
 }
 
 /* ---------- Dark Mode ---------- */
@@ -91,6 +95,15 @@
   background: linear-gradient(90deg, var(--color-surface-2) 25%, color-mix(in srgb, var(--color-surface-2) 50%, var(--color-surface)) 50%, var(--color-surface-2) 75%);
   background-size: 200% 100%;
   animation: var(--animate-shimmer);
+}
+
+/* Hide scrollbars on swipeable tracks (carousels, tab lists) */
+@utility scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .entry-content {

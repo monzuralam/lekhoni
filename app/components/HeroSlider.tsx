@@ -3,6 +3,21 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Carousel from './Carousel'
 
+type SliderItem = {
+  eyebrow: string | null
+  title: string | null
+  description: string | null
+  image: {
+    node: {
+      altText: string | null
+      sourceUrl: string
+      mediaDetails: { width: number | null; height: number | null } | null
+    }
+  } | null
+  buyNowUrl: string | null
+  collectionUrl: string | null
+}
+
 export default async function HeroSlider () {
   const sliderData = await wpQuery(`
         {
@@ -35,7 +50,7 @@ export default async function HeroSlider () {
             }
         } 
     `)
-  const sliderItems =
+  const sliderItems: SliderItem[] =
     (await sliderData?.page?.homeShop?.sliderSection?.sliderItem) || []
 
   return (

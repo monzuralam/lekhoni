@@ -1,62 +1,64 @@
-import { wpQuery } from '../lib/wp'
-import Image from 'next/image'
+import type { Metadata } from 'next'
+import { getFrontPage } from '@/lib/front-page'
 import HeroSlider from './components/HeroSlider'
 import TrustSection from './components/TrustSection'
 import CategorySection from './components/CategorySection'
+import FlashSaleSection from './components/FlashSaleSection'
+import FeaturedProductsTabs from './components/home/FeaturedProductsTabs'
+import PromoBanners from './components/home/PromoBanners'
+import ProductSpotlight from './components/home/ProductSpotlight'
+import BestSellersCarousel from './components/home/BestSellersCarousel'
+import CustomerReviews from './components/home/CustomerReviews'
+import BrandsStrip from './components/home/BrandsStrip'
+import FromTheBlog from './components/home/FromTheBlog'
+import RecentlyViewedSection from './components/home/RecentlyViewedSection'
+import SubscribeBand from './components/home/SubscribeBand'
+import BlogHome from './components/blog-home/BlogHome'
+import WordPressPage, { getPage, pageMetadata } from './components/layout/WordPressPage'
 
-export default async function Home () {
-  const data = await wpQuery(`
-    query {
-      posts(first: 10) {
-        nodes {
-          title
-          slug
-          excerpt
-          featuredImage{
-            node{
-              sourceUrl
-            }
-          }
-        }
-      }
-    }
-  `)
+// The homepage follows Settings > Reading > "Your homepage displays"
+// (lib/front-page.ts):
+// - static page with the Home Shop template -> shop home (design/home-shop.html)
+// - static page with another template       -> that page's content
+// - "Your latest posts"                     -> blog home (design/index.html)
 
-  console.log(data)
+export async function generateMetadata (): Promise<Metadata> {
+  const front = await getFrontPage()
+  if (front.kind !== 'page') return {} // the layout's site title and tagline
+  const page = await getPage(front.uri)
+  return page ? pageMetadata(page) : {}
+}
 
+// Shop home. Every section reads its settings from the "Home Shop" ACF group
+// on the front page (wp-content/themes/lekhoni/inc/acf-home.php), falls back
+// to WooCommerce/WordPress data when empty, and renders nothing when it has
+// nothing to show.
+function ShopHome () {
   return (
     <>
       <HeroSlider />
-
       <TrustSection />
-
       <CategorySection />
-
-      <div className='m-4'>
-        <h1 className='text-4xl mb-4'>Recent Posts</h1>
-
-        <div className='grid grid-flow-col grid-cols-4 gap-4'>
-          {data.posts.nodes.map(({ title, slug, excerpt, featuredImage }) => (
-            <div key={slug} className='border p-2'>
-              <Image
-                src={featuredImage?.node?.sourceUrl}
-                width={500}
-                height={500}
-                alt={title}
-                unoptimized={true}
-              />
-              <h2 className='my-2'>{title}</h2>
-              <div
-                dangerouslySetInnerHTML={{ __html: excerpt }}
-                className='mb-2'
-              ></div>
-              <a href='' className='border px-3 py-2'>
-                Read More
-              </a>
-            </div>
-          ))}
-        </div>
-      </div>
+      <FlashSaleSection />
+      <FeaturedProductsTabs />
+      <PromoBanners />
+      <ProductSpotlight />
+      <BestSellersCarousel />
+      <CustomerReviews />
+      <BrandsStrip />
+      <FromTheBlog />
+      <RecentlyViewedSection />
+      <SubscribeBand />
     </>
   )
+}
+
+export default async function Home () {
+  const front = await getFrontPage()
+  if (front.kind === 'posts') return <BlogHome />
+  if (front.kind === 'page') {
+    const page = await getPage(front.uri)
+    if (page) return <WordPressPage page={page} />
+  }
+  return <ShopHome />
 }
