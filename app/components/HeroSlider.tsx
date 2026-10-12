@@ -1,6 +1,7 @@
 import { wpQuery } from '@/lib/wp'
 import Image from 'next/image'
 import Link from 'next/link'
+import Carousel from './Carousel'
 
 export default async function HeroSlider () {
   const sliderData = await wpQuery(`
@@ -20,6 +21,10 @@ export default async function HeroSlider () {
                         node {
                         altText
                         sourceUrl
+                        mediaDetails {
+                            width
+                            height
+                        }
                         }
                     }
                     buyNowUrl
@@ -34,10 +39,9 @@ export default async function HeroSlider () {
     (await sliderData?.page?.homeShop?.sliderSection?.sliderItem) || []
 
   return (
-    <section
-      data-carousel
-      data-autoplay='6000'
-      data-loop
+    <Carousel
+      autoplay={6000}
+      loop
       aria-label='প্রধান অফার'
       className='group/hero mx-auto w-full max-w-site px-4 sm:px-6 relative mt-6'
     >
@@ -157,6 +161,6 @@ export default async function HeroSlider () {
           </svg>
         </button>
       </div>
-    </section>
+    </Carousel>
   )
 }

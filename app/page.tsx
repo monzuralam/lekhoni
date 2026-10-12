@@ -2,6 +2,7 @@ import { wpQuery } from '../lib/wp'
 import Image from 'next/image'
 import HeroSlider from './components/HeroSlider'
 import TrustSection from './components/TrustSection'
+import CategorySection from './components/CategorySection'
 
 export default async function Home () {
   const data = await wpQuery(`
@@ -28,6 +29,8 @@ export default async function Home () {
       <HeroSlider />
 
       <TrustSection />
+
+      <CategorySection />
 
       <div className='m-4'>
         <h1 className='text-4xl mb-4'>Recent Posts</h1>
