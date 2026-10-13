@@ -11,7 +11,7 @@ import {
   focusFirstError,
   postJson
 } from './fields'
-import { MESSAGES, PASSWORD_MIN, passwordError } from './validation'
+import { MESSAGES, PASSWORD_MIN, isWeakPassword, passwordError } from './validation'
 import { bn } from '@/lib/bn'
 
 type Errors = { 'new-password'?: string; 'new-password2'?: string }
@@ -73,13 +73,13 @@ export default function ResetPasswordForm ({ resetKey, login }: { resetKey: stri
         autoComplete='new-password'
         value={password}
         error={errors['new-password']}
-        hint={`কমপক্ষে ${bn(PASSWORD_MIN)} অক্ষর। বড় ও ছোট হাতের অক্ষর, সংখ্যা আর চিহ্ন মেশালে পাসওয়ার্ড শক্তিশালী হয়।`}
+        hint={`কমপক্ষে ${bn(PASSWORD_MIN)} অক্ষর, আর দুর্বল হলে চলবে না। বড় ও ছোট হাতের অক্ষর, সংখ্যা আর চিহ্ন মেশালে পাসওয়ার্ড শক্তিশালী হয়।`}
         onValue={value => {
           setPassword(value)
           if (errors['new-password']) setErrors(e => ({ ...e, 'new-password': undefined }))
         }}
       />
-      <PasswordStrength value={password} />
+      <PasswordStrength id='new-password-strength' value={password} />
       <PasswordField
         id='new-password2'
         label='নতুন পাসওয়ার্ড আবার লিখুন'
@@ -93,7 +93,9 @@ export default function ResetPasswordForm ({ resetKey, login }: { resetKey: stri
         }}
       />
       <FormError message={formError} />
-      <SubmitButton pending={pending}>{pending ? 'সংরক্ষণ হচ্ছে…' : 'পাসওয়ার্ড সংরক্ষণ করুন'}</SubmitButton>
+      <SubmitButton pending={pending} disabled={isWeakPassword(password)} describedBy='new-password-strength'>
+        {pending ? 'সংরক্ষণ হচ্ছে…' : 'পাসওয়ার্ড সংরক্ষণ করুন'}
+      </SubmitButton>
     </form>
   )
 }

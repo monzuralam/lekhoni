@@ -19,8 +19,8 @@ export default async function ProductSpotlight () {
   if (!spotlight) return null
   const { eyebrow, highlights, product } = spotlight
 
-  const attributes = variantAttributes(product.attributes?.nodes ?? [])
   const variations = product.variations?.nodes ?? []
+  const attributes = variantAttributes(product.attributes?.nodes ?? [], variations)
   const isVariable = product.__typename === 'VariableProduct'
   const defaultSelection = Object.fromEntries(
     (product.defaultAttributes?.nodes ?? [])

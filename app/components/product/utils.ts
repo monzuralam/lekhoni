@@ -34,18 +34,27 @@ export type VariantAttribute = {
 
 // Attributes used for variations, with readable labels. Global attribute
 // options come back as term slugs; local ones are the visible names already.
-export function variantAttributes (attributes: AttributeData[]): VariantAttribute[] {
+// WooGraphQL lists global options by name (ছোট, বড়, মাঝারি), so they are put
+// in the order they first appear among the variations, which follows the
+// merchant's order (small, medium, large). Options no variation uses go last.
+export function variantAttributes (attributes: AttributeData[], variations: VariationData[] = []): VariantAttribute[] {
   return attributes
     .filter(attribute => attribute.variation && attribute.options?.length)
     .map(attribute => {
       const terms = new Map(attribute.terms?.nodes.map(term => [term.slug, term.name]))
+      const order = new Map<string, number>()
+      for (const variation of variations) {
+        const value = valueOf(variation, attribute.name).toLowerCase()
+        if (value && !order.has(value)) order.set(value, order.size)
+      }
+      const rank = (value: string) => order.get(value.toLowerCase()) ?? Number.MAX_SAFE_INTEGER
       return {
         name: attribute.name,
         label: attribute.label || attribute.name,
-        options: (attribute.options ?? []).map(value => ({
-          value,
-          label: terms.get(value) ?? value
-        }))
+        options: (attribute.options ?? [])
+          .map((value, index) => ({ value, label: terms.get(value) ?? value, index }))
+          .sort((a, b) => rank(a.value) - rank(b.value) || a.index - b.index)
+          .map(({ value, label }) => ({ value, label }))
       }
     })
 }

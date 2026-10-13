@@ -12,7 +12,7 @@ import {
   postJson,
   useFinishSignIn
 } from './fields'
-import { MESSAGES, isEmail, isMobile, passwordError } from './validation'
+import { MESSAGES, isEmail, isMobile, isWeakPassword, passwordError } from './validation'
 
 type Values = {
   'reg-name': string
@@ -135,7 +135,7 @@ export default function RegisterForm () {
           inputMode='tel'
         />
         <PasswordField {...field('reg-password')} label='পাসওয়ার্ড' required autoComplete='new-password' />
-        <PasswordStrength value={values['reg-password']} />
+        <PasswordStrength id='reg-password-strength' value={values['reg-password']} />
         <PasswordField
           {...field('reg-password2')}
           label='পাসওয়ার্ড আবার লিখুন'
@@ -177,7 +177,14 @@ export default function RegisterForm () {
           )}
         </div>
         <FormError message={formError} />
-        <SubmitButton pending={pending}>{pending ? 'অ্যাকাউন্ট খোলা হচ্ছে…' : 'অ্যাকাউন্ট খুলুন'}</SubmitButton>
+        {/* Disabled while the typed password is weak (the meter says why) */}
+        <SubmitButton
+          pending={pending}
+          disabled={isWeakPassword(values['reg-password'])}
+          describedBy='reg-password-strength'
+        >
+          {pending ? 'অ্যাকাউন্ট খোলা হচ্ছে…' : 'অ্যাকাউন্ট খুলুন'}
+        </SubmitButton>
       </form>
       <p className='mt-6 text-center text-[0.95rem] text-ink-2'>
         আগে থেকেই অ্যাকাউন্ট আছে?{' '}

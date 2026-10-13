@@ -1,10 +1,10 @@
 'use client'
 
-import { ANNOUNCEMENT_ATTR, ANNOUNCEMENT_STORAGE_KEY } from './announcement'
+import { ANNOUNCEMENT_ATTR, announcementStorageKey } from './announcement'
 
 // Close button for the announcement bar: hides it now (via the <html>
 // attribute the bar's CSS reacts to) and remembers it for later visits
-export default function AnnouncementDismiss () {
+export default function AnnouncementDismiss ({ id }: { id: string }) {
   return (
     <button
       type='button'
@@ -12,7 +12,7 @@ export default function AnnouncementDismiss () {
       onClick={() => {
         document.documentElement.setAttribute(ANNOUNCEMENT_ATTR, '')
         try {
-          localStorage.setItem(ANNOUNCEMENT_STORAGE_KEY, 'true')
+          localStorage.setItem(announcementStorageKey(id), 'true')
         } catch {}
         // The bar is gone; keep keyboard focus on the page instead of losing it
         document.getElementById('main')?.focus({ preventScroll: true })

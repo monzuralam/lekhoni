@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { getThemeSettings, type SocialNetwork } from '@/lib/theme-settings'
 import { getPopularPosts, getTags, type TermLink } from './data'
 import { formatDate, isoDay, linkTo } from './format'
 
@@ -9,12 +10,8 @@ import { formatDate, isoDay, linkTo } from './format'
 
 const card = 'rounded-card border border-line bg-surface shadow-soft p-6'
 
-const SOCIAL = [
-  { icon: 'facebook', label: 'ফেসবুক' },
-  { icon: 'x', label: 'এক্স' },
-  { icon: 'instagram', label: 'ইনস্টা' },
-  { icon: 'youtube', label: 'ইউটিউব' }
-]
+// Shorter tile labels where the full name doesn't fit
+const TILE_LABELS: Partial<Record<SocialNetwork, string>> = { instagram: 'ইনস্টা', rss: 'RSS' }
 
 function AboutWidget ({ title, description }: { title: string; description: string }) {
   return (
@@ -109,19 +106,25 @@ async function TagCloudWidget ({ linkTerms }: { linkTerms: boolean }) {
   )
 }
 
-function SocialTilesWidget () {
+// Theme Settings → Social Profiles; hidden when none are set
+async function SocialTilesWidget () {
+  const { social } = await getThemeSettings()
+  if (!social.length) return null
+  const columns = ['grid-cols-1', 'grid-cols-2', 'grid-cols-3', 'grid-cols-4'][Math.min(social.length, 4) - 1]
   return (
-    <section aria-label='সামাজিক যোগাযোগ' className='grid grid-cols-4 gap-2'>
-      {SOCIAL.map(item => (
+    <section aria-label='সামাজিক যোগাযোগ' className={`grid gap-2 ${columns}`}>
+      {social.map(item => (
         <a
-          key={item.icon}
-          href='#'
+          key={`${item.network}-${item.url}`}
+          href={item.url}
+          target='_blank'
+          rel='noopener noreferrer me'
           className='flex aspect-square flex-col items-center justify-center gap-1.5 rounded-xl border border-line bg-surface text-ink-2 transition hover:-translate-y-0.5 hover:border-accent hover:text-link'
         >
           <svg className='icon size-5' aria-hidden='true'>
-            <use href={`#i-${item.icon}`} />
+            <use href={`#i-${item.network}`} />
           </svg>
-          <span className='text-xs font-medium'>{item.label}</span>
+          <span className='text-xs font-medium'>{TILE_LABELS[item.network] ?? item.label}</span>
         </a>
       ))}
     </section>

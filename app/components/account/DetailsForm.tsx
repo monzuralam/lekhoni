@@ -4,13 +4,14 @@ import { useRouter } from 'next/navigation'
 import { useState, type FormEvent } from 'react'
 import {
   DETAILS_FIELD_ORDER,
-  passwordLevel,
   validateDetails,
   validateDetailsField,
   type DetailsErrors,
   type DetailsFields
 } from './details'
 import { BUTTON_PRIMARY, CARD, Field, FormMessage, INPUT } from './ui'
+import { PasswordStrength } from '../auth/fields'
+import { isWeakPassword } from '../auth/validation'
 
 // The design's AccountDetails form with the optional password change and the
 // PasswordStrength meter. Saves through /api/account/details.
@@ -18,7 +19,6 @@ import { BUTTON_PRIMARY, CARD, Field, FormMessage, INPUT } from './ui'
 type Profile = Pick<DetailsFields, 'name' | 'displayName' | 'phone' | 'email'>
 
 const EMPTY_PASSWORDS = { current: '', password: '', confirm: '' }
-const STRENGTH = ['', 'দুর্বল', 'মাঝারি', 'শক্তিশালী']
 
 function PasswordInput ({
   autoComplete,
@@ -50,20 +50,6 @@ function PasswordInput ({
           <use href='#i-eye-off' />
         </svg>
       </button>
-    </div>
-  )
-}
-
-function PasswordStrength ({ value }: { value: string }) {
-  const level = passwordLevel(value)
-  return (
-    <div data-level={level} className='group/strength -mt-2'>
-      <div className='h-1.5 overflow-hidden rounded-full bg-surface-2'>
-        <div className='h-full w-0 rounded-full transition-all duration-300 group-data-[level=1]/strength:w-1/3 group-data-[level=1]/strength:bg-danger group-data-[level=2]/strength:w-2/3 group-data-[level=2]/strength:bg-star group-data-[level=3]/strength:w-full group-data-[level=3]/strength:bg-success' />
-      </div>
-      <p aria-live='polite' className='mt-1 min-h-5 text-xs text-muted'>
-        {level ? `পাসওয়ার্ডের মান: ${STRENGTH[level]}` : ''}
-      </p>
     </div>
   )
 }
@@ -174,14 +160,21 @@ export default function DetailsForm ({ initial }: { initial: Profile }) {
         <Field id='acc-password' label='নতুন পাসওয়ার্ড' error={errors.password}>
           <PasswordInput {...fieldProps('password')} autoComplete='new-password' />
         </Field>
-        <PasswordStrength value={values.password} />
+        <PasswordStrength id='acc-password-strength' value={values.password} />
         <Field id='acc-confirm' label='নতুন পাসওয়ার্ড আবার লিখুন' error={errors.confirm}>
           <PasswordInput {...fieldProps('confirm')} autoComplete='new-password' />
         </Field>
       </fieldset>
 
       {status && <FormMessage type={status.type}>{status.message}</FormMessage>}
-      <button type='submit' disabled={pending} className={BUTTON_PRIMARY}>
+      {/* Disabled while the new password is weak (the meter says why) */}
+      <button
+        type='submit'
+        disabled={pending || isWeakPassword(values.password)}
+        aria-describedby={isWeakPassword(values.password) ? 'acc-password-strength' : undefined}
+        aria-busy={pending || undefined}
+        className={BUTTON_PRIMARY}
+      >
         {pending ? 'সংরক্ষণ হচ্ছে…' : 'পরিবর্তন সংরক্ষণ করুন'}
       </button>
     </form>

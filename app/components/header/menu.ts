@@ -18,11 +18,20 @@ type RawMenuItem = {
   target: string | null
 }
 
-// Shown until a menu is assigned to the "Primary menu" location in WordPress
-const FALLBACK_MENU: MenuItem[] = [
-  { id: 'home', label: 'হোম', href: '/', external: false, target: null, children: [] },
-  { id: 'shop', label: 'শপ', href: '/shop', external: false, target: null, children: [] }
-]
+const link = (id: string, label: string, href: string): MenuItem => ({ id, label, href, external: false, target: null, children: [] })
+
+// Shown until a menu is assigned to the location in WordPress (Appearance → Menus)
+const FALLBACK_MENUS = {
+  PRIMARY: [link('home', 'হোম', '/'), link('shop', 'শপ', '/shop')],
+  FOOTER: [
+    link('shop', 'শপ', '/shop'),
+    link('account', 'আমার অ্যাকাউন্ট', '/my-account'),
+    link('about', 'আমাদের সম্পর্কে', '/about'),
+    link('contact', 'যোগাযোগ', '/contact')
+  ]
+}
+
+export type MenuLocation = keyof typeof FALLBACK_MENUS
 
 // WordPress URLs point at the WP host; internal ones become front-end paths
 function toHref (item: RawMenuItem, wpOrigin: string | null) {
@@ -41,12 +50,15 @@ function toHref (item: RawMenuItem, wpOrigin: string | null) {
   }
 }
 
-export async function getPrimaryMenu (): Promise<MenuItem[]> {
+// The menu at a theme location ("Primary menu" or "Footer menu"). Tagged
+// 'menus': WordPress calls /api/revalidate when a menu is saved.
+export async function getMenu (location: MenuLocation): Promise<MenuItem[]> {
+  const fallback = FALLBACK_MENUS[location]
   let nodes: RawMenuItem[] = []
   try {
     const data = await wpQuery(`
-      {
-        menuItems(first: 100, where: { location: PRIMARY }) {
+      query Menu($location: MenuLocationEnum) {
+        menuItems(first: 100, where: { location: $location }) {
           nodes {
             id
             parentId
@@ -57,12 +69,12 @@ export async function getPrimaryMenu (): Promise<MenuItem[]> {
           }
         }
       }
-    `)
+    `, { location }, { tags: ['menus'] })
     nodes = data?.menuItems?.nodes ?? []
   } catch {
-    return FALLBACK_MENU
+    return fallback
   }
-  if (!nodes.length) return FALLBACK_MENU
+  if (!nodes.length) return fallback
 
   let wpOrigin: string | null = null
   try {
@@ -91,3 +103,5 @@ export async function getPrimaryMenu (): Promise<MenuItem[]> {
   }
   return tree
 }
+
+export const getPrimaryMenu = () => getMenu('PRIMARY')

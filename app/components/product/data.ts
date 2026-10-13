@@ -81,7 +81,8 @@ const PRODUCT_QUERY = `
         }
       }
       ... on VariableProduct {
-        variations(first: 100) {
+        # The merchant's order (dragged in the editor); WooGraphQL's default is newest first
+        variations(first: 100, where: { orderby: [{ field: MENU_ORDER, order: ASC }] }) {
           nodes {
             databaseId
             price

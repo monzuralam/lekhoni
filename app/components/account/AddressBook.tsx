@@ -266,7 +266,7 @@ function AddressForm ({
       </div>
       {formError && <FormMessage type='error'>{formError}</FormMessage>}
       <div className='flex flex-wrap items-center gap-3'>
-        <button type='submit' disabled={pending} className={BUTTON_PRIMARY}>
+        <button type='submit' disabled={pending} aria-busy={pending || undefined} className={BUTTON_PRIMARY}>
           {pending ? 'সংরক্ষণ হচ্ছে…' : 'ঠিকানা সংরক্ষণ করুন'}
         </button>
         <button type='button' onClick={onCancel} disabled={pending} className={BUTTON_GHOST}>

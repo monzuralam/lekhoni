@@ -164,8 +164,8 @@ export default async function ProductPage ({ params }: PageProps<'/product/[slug
   const save = product.onSale ? saving(product) : null
   const badge = save ? `−${bn(save.percent)}% ছাড়` : product.onSale ? 'অফার' : null
 
-  const attributes = variantAttributes(product.attributes?.nodes ?? [])
   const variations = product.variations?.nodes ?? []
+  const attributes = variantAttributes(product.attributes?.nodes ?? [], variations)
   const isVariable = product.__typename === 'VariableProduct'
   const defaultSelection = Object.fromEntries(
     (product.defaultAttributes?.nodes ?? [])

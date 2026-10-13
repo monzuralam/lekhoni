@@ -11,6 +11,7 @@ export const MESSAGES = {
   email: 'সঠিক ইমেইল ঠিকানা লিখুন।',
   mobile: 'সঠিক মোবাইল নম্বর লিখুন (যেমন ০১৭১২৩৪৫৬৭৮)।',
   match: 'পাসওয়ার্ড দুটি মিলছে না।',
+  weakPassword: 'পাসওয়ার্ডটি দুর্বল। বড় ও ছোট হাতের অক্ষর, সংখ্যা বা চিহ্ন মিলিয়ে আরো শক্ত করুন।',
   minLength: (min: number) => `কমপক্ষে ${bn(min)}টি অক্ষর লিখুন।`
 }
 
@@ -26,6 +27,9 @@ export const AUTH_MESSAGES = {
   resetInvalid: 'রিসেট লিংকটি অকার্যকর বা মেয়াদোত্তীর্ণ। নতুন লিংক নিন।',
   resetFailed: 'পাসওয়ার্ড বদলানো যায়নি, আবার চেষ্টা করুন।',
   invalidInput: 'তথ্যগুলো সঠিকভাবে পূরণ করুন।',
+  emailLinkDisabled: 'ইমেইল লিংক দিয়ে লগইন এখন চালু নেই। পাসওয়ার্ড দিয়ে লগইন করুন।',
+  emailLinkTooMany: 'একটু আগেই লিংক পাঠানো হয়েছে। ইমেইল দেখুন, অথবা কয়েক মিনিট পর আবার চেষ্টা করুন।',
+  emailLinkInvalid: 'লিংকটি অকার্যকর, আগেই ব্যবহার হয়েছে বা মেয়াদ শেষ হয়ে গেছে। নতুন লিংক নিন।',
   serverDown: 'সার্ভারে সংযোগ করা যায়নি। কিছুক্ষণ পর আবার চেষ্টা করুন।',
   network: 'সংযোগে সমস্যা হয়েছে। ইন্টারনেট সংযোগ দেখে আবার চেষ্টা করুন।'
 }
@@ -49,12 +53,21 @@ export function isMobile (value: string) {
   return MOBILE_PATTERN.test(normalizePhone(value))
 }
 
+// Rules for a new password (register, reset, change password), checked in the
+// form and again by the API route: at least PASSWORD_MIN characters and not
+// "weak" on the strength meter. Logging in with an older password still works.
 export function passwordError (value: string) {
   if (!value) return MESSAGES.required
-  return value.length < PASSWORD_MIN ? MESSAGES.minLength(PASSWORD_MIN) : ''
+  if (value.length < PASSWORD_MIN) return MESSAGES.minLength(PASSWORD_MIN)
+  return isWeakPassword(value) ? MESSAGES.weakPassword : ''
 }
 
-// 0 = empty, 1 = weak, 2 = medium, 3 = strong (same scoring as the design)
+// Typed but rated "weak": the forms disable their submit button
+export const isWeakPassword = (value: string) => Boolean(value) && passwordStrength(value) < 2
+
+// 0 = empty, 1 = weak, 2 = medium, 3 = strong (same scoring as the design).
+// Medium needs at least 8 characters plus two of: upper and lower case, a
+// digit, a symbol, or 12+ characters.
 export function passwordStrength (value: string) {
   if (!value) return 0
   let score = 0

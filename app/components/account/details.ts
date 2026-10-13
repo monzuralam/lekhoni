@@ -1,5 +1,6 @@
 import { bn } from '@/lib/bn'
 import { normalizePhone } from '../checkout/validation'
+import { passwordError } from '../auth/validation'
 
 // Account details form rules, shared by <DetailsForm /> and
 // /api/account/details. Messages match design/assets/js/main.js (section 14).
@@ -59,8 +60,8 @@ export function validateDetailsField (name: keyof DetailsFields, values: Details
       return wantsPasswordChange(values) && !values.current ? MESSAGES.required : ''
     case 'password':
       if (!wantsPasswordChange(values)) return ''
-      if (!values.password) return MESSAGES.required
-      return values.password.length < PASSWORD_MIN ? minLength(PASSWORD_MIN) : ''
+      // Same rules as registration: 8+ characters and not "weak"
+      return passwordError(values.password)
     case 'confirm':
       if (!wantsPasswordChange(values)) return ''
       if (!values.confirm) return MESSAGES.required
@@ -93,14 +94,3 @@ export function readDetailsFields (source: unknown): DetailsFields {
   }
 }
 
-// The design's PasswordStrength meter: 0 (empty), 1 weak, 2 medium, 3 strong
-export function passwordLevel (value: string) {
-  if (!value) return 0
-  let score = 0
-  if (value.length >= 8) score++
-  if (/[a-z]/.test(value) && /[A-Z]/.test(value)) score++
-  if (/\d|[০-৯]/.test(value)) score++
-  if (/[^A-Za-z0-9০-৯]/.test(value)) score++
-  if (value.length >= 12) score++
-  return score <= 2 ? 1 : score <= 3 ? 2 : 3
-}
