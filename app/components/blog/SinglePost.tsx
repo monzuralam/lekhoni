@@ -67,20 +67,24 @@ function jsonLd (post: Post, crumbs: Crumb[], siteTitle: string) {
   return JSON.stringify([article, breadcrumbs]).replace(/</g, '\\u003c')
 }
 
-export default async function SinglePost ({ post, settings }: { post: Post; settings: BlogSettings }) {
+// `preview`: an unpublished post (app/preview) — no comments, neighbours,
+// related posts or structured data
+export default async function SinglePost ({ post, settings, preview = false }: { post: Post; settings: BlogSettings; preview?: boolean }) {
   const linkTerms = Boolean(settings.postsPage)
-  const [adjacent, related, comments] = await Promise.all([
-    getAdjacentPosts(post.databaseId),
-    getRelatedPosts(post.categories.flatMap(category => (category.databaseId ? [category.databaseId] : [])), post.databaseId),
-    getComments(post.databaseId)
-  ])
+  const [adjacent, related, comments] = preview
+    ? [{ previous: null, next: null }, [], []]
+    : await Promise.all([
+      getAdjacentPosts(post.databaseId),
+      getRelatedPosts(post.categories.flatMap(category => (category.databaseId ? [category.databaseId] : [])), post.databaseId),
+      getComments(post.databaseId)
+    ])
   const crumbs = postCrumbs(post, settings)
   const open = post.commentStatus === 'open'
   const image = post.image
 
   return (
     <>
-      <script type='application/ld+json' dangerouslySetInnerHTML={{ __html: jsonLd(post, crumbs, settings.siteTitle) }} />
+      {!preview && <script type='application/ld+json' dangerouslySetInnerHTML={{ __html: jsonLd(post, crumbs, settings.siteTitle) }} />}
       <ReadingProgress target='#article' />
 
       <article id='article' className='mx-auto w-full max-w-site px-4 sm:px-6'>
@@ -133,12 +137,14 @@ export default async function SinglePost ({ post, settings }: { post: Post; sett
               </svg>
               {bn(post.minutes)} মিনিটে পড়া যাবে
             </span>
-            <a href='#comments' className='inline-flex items-center gap-1.5 transition hover:text-link'>
-              <svg className='icon size-4' aria-hidden='true'>
-                <use href='#i-chat' />
-              </svg>
-              {comments.length ? `${bn(comments.length)}টি মন্তব্য` : 'মন্তব্য করুন'}
-            </a>
+            {!preview && (
+              <a href='#comments' className='inline-flex items-center gap-1.5 transition hover:text-link'>
+                <svg className='icon size-4' aria-hidden='true'>
+                  <use href='#i-chat' />
+                </svg>
+                {comments.length ? `${bn(comments.length)}টি মন্তব্য` : 'মন্তব্য করুন'}
+              </a>
+            )}
           </div>
         </header>
 
@@ -165,7 +171,7 @@ export default async function SinglePost ({ post, settings }: { post: Post; sett
 
         <div className='mx-auto mt-8 flex max-w-5xl flex-wrap items-center justify-between gap-4 border-y border-line py-3'>
           <ReaderControls />
-          <ShareButtons path={post.uri} title={post.title} />
+          {!preview && <ShareButtons path={post.uri} title={post.title} />}
         </div>
 
         <div className='mx-auto mt-10 grid max-w-5xl gap-10 lg:grid-cols-[minmax(0,1fr)_16rem]'>
@@ -192,10 +198,12 @@ export default async function SinglePost ({ post, settings }: { post: Post; sett
               </ul>
             )}
 
-            <div className='mt-6 flex flex-wrap items-center gap-2 border-y border-line py-4 print:hidden'>
-              <span className='mr-1 text-sm font-semibold text-ink'>শেয়ার করুন:</span>
-              <ShareButtons path={post.uri} title={post.title} />
-            </div>
+            {!preview && (
+              <div className='mt-6 flex flex-wrap items-center gap-2 border-y border-line py-4 print:hidden'>
+                <span className='mr-1 text-sm font-semibold text-ink'>শেয়ার করুন:</span>
+                <ShareButtons path={post.uri} title={post.title} />
+              </div>
+            )}
 
             {post.author && (
               <section
@@ -268,7 +276,7 @@ export default async function SinglePost ({ post, settings }: { post: Post; sett
               </nav>
             )}
 
-            <Comments postId={post.databaseId} authorId={post.author?.databaseId ?? null} open={open} />
+            {!preview && <Comments postId={post.databaseId} authorId={post.author?.databaseId ?? null} open={open} />}
           </div>
 
           {post.headings.length > 0 && (

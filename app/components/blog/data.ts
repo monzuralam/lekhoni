@@ -1,7 +1,8 @@
 import { cacheLife, cacheTag } from 'next/cache'
 import { wpQuery } from '@/lib/wp'
 import { rawQuery } from '@/lib/auth'
-import { addHeadingIds, linkTo, readingMinutes, textFromHtml, type Heading } from './format'
+import { linkTo, readingMinutes, textFromHtml, type Heading } from './format'
+import { toSinglePost } from './single-post'
 
 // GraphQL for the blog (WPGraphQL core only, no extra plugins).
 // Every function is cached; tags: 'posts', 'blog-settings', `post:<uri>`, `comments:<id>`.
@@ -317,31 +318,7 @@ export async function getPost (uri: string): Promise<SinglePost | null> {
   )
   const post = data?.post
   if (!post || post.status !== 'publish') return null
-  const { html, headings } = addHeadingIds(post.content ?? '')
-  return {
-    databaseId: post.databaseId,
-    title: post.title,
-    uri: post.uri,
-    content: html,
-    headings,
-    excerpt: textFromHtml(post.excerpt).replace(/\s*\[…\]$/, '…'),
-    dateGmt: post.dateGmt,
-    modifiedGmt: post.modifiedGmt,
-    minutes: readingMinutes(post.content),
-    commentStatus: post.commentStatus,
-    image: post.featuredImage?.node ?? null,
-    author: post.author?.node
-      ? {
-          databaseId: post.author.node.databaseId,
-          name: post.author.node.name,
-          uri: post.author.node.uri ?? null,
-          description: post.author.node.description,
-          avatar: post.author.node.avatar?.url ?? null
-        }
-      : null,
-    categories: post.categories?.nodes ?? [],
-    tags: post.tags?.nodes ?? []
-  }
+  return toSinglePost(post)
 }
 
 type Adjacent = { title: string; uri: string } | null

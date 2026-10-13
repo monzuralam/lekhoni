@@ -43,7 +43,7 @@ const toSegments = (uri: string) => uri.split('/').filter(Boolean)
 // First path segments that have their own app route
 const APP_ROUTES = new Set([
   'about', 'api', 'cart', 'checkout', 'contact', 'forgot-password', 'login', 'my-account',
-  'order-received', 'product', 'product-category', 'register', 'reset-password', 'shop'
+  'order-received', 'preview', 'product', 'product-category', 'register', 'reset-password', 'shop'
 ])
 
 export async function generateStaticParams () {
