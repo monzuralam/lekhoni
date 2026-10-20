@@ -9,6 +9,9 @@ import { bn } from '@/lib/bn'
 type CountdownProps = {
   endsAt: string // ISO 8601 with offset
   label: string // spoken end time for screen readers
+  // Light boxes for coloured banners (cosmetics offer)
+  inverse?: boolean
+  text?: string
 }
 
 const UNITS = [
@@ -29,7 +32,7 @@ function remaining (end: number) {
   }
 }
 
-export default function Countdown ({ endsAt, label }: CountdownProps) {
+export default function Countdown ({ endsAt, label, inverse = false, text = 'শেষ হতে বাকি' }: CountdownProps) {
   const end = new Date(endsAt).getTime()
   const [left, setLeft] = useState<ReturnType<typeof remaining> | null>(null)
 
@@ -56,16 +59,16 @@ export default function Countdown ({ endsAt, label }: CountdownProps) {
         </p>
       ) : (
         <>
-          <span aria-hidden='true' className='text-sm font-medium text-ink-2 max-sm:hidden'>
-            শেষ হতে বাকি
+          <span aria-hidden='true' className={`text-sm font-medium max-sm:hidden ${inverse ? 'opacity-80' : 'text-ink-2'}`}>
+            {text}
           </span>
           <div aria-hidden='true' className='flex items-start gap-1.5'>
             {UNITS.map(([key, name]) => (
               <span key={key} className='flex flex-col items-center'>
-                <span className='grid h-11 min-w-11 place-items-center rounded-xl bg-ink px-1.5 font-mono text-lg font-bold tabular-nums text-page'>
+                <span className={`grid h-11 min-w-11 place-items-center rounded-xl px-1.5 font-mono text-lg font-bold tabular-nums ${inverse ? 'bg-white/15 text-white' : 'bg-ink text-page'}`}>
                   {bn(String(left?.[key] ?? 0).padStart(2, '0'))}
                 </span>
-                <span className='mt-1 text-[0.6875rem] text-muted'>{name}</span>
+                <span className={`mt-1 text-[0.6875rem] ${inverse ? 'opacity-75' : 'text-muted'}`}>{name}</span>
               </span>
             ))}
           </div>

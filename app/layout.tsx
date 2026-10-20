@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
+import type { CSSProperties } from 'react'
+import { Geist, Geist_Mono, Tiro_Bangla } from 'next/font/google'
 import './globals.css'
 import AnnouncementBar from './components/AnnouncementBar'
 import Icons from './components/Icons'
@@ -20,6 +21,15 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
   subsets: ['latin']
+})
+
+// Headings of the Cosmetics style preset (globals.css). Not preloaded: the
+// browser only downloads it on sites that use that preset.
+const tiroBangla = Tiro_Bangla({
+  variable: '--font-tiro',
+  weight: '400',
+  subsets: ['bengali', 'latin'],
+  preload: false
 })
 
 const siteMeta = async () =>
@@ -53,7 +63,7 @@ export async function generateMetadata (): Promise<Metadata> {
 
 export default async function RootLayout ({ children }: LayoutProps<'/'>) {
   // Theme Settings (wp-admin): announcement bar here; header/footer read their own
-  const { announcement } = await getThemeSettings()
+  const { announcement, style } = await getThemeSettings()
   const announcementJs = announcementScript(announcement)
 
   return (
@@ -61,7 +71,10 @@ export default async function RootLayout ({ children }: LayoutProps<'/'>) {
     <html
       lang='en'
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      // Theme Settings → Branding → Style: preset tokens and an optional accent
+      data-preset={style.preset === 'default' ? undefined : style.preset}
+      style={style.accent ? ({ '--color-accent': style.accent } as CSSProperties) : undefined}
+      className={`${geistSans.variable} ${geistMono.variable} ${tiroBangla.variable} h-full antialiased`}
     >
       <head>
         {/* Apply the saved theme before the CSS loads to avoid a flash */}

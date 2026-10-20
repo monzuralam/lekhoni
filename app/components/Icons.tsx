@@ -184,6 +184,68 @@ export default function Icons () {
         <rect x='3' y='4' width='18' height='18' rx='2' />
         <path d='M16 2v4M8 2v4M3 10h18' />
       </symbol>
+      {/* Shop icons: e-commerce and cosmetics homes, category icons */}
+      <symbol id='i-smartphone' viewBox='0 0 24 24'>
+        <rect x='6' y='2' width='12' height='20' rx='2' />
+        <path d='M11 18h2' />
+      </symbol>
+      <symbol id='i-shirt' viewBox='0 0 24 24'>
+        <path d='M20.4 6.6 16 4a4 4 0 0 1-8 0L3.6 6.6a1 1 0 0 0-.4 1.3L4.5 11a1 1 0 0 0 1.2.5L7 11v10h10V11l1.3.5a1 1 0 0 0 1.2-.5l1.3-3.1a1 1 0 0 0-.4-1.3z' />
+      </symbol>
+      <symbol id='i-home' viewBox='0 0 24 24'>
+        <path d='M3 10.5 12 3l9 7.5V21H3z' />
+        <path d='M9 21v-6h6v6' />
+      </symbol>
+      <symbol id='i-sparkles' viewBox='0 0 24 24'>
+        <path d='m12 3 1.8 4.7 4.7 1.8-4.7 1.8L12 16l-1.8-4.7-4.7-1.8 4.7-1.8z' />
+        <path d='m19 15 .8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z' />
+      </symbol>
+      <symbol id='i-droplet' viewBox='0 0 24 24'>
+        <path d='M12 2.7S6 9.3 6 14a6 6 0 0 0 12 0c0-4.7-6-11.3-6-11.3z' />
+      </symbol>
+      <symbol id='i-leaf' viewBox='0 0 24 24'>
+        <path d='M11 20a7 7 0 0 1-7-7c0-6 6-10 16-10 0 10-4 17-9 17z' />
+        <path d='M4 21c4-6 7-8 11-10' />
+      </symbol>
+      <symbol id='i-activity' viewBox='0 0 24 24'>
+        <path d='M22 12h-4l-3 9L9 3l-3 9H2' />
+      </symbol>
+      <symbol id='i-smile' viewBox='0 0 24 24'>
+        <circle cx='12' cy='12' r='10' />
+        <path d='M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01' />
+      </symbol>
+      <symbol id='i-basket' viewBox='0 0 24 24'>
+        <path d='M4 10h16l-1.6 9.2a1 1 0 0 1-1 .8H6.6a1 1 0 0 1-1-.8z' />
+        <path d='m8 10 4-6 4 6' />
+      </symbol>
+      <symbol id='i-bag' viewBox='0 0 24 24'>
+        <path d='M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z' />
+        <path d='M3 6h18M16 10a4 4 0 0 1-8 0' />
+      </symbol>
+      <symbol id='i-credit-card' viewBox='0 0 24 24'>
+        <rect x='2' y='5' width='20' height='14' rx='2' />
+        <path d='M2 10h20' />
+      </symbol>
+      <symbol id='i-percent' viewBox='0 0 24 24'>
+        <path d='M19 5 5 19' />
+        <circle cx='6.5' cy='6.5' r='2.5' />
+        <circle cx='17.5' cy='17.5' r='2.5' />
+      </symbol>
+      <symbol id='i-award' viewBox='0 0 24 24'>
+        <circle cx='12' cy='8' r='6' />
+        <path d='M15.5 13 17 22l-5-3-5 3 1.5-9' />
+      </symbol>
+      <symbol id='i-flask' viewBox='0 0 24 24'>
+        <path d='M9 2h6M10 2v7l-5.5 9.5a2 2 0 0 0 1.7 3h11.6a2 2 0 0 0 1.7-3L14 9V2' />
+        <path d='M7 15h10' />
+      </symbol>
+      <symbol id='i-chevron-right' viewBox='0 0 24 24'>
+        <path d='m9 18 6-6-6-6' />
+      </symbol>
+      <symbol id='i-package' viewBox='0 0 24 24'>
+        <path d='m21 8-9-5-9 5 9 5z' />
+        <path d='M3 8v8l9 5 9-5V8M12 13v8' />
+      </symbol>
     </svg>
   )
 }

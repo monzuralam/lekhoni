@@ -21,6 +21,9 @@ export type ShippingRate = {
 
 export type AppliedCoupon = { code: string; amount: string }
 
+// WooCommerce cart fees, e.g. the routine bundle discount (negative)
+export type CartFee = { name: string; amount: string; negative: boolean }
+
 export type Cart = {
   count: number
   subtotal: string
@@ -31,6 +34,7 @@ export type Cart = {
   shippingTotal: string
   total: string
   coupons: AppliedCoupon[]
+  fees: CartFee[]
   // One rate list per shipping package (usually one package)
   shippingPackages: ShippingRate[][]
   chosenShipping: string[]
@@ -46,6 +50,7 @@ export const EMPTY_CART: Cart = {
   shippingTotal: '',
   total: '',
   coupons: [],
+  fees: [],
   shippingPackages: [],
   chosenShipping: [],
   needsShipping: false
@@ -61,6 +66,7 @@ export type OrderSummary = {
   paymentMethod?: string // gateway id, e.g. 'bacs' (missing in older cookies)
   subtotal: string
   discount: string | null
+  fees?: CartFee[] // missing in older cookies
   shipping: string | null // null = free / no shipping charge
   total: string
   name: string

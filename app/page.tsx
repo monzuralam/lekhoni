@@ -14,11 +14,14 @@ import FromTheBlog from './components/home/FromTheBlog'
 import RecentlyViewedSection from './components/home/RecentlyViewedSection'
 import SubscribeBand from './components/home/SubscribeBand'
 import BlogHome from './components/blog-home/BlogHome'
+import EcommerceHome from './components/home-ecommerce/EcommerceHome'
+import CosmeticsHome from './components/home-cosmetics/CosmeticsHome'
 import WordPressPage, { getPage, pageMetadata } from './components/layout/WordPressPage'
 
 // The homepage follows Settings > Reading > "Your homepage displays"
 // (lib/front-page.ts):
 // - static page with the Home Shop template -> shop home (design/home-shop.html)
+// - … "Home – E-commerce" / "Home – Cosmetics" -> design/home-ecommerce.html / home-cosmetics.html
 // - static page with another template       -> that page's content
 // - "Your latest posts"                     -> blog home (design/index.html)
 
@@ -56,6 +59,8 @@ function ShopHome () {
 export default async function Home () {
   const front = await getFrontPage()
   if (front.kind === 'posts') return <BlogHome />
+  if (front.kind === 'ecommerce') return <EcommerceHome />
+  if (front.kind === 'cosmetics') return <CosmeticsHome />
   if (front.kind === 'page') {
     const page = await getPage(front.uri)
     if (page) return <WordPressPage page={page} />

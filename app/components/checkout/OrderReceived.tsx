@@ -172,6 +172,12 @@ export default async function OrderReceived ({
                 <dd className='font-semibold'>− {order.discount}</dd>
               </div>
             )}
+            {(order.fees ?? []).map(fee => (
+              <div key={fee.name} className={`flex items-start justify-between gap-4 py-2.5 ${fee.negative ? 'text-success' : ''}`}>
+                <dt className={fee.negative ? '' : 'text-ink-2'}>{fee.name}</dt>
+                <dd className='font-semibold'>{fee.negative ? '− ' : ''}{fee.amount}</dd>
+              </div>
+            ))}
             <div className='flex items-start justify-between gap-4 py-2.5'>
               <dt className='text-ink-2'>ডেলিভারি চার্জ</dt>
               <dd className='font-semibold text-ink'>{order.shipping ?? 'ফ্রি'}</dd>

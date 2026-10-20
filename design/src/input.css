@@ -125,6 +125,64 @@
     color-scheme: dark;
   }
 
+  /* ------------------------------------------------------------------------
+     Style presets: <html data-preset="ecommerce|cosmetics">. Each preset only
+     swaps token values (light, then dark), like dark mode does, so every
+     component follows. Theme Settings → Branding → Style preset in WordPress.
+     The dark blocks set every token the light block sets, because
+     [data-preset][data-theme] outranks both single-attribute blocks.
+     ------------------------------------------------------------------------ */
+
+  /* E-commerce: crisp and cool, orange accent, squarer cards, sans headings */
+  [data-preset="ecommerce"] {
+    --color-accent: #c2410c;
+    --color-page: #f4f5f7;
+    --color-surface: #fff;
+    --color-surface-2: #eef0f3;
+    --color-ink: #111827;
+    --color-ink-2: #4b5563;
+    --color-muted: #6b7280;
+    --color-line: #e2e5ea;
+    --color-danger: #dc2626;
+    --color-sale: #e11d48;
+    --radius-card: 0.75rem;
+    --font-serif: "Hind Siliguri", ui-sans-serif, system-ui, sans-serif;
+  }
+  [data-preset="ecommerce"][data-theme="dark"] {
+    --color-page: #0f1115;
+    --color-surface: #171a21;
+    --color-surface-2: #20242d;
+    --color-ink: #eceef2;
+    --color-ink-2: #b4b9c4;
+    --color-muted: #858b97;
+    --color-line: #2a2f3a;
+  }
+
+  /* Cosmetics: soft blush, berry accent, rounder cards, Tiro Bangla headings */
+  [data-preset="cosmetics"] {
+    --color-accent: #a83f5f;
+    --color-page: #fcf7f5;
+    --color-surface: #fff;
+    --color-surface-2: #f8ece8;
+    --color-ink: #2a1f24;
+    --color-ink-2: #5c4b52;
+    --color-muted: #8f7d86;
+    --color-line: #efdfda;
+    --color-sale: #be185d;
+    --color-star: #e0a43a;
+    --radius-card: 1.5rem;
+    --font-serif: "Tiro Bangla", "Noto Serif Bengali", Georgia, serif;
+  }
+  [data-preset="cosmetics"][data-theme="dark"] {
+    --color-page: #17121a;
+    --color-surface: #201923;
+    --color-surface-2: #2a2130;
+    --color-ink: #f3eaee;
+    --color-ink-2: #c9b9c1;
+    --color-muted: #9a8a93;
+    --color-line: #3a2d3f;
+  }
+
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 7rem;
@@ -226,6 +284,13 @@
   &::-webkit-scrollbar {
     display: none;
   }
+}
+
+/* Cosmetics preset: Tiro Bangla has a single weight, so serif text stays at
+   400 instead of a synthesised bold. Unlayered so it wins over font-semibold. */
+[data-preset="cosmetics"] :is(h1, h2, h3, h4):not(.font-sans),
+[data-preset="cosmetics"] .font-serif {
+  font-weight: 400;
 }
 
 /* --------------------------------------------------------------------------

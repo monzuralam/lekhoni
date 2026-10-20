@@ -3,10 +3,12 @@ import { wpQuery } from './wp'
 
 // What "/" shows, from Settings > Reading > "Your homepage displays":
 // - a static page with the Home Shop template -> 'shop' (design/home-shop.html)
+// - … with "Home – E-commerce"                 -> 'ecommerce' (design/home-ecommerce.html)
+// - … with "Home – Cosmetics"                  -> 'cosmetics' (design/home-cosmetics.html)
 // - a static page with any other template     -> 'page' (that page's content)
 // - "Your latest posts", or no page chosen    -> 'posts' (design/index.html)
 
-export type FrontPage = { kind: 'shop' } | { kind: 'page'; uri: string } | { kind: 'posts' }
+export type FrontPage = { kind: 'shop' | 'ecommerce' | 'cosmetics' } | { kind: 'page'; uri: string } | { kind: 'posts' }
 
 export async function getFrontPage (): Promise<FrontPage> {
   'use cache'
@@ -21,7 +23,14 @@ export async function getFrontPage (): Promise<FrontPage> {
     }`)
     const node = data?.nodeByUri
     if (node?.__typename !== 'Page') return { kind: 'posts' }
-    return node.template?.__typename === 'Template_HomeShop' ? { kind: 'shop' } : { kind: 'page', uri: node.uri }
+    // WPGraphQL names template types from the template name without
+    // punctuation: "Home – E-commerce" -> Template_HomeEcommerce
+    switch (node.template?.__typename) {
+      case 'Template_HomeShop': return { kind: 'shop' }
+      case 'Template_HomeEcommerce': return { kind: 'ecommerce' }
+      case 'Template_HomeCosmetics': return { kind: 'cosmetics' }
+      default: return { kind: 'page', uri: node.uri }
+    }
   } catch {
     // WordPress unreachable: keep the shop home, whose sections handle missing data
     return { kind: 'shop' }

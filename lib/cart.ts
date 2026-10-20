@@ -76,6 +76,10 @@ export const CART_FIELDS = `
     code
     discountAmount
   }
+  fees {
+    name
+    total
+  }
   availableShippingMethods {
     rates {
       id
@@ -128,6 +132,7 @@ export type RawCart = {
   needsShippingAddress: boolean | null
   chosenShippingMethods: (string | null)[] | null
   appliedCoupons: { code: string; discountAmount: string | null }[] | null
+  fees: { name: string | null; total: number | null }[] | null
   availableShippingMethods: {
     rates: { id: string; label: string | null; cost: string | null }[] | null
   }[] | null
@@ -166,6 +171,18 @@ function rateCost (cost: string | null, sample: string | null) {
   return formatPrice(`${symbol}${Number(cost ?? 0).toFixed(2)}`)
 }
 
+// Fee totals are plain numbers (-282): format them like the cart's prices,
+// with its currency symbol, thousands separators and no ".00" on whole amounts
+export function feeAmount (total: number, sample: string | null) {
+  const value = Math.abs(total)
+  // Decode entities (&#2547;) first, then keep what comes before the digits
+  const symbol = formatPrice(sample).match(/^[^\d০-৯]*/)?.[0] ?? ''
+  const digits = Number.isInteger(value)
+    ? value.toLocaleString('en-IN')
+    : value.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+  return formatPrice(`${symbol}${digits}`)
+}
+
 export function toCart (cart: RawCart): Cart {
   if (!cart) return EMPTY_CART
   return {
@@ -192,6 +209,9 @@ export function toCart (cart: RawCart): Cart {
       code: coupon.code,
       amount: formatPrice(coupon.discountAmount)
     })),
+    fees: (cart.fees ?? []).flatMap(fee =>
+      fee.total ? [{ name: fee.name ?? '', amount: feeAmount(fee.total, cart.subtotal), negative: fee.total < 0 }] : []
+    ),
     shippingPackages: (cart.availableShippingMethods ?? []).map(pkg =>
       (pkg.rates ?? []).map(rate => ({
         id: rate.id,

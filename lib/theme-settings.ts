@@ -41,12 +41,16 @@ export type Announcement = {
   endsAt: string | null // ISO
 }
 
+// Theme Settings → Branding → Style (see globals.css: [data-preset])
+export type StylePreset = 'default' | 'ecommerce' | 'cosmetics'
+
 export type TopicSource = 'categories' | 'tags' | 'product_categories'
 
 export type ThemeSettings = {
   siteTitle: string
   siteIcon: { small: string; large: string } | null
   logo: { light: LogoImage; dark: LogoImage | null; width: number } | null
+  style: { preset: StylePreset; accent: string | null }
   announcement: Announcement | null
   social: SocialLink[]
   header: { social: boolean; search: boolean; wishlist: boolean; account: boolean; themeToggle: boolean }
@@ -91,6 +95,7 @@ const QUERY = `{
   themeSettings {
     themeOptions {
       branding { logo { ${IMAGE} } logoDark { ${IMAGE} } logoWidth }
+      style { preset accentColor }
       announcement { enabled dismissible icon text linkLabel linkUrl startsAt endsAt }
       socialLinks { network url }
       header { showSocial showSearch showWishlist showAccount showThemeToggle }
@@ -182,6 +187,10 @@ export async function getThemeSettings (): Promise<ThemeSettings> {
     ? { light, dark, width: clamp(options.branding?.logoWidth, 40, 400, DEFAULTS.logoWidth) }
     : null
 
+  // Style preset and accent override (#rgb or #rrggbb only: it goes into a style attribute)
+  const preset = first(options.style?.preset)
+  const accent = /^#(?:[0-9a-f]{3}|[0-9a-f]{6})$/i.test(options.style?.accentColor ?? '') ? options.style.accentColor as string : null
+
   // Announcement bar
   const ann = options.announcement ?? {}
   let announcement: Announcement | null = null
@@ -231,6 +240,7 @@ export async function getThemeSettings (): Promise<ThemeSettings> {
     siteTitle,
     siteIcon: data?.siteIcon?.small ? data.siteIcon : null,
     logo,
+    style: { preset: preset === 'ecommerce' || preset === 'cosmetics' ? preset : 'default', accent },
     announcement,
     social,
     header: {

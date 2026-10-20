@@ -25,6 +25,12 @@ export default function CartTotals ({ cart }: { cart: Cart }) {
           <dd className='font-semibold'>− {cart.discountTotal}</dd>
         </div>
       )}
+      {cart.fees.map(fee => (
+        <div key={fee.name} className={`flex items-center justify-between ${fee.negative ? 'text-success' : ''}`}>
+          <dt className={fee.negative ? '' : 'text-ink-2'}>{fee.name}</dt>
+          <dd className='font-semibold'>{fee.negative ? '− ' : ''}{fee.amount}</dd>
+        </div>
+      ))}
       <div className='flex items-center justify-between'>
         <dt className='text-ink-2'>ডেলিভারি চার্জ</dt>
         <dd className='font-semibold text-ink'>{shippingLabel(cart)}</dd>

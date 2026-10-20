@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation'
 import { Suspense } from 'react'
 import { bn } from '@/lib/bn'
 import { formatPrice } from '@/lib/products'
+import { feeAmount } from '@/lib/cart'
 import { gatewayTitle } from '../../../components/checkout/gateways'
 import { CartSpinner } from '../../../components/cart/CartPage'
 import { divisionOf, fullName, type CustomerAddress } from '../../../components/account/address'
@@ -158,6 +159,16 @@ async function OrderDetails ({ params }: { params: PageProps<'/my-account/orders
               <dd className='font-semibold'>− {formatPrice(order.discountTotal)}</dd>
             </div>
           )}
+          {(order.feeLines?.nodes ?? []).map((fee, index) => {
+            const total = Number(fee.total)
+            if (!total) return null
+            return (
+              <div key={index} className={`flex items-start justify-between gap-4 py-2.5 ${total < 0 ? 'text-success' : ''}`}>
+                <dt className={total < 0 ? '' : 'text-ink-2'}>{fee.name}</dt>
+                <dd className='font-semibold'>{total < 0 ? '− ' : ''}{feeAmount(total, order.total)}</dd>
+              </div>
+            )
+          })}
           <div className='flex items-start justify-between gap-4 py-2.5'>
             <dt className='text-ink-2'>ডেলিভারি চার্জ</dt>
             <dd className='font-semibold text-ink'>

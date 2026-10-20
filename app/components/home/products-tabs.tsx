@@ -15,9 +15,13 @@ export type HomeTab = {
 type ProductsTabsProps = {
   title: string
   tabs: HomeTab[]
+  // Unique per page when the tabs are used twice (ids: <prefix>tab-*, <prefix>panel-*)
+  idPrefix?: string
+  className?: string
 }
 
-export default function ProductsTabs ({ title, tabs }: ProductsTabsProps) {
+export default function ProductsTabs ({ title, tabs, idPrefix = 'f', className = 'mx-auto mt-16 w-full max-w-site px-4 sm:px-6' }: ProductsTabsProps) {
+  const headingId = idPrefix === 'f' ? 'featured-products-title' : `${idPrefix}-products-title`
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([])
   const [active, setActive] = useState(tabs[0]?.key)
 
@@ -36,11 +40,11 @@ export default function ProductsTabs ({ title, tabs }: ProductsTabsProps) {
   return (
     <section
       data-tabs
-      aria-labelledby='featured-products-title'
-      className='mx-auto mt-16 w-full max-w-site px-4 sm:px-6'
+      aria-labelledby={headingId}
+      className={className}
     >
       <div className='mb-6 flex flex-wrap items-end justify-between gap-4'>
-        <h2 id='featured-products-title' className='text-2xl text-ink sm:text-[1.75rem]'>
+        <h2 id={headingId} className='text-2xl text-ink sm:text-[1.75rem]'>
           {title}
         </h2>
         {tabs.length > 1 && (
@@ -57,9 +61,9 @@ export default function ProductsTabs ({ title, tabs }: ProductsTabsProps) {
                 }}
                 type='button'
                 role='tab'
-                id={`ftab-${tab.key}`}
+                id={`${idPrefix}tab-${tab.key}`}
                 data-tab={tab.key}
-                aria-controls={`fpanel-${tab.key}`}
+                aria-controls={`${idPrefix}panel-${tab.key}`}
                 aria-selected={tab.key === active}
                 tabIndex={tab.key === active ? 0 : -1}
                 onClick={() => setActive(tab.key)}
@@ -78,8 +82,8 @@ export default function ProductsTabs ({ title, tabs }: ProductsTabsProps) {
           <div
             key={tab.key}
             role='tabpanel'
-            id={`fpanel-${tab.key}`}
-            aria-labelledby={`ftab-${tab.key}`}
+            id={`${idPrefix}panel-${tab.key}`}
+            aria-labelledby={`${idPrefix}tab-${tab.key}`}
             tabIndex={0}
             hidden={tab.key !== active}
             className='focus-visible:outline-offset-8'

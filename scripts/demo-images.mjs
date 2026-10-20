@@ -1,4 +1,4 @@
-// Images for the demo content: the design's SVG illustrations
+// Images for the stationery demo content: the design's SVG illustrations
 // (design/assets/img) rendered to JPG, plus recoloured copies used as
 // product gallery and variation images. Used by build-demo.mjs.
 //
@@ -49,22 +49,19 @@ export const IMAGES = {
   'avatar-2': { svg: 'avatar-2', width: 320, alt: 'করিমা সুলতানা' }
 }
 
-// Renders every image to <outDir>/<key>.jpg (or .png) and returns
-// { key: { file, alt, width, height } }
-export async function buildImages (designDir, outDir) {
-  const manifest = {}
-  for (const [key, spec] of Object.entries(IMAGES)) {
-    const source = path.join(designDir, 'assets/img', `${spec.svg}.svg`)
-    let image = sharp(source, { density: 300 }).resize({ width: spec.width })
-    if (spec.hue) image = image.modulate({ hue: spec.hue })
-    const rendered = await image.png().toBuffer()
-    const { isOpaque } = await sharp(rendered).stats()
-    const file = `${key}.${isOpaque ? 'jpg' : 'png'}`
-    const output = isOpaque
-      ? sharp(rendered).flatten({ background: '#ffffff' }).jpeg({ quality: 82, mozjpeg: true })
-      : sharp(rendered).png({ compressionLevel: 9, palette: true, quality: 90 })
-    const info = await output.toFile(path.join(outDir, file))
-    manifest[key] = { file, alt: spec.alt, width: info.width, height: info.height }
-  }
-  return manifest
+// Renders one image to <outDir>/<key>.jpg (or .png when it has transparent
+// parts) and returns { file, alt, width, height }. `spec` is an IMAGES entry
+// (here or in demo-content/ecommerce.mjs, cosmetics.mjs).
+export async function renderImage (designDir, key, spec, outDir) {
+  const source = path.join(designDir, 'assets/img', `${spec.svg}.svg`)
+  let image = sharp(source, { density: 300 }).resize({ width: spec.width })
+  if (spec.hue) image = image.modulate({ hue: spec.hue })
+  const rendered = await image.png().toBuffer()
+  const { isOpaque } = await sharp(rendered).stats()
+  const file = `${key}.${isOpaque ? 'jpg' : 'png'}`
+  const output = isOpaque
+    ? sharp(rendered).flatten({ background: '#ffffff' }).jpeg({ quality: 82, mozjpeg: true })
+    : sharp(rendered).png({ compressionLevel: 9, palette: true, quality: 90 })
+  const info = await output.toFile(path.join(outDir, file))
+  return { file, alt: spec.alt, width: info.width, height: info.height }
 }

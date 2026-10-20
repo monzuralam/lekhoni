@@ -112,6 +112,8 @@ export type OrderDetail = {
   customerNote: string | null
   billing: CustomerAddress | null
   shipping: CustomerAddress | null
+  // Cart fees kept on the order, e.g. the routine bundle discount (total "-282.00")
+  feeLines: { nodes: { name: string | null; total: string | null }[] } | null
   lineItems: {
     nodes: {
       quantity: number | null
@@ -145,6 +147,7 @@ export async function getOrder (id: number) {
             customerNote
             billing { ${ADDRESS_GRAPHQL} email }
             shipping { ${ADDRESS_GRAPHQL} }
+            feeLines { nodes { name total } }
             lineItems {
               nodes {
                 quantity

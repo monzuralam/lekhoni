@@ -34,6 +34,8 @@ type CartContextValue = {
     variationId?: number,
     attributes?: Record<string, string>
   ) => Promise<boolean>
+  // Several simple products at once (routine bundles); one toast for all
+  addItems: (items: { productId: number; quantity?: number }[], label: string) => Promise<boolean>
   setQuantity: (key: string, quantity: number) => Promise<void>
   removeItem: (key: string, name: string) => Promise<void>
   // Cart page / checkout. applyCoupon resolves to a Bangla error message, or
@@ -107,6 +109,27 @@ export default function CartProvider ({ children }: { children: ReactNode }) {
         return true
       } catch {
         toast('কার্টে যোগ করা যায়নি, আবার চেষ্টা করুন', 'error')
+        return false
+      }
+    },
+    [toast]
+  )
+
+  const addItems = useCallback(
+    async (items: { productId: number; quantity?: number }[], label: string) => {
+      let latest: Cart | null = null
+      try {
+        // One at a time: every request updates the same WooCommerce session
+        for (const item of items) {
+          latest = await request('POST', { productId: item.productId, quantity: item.quantity ?? 1 })
+        }
+        if (latest) setCart(latest)
+        toast(`${label} কার্টে যোগ হয়েছে`, 'success')
+        setIsOpen(true)
+        return true
+      } catch {
+        if (latest) setCart(latest)
+        toast('সবগুলো পণ্য কার্টে যোগ করা যায়নি, আবার চেষ্টা করুন', 'error')
         return false
       }
     },
@@ -209,6 +232,7 @@ export default function CartProvider ({ children }: { children: ReactNode }) {
         open,
         close,
         addItem,
+        addItems,
         setQuantity,
         removeItem,
         applyCoupon,

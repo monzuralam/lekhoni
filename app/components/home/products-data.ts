@@ -263,7 +263,7 @@ type ReviewProduct = {
 const MAX_REVIEWS = 8
 
 // Approved product reviews rated 4 or 5 (newest first) and the store rating
-async function getProductReviews () {
+export async function getProductReviews () {
   'use cache'
   cacheLife('minutes')
   cacheTag('products')
@@ -365,7 +365,7 @@ export type BrandItem = { name: string; logo: HomeImage | null; link: string | n
 
 // WooCommerce product brands that have products. They are not linked: the
 // storefront has no brand archive route.
-async function getWooBrands (): Promise<BrandItem[]> {
+export async function getWooBrands (): Promise<BrandItem[]> {
   'use cache'
   cacheLife('minutes')
   cacheTag('products')

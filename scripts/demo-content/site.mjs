@@ -1,5 +1,6 @@
-// Demo pages (with their ACF fields), menus, Theme Settings and store
-// settings. References are resolved by the importer:
+// The stationery demo's home page fields, and the Theme Settings and store
+// settings every demo shares (menus are built per demo in build-demo.mjs).
+// References are resolved by the importer:
 //   @image:<key>  @product:<key>  @term:<taxonomy>:<key>  @page:<key>
 //   @date:+<days>  (site time, from the moment of import)
 // ACF values are keyed by field name; `acfGroup` says which field group
@@ -86,37 +87,6 @@ export const HOME_FIELDS = {
     note: 'মাসে দু-একটির বেশি ইমেইল নয়। যেকোনো সময় আনসাবস্ক্রাইব করা যায়।'
   }
 }
-
-export const MENUS = [
-  {
-    key: 'primary',
-    name: 'প্রধান মেনু',
-    location: 'primary',
-    items: [
-      { title: 'হোম', url: '/' },
-      {
-        title: 'শপ',
-        url: '/shop',
-        children: ['notebooks', 'pens', 'mugs', 'bags', 'gift-boxes'].map(key => ({ term: `product_cat:${key}` }))
-      },
-      { title: 'ব্লগ', page: 'blog' },
-      { title: 'আমাদের সম্পর্কে', page: 'about' },
-      { title: 'যোগাযোগ', page: 'contact' }
-    ]
-  },
-  {
-    key: 'footer',
-    name: 'ফুটার মেনু',
-    location: 'footer',
-    items: [
-      { title: 'শপ', url: '/shop' },
-      { title: 'আমার অ্যাকাউন্ট', url: '/my-account' },
-      { title: 'ব্লগ', page: 'blog' },
-      { title: 'আমাদের সম্পর্কে', page: 'about' },
-      { title: 'যোগাযোগ', page: 'contact' }
-    ]
-  }
-]
 
 export const THEME_SETTINGS = {
   social_links: [

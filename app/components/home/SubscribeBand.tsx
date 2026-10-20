@@ -17,6 +17,7 @@ type SubscribeBandProps = {
   successMessage?: string
   note?: string
   className?: string
+  icon?: string // sprite icon in the circle
 }
 
 export default async function SubscribeBand ({
@@ -26,7 +27,8 @@ export default async function SubscribeBand ({
   text,
   successMessage,
   note,
-  className = 'mx-auto w-full max-w-site px-4 sm:px-6 mt-16 print:hidden'
+  className = 'mx-auto w-full max-w-site px-4 sm:px-6 mt-16 print:hidden',
+  icon = 'mail'
 }: SubscribeBandProps) {
   const settings = (await getHomeContent())?.subscribeSection
   const heading = title || settings?.title || 'নতুন অফারের খবর সরাসরি ইনবক্সে'
@@ -42,7 +44,7 @@ export default async function SubscribeBand ({
         <div className='relative mx-auto max-w-xl'>
           <span className='mx-auto mb-4 grid size-12 place-items-center rounded-full bg-accent text-accent-ink'>
             <svg className='icon size-5' aria-hidden='true'>
-              <use href='#i-mail' />
+              <use href={`#i-${icon}`} />
             </svg>
           </span>
           <h2 id={titleId} className='text-2xl text-ink sm:text-3xl'>

@@ -130,6 +130,7 @@ export async function POST (request: Request) {
     paymentMethod: fields.paymentMethod,
     subtotal: formatPrice(order.subtotal) || cart.subtotal,
     discount: positive(order.rawDiscount) ? formatPrice(order.discountTotal) : null,
+    fees: cart.fees,
     shipping: positive(order.rawShipping) ? formatPrice(order.shippingTotal) : null,
     total: formatPrice(order.total) || cart.total,
     name,

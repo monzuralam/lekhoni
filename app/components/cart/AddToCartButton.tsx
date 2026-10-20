@@ -7,9 +7,11 @@ type AddToCartButtonProps = {
   productId: number
   name: string
   className?: string
+  label?: string // default 'কার্টে যোগ করুন'
+  icon?: string // sprite icon, default 'cart'
 }
 
-export default function AddToCartButton ({ productId, name, className }: AddToCartButtonProps) {
+export default function AddToCartButton ({ productId, name, className, label = 'কার্টে যোগ করুন', icon = 'cart' }: AddToCartButtonProps) {
   const { addItem } = useCart()
   const [pending, setPending] = useState(false)
 
@@ -33,10 +35,10 @@ export default function AddToCartButton ({ productId, name, className }: AddToCa
         />
       ) : (
         <svg className='icon size-4' aria-hidden='true'>
-          <use href='#i-cart' />
+          <use href={`#i-${icon}`} />
         </svg>
       )}
-      {pending ? 'যোগ হচ্ছে…' : 'কার্টে যোগ করুন'}
+      {pending ? 'যোগ হচ্ছে…' : label}
     </button>
   )
 }
